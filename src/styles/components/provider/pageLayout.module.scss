@@ -1,0 +1,32 @@
+@use '@/styles/utils';
+
+// メイン要素全体のコンテナ
+.container {
+  max-width: 700px;
+  // 両脇にスペース
+  @include utils.mq(sm) {
+    margin-top: var(--lg);
+    margin-right: auto;
+    margin-bottom: var(--lg);
+    margin-left: auto;
+  }
+  // 右側リスト出現
+  @include utils.mq(md) {
+    width: calc(100% - 298px);
+    margin-left: var(--md);
+  }
+  //両脇のスペースを広げていく
+  @include utils.mq(xl) {
+    margin-left: calc((100% - 1074px) / 2);
+  }
+}
+
+// インジケーター
+.liner {
+  width: 100%;
+  &.liner_root {
+    position: fixed;
+    z-index: 1200;
+    background-color: inherit;
+  }
+}

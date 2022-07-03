@@ -1,0 +1,42 @@
+// 全体
+.field {
+  max-width: 400px;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+// ラベル込みのフォームコントロール
+.formcontrol {
+  &.formcontrol_root {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+// 各共有ボタン
+.share_button {
+  &.share_button_root {
+    width: 60px;
+    height: 60px;
+    margin: var(--sm);
+  }
+}
+
+// コピーと共有アイコン
+.icon {
+  &.icon_root {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+// twitter, facebookのボタン
+.button {
+  &.button_root {
+    width: 60px;
+    height: 60px;
+    margin: var(--sm);
+  }
+}

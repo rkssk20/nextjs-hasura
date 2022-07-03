@@ -1,0 +1,44 @@
+// 全体
+.field {
+  margin-bottom: var(--md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// ボタンと連携する非表示のinput
+.hidden_button {
+  display: none;
+}
+
+// テキストボタン
+.text_button {
+  &.text_button_root {
+    padding-right: var(--md);
+    padding-left: var(--md);
+    margin-top: var(--sm);
+    border-radius: 9999px;
+  }
+}
+
+// アイコンのボタン
+.icon_button {
+  &.icon_button_root {
+    padding: 0;
+  }
+}
+
+// アバターアイコン
+.avatar {
+  &.avatar_root {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+// 切り抜いた画像アイコン
+.crop_image {
+  width: 100px;
+  height: 100px;
+  border-radius: 9999px;
+}

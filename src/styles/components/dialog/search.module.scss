@@ -1,0 +1,45 @@
+// 上部全体
+.dialog_title {
+  display: flex;
+}
+
+// タイトル
+.title {
+  padding-top: var(--md);
+}
+
+// 入力欄
+.input {
+  width: calc(100% - 85px);
+  margin: 0;
+  background-color: var(--c-gray);
+  border-radius: 9999px;
+}
+
+// 入力欄全体
+.input_base {
+  width: calc(100% - 40px);
+  padding-left: var(--md);
+  &.input_base_root {
+    font-size: 16px;
+  }
+}
+
+// キャンセルボタン
+.button {
+  border-radius: 9999px;
+  &.button_root {
+    width: 85px;
+    font-size: 13px;
+  }
+}
+
+// 各ボタン
+.list_item_button {
+  border-radius: 9999px;
+}
+
+// 履歴がない時の補足テキスト
+.ex {
+  margin-bottom: var(--md);
+}

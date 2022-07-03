@@ -1,0 +1,24 @@
+// タイトル
+.title {
+  // padding-top: var(--md);
+  padding-bottom: var(--sm);
+}
+
+// 入力フォーム
+.input {
+  &.input_root {
+    width: 100%;
+    padding: var(--sm);
+    margin-bottom: var(--md);
+    text-align: center;
+    background-color: var(--c-gray);
+    border-radius: 13px;
+  }
+}
+
+// 利用規約のチェック全体
+.rule {
+  margin-bottom: var(--md);
+  display: flex;
+  align-items: center;
+}

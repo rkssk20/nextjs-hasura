@@ -1,0 +1,16 @@
+// スライダー全体
+.slider_field {
+  padding-top: var(--md);
+  padding-right: var(--md);
+  padding-left: var(--md);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+// スライダー
+.slider {
+  margin-right: var(--md);
+  margin-left: var(--md);
+}

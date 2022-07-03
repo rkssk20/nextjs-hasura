@@ -1,0 +1,32 @@
+// タイトル
+.title {
+  padding-bottom: var(--md);
+}
+
+// 各設定項目のタイトル
+.sub_title {
+  padding-bottom: var(--sm);
+}
+
+// 入力欄全体
+.input_field {
+  padding: var(--sm);
+  margin-bottom: var(--md);
+  background-color: var(--c-gray);
+  border-radius: 13px;
+  text-align: end;
+}
+
+// 各入力
+.input {
+  width: 100%;
+  &.input_root {
+    font-size: 16px;
+  }
+}
+
+// 変更ボタンの周り
+.save {
+  margin-bottom: var(--md);
+  text-align: center;
+}

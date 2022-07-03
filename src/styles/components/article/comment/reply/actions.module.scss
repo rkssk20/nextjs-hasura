@@ -1,0 +1,34 @@
+// 本文
+.content {
+  padding-right: var(--md);
+  padding-left: var(--md);
+}
+
+// 返信一覧の左側に線をつける
+.reply_field {
+  margin-left: 32.5px;
+  padding-left: 16.5px;
+  border-left: 2px solid rgba(0, 0, 0, 0.12);
+}
+
+// 下部の全体
+.actions_field {
+  width: 100%;
+  padding-top: var(--md);
+  padding-right: var(--sm);
+  padding-left: var(--md);
+  display: flex;
+  align-items: center;
+}
+
+// いいね数
+.favorite_count {
+  padding-left: var(--sm);
+}
+
+// 詳細ボタン
+.icon_button {
+  &.icon_button_root {
+    margin-left: auto;
+  }
+}

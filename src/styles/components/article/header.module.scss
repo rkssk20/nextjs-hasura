@@ -1,0 +1,13 @@
+// 全体
+.field {
+  padding: var(--sm) var(--md);
+  display: flex;
+  align-items: center;
+}
+
+// テキスト全体
+.text_field {
+  padding-left: var(--md);
+  display: flex;
+  flex-direction: column;
+}

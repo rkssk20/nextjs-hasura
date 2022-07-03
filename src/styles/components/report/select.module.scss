@@ -1,0 +1,16 @@
+// 選択フォーム
+.select {
+  width: 100%;
+  margin-bottom: var(--md);
+}
+
+.input {
+  background-color: var(--c-gray);
+  padding: var(--sm);
+  border-radius: 13px;
+}
+
+// placeholderとして使用する、非表示の選択肢
+.none_menu_item {
+  display: none;
+}

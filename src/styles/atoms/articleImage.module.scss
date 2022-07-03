@@ -1,0 +1,14 @@
+@use '@/styles/utils';
+
+.image_fill {
+  width: 100%;
+  max-width: 700px;
+  height: calc((100vw / 16) * 9);
+  max-height: 394.1px;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  @include utils.mq(md) {
+    height: calc(((100vw - 298px) / 16) * 9);
+  }
+}

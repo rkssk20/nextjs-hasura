@@ -1,0 +1,44 @@
+// カテゴリ選択全体
+.select {
+  .select_root {
+    width: 100%;
+    font-weight: 600;
+    > span:not(:first-child) {
+      padding-left: var(--sm);
+    }
+  }
+}
+
+// カテゴリ未選択時
+.empty {
+  color: #8e8e8e;
+  display: flex;
+  align-items: center;
+}
+
+// 入力部分
+.input {
+  width: 100%;
+  margin-bottom: var(--md);
+  border: none;
+  border-radius: 5px;
+  .input_input {
+    padding: var(--sm);
+  }
+  &:hover {
+    border: none;
+  }
+  &.input_focused {
+    border: none;
+  }
+}
+
+// カテゴリ一覧メニュー
+.menu_item {
+  &.menu_item_selected {
+    background-color: inherit;
+    &:hover {
+      background-color: inherit;
+    }
+  }
+}

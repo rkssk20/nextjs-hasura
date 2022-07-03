@@ -1,0 +1,17 @@
+// 周りにスペース
+.content {
+  padding: var(--md);
+}
+
+// マークダウンをHTMLに変換した部分
+.markdown {
+  font-size: 16px;
+  font-family: 'Helvetica Neue', 'arial', 'Hiragino Kaku Gothic ProN', 'Meiryo', 'sans-serif';
+  a {
+    color: var(--c-main);
+    text-decoration: underline;
+  }
+  hr {
+    border: 0.5px solid #e7e7e8;
+  }
+}

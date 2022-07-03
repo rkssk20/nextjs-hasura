@@ -1,0 +1,8 @@
+{
+  "extends": ["next", "next/core-web-vitals", "prettier", "next/babel"],
+  "rules": {
+    // react hooksのルールを無効にする
+    "react-hooks/exhaustive-deps": "off"
+  },
+  "parser": "@babel/eslint-parser"
+}

@@ -1,0 +1,18 @@
+// 注意書き
+.error {
+  padding-top: var(--md);
+  padding-bottom: var(--md);
+}
+
+// 各ボタン
+.button {
+  border-radius: 9999px;
+}
+
+// キャンセルボタン
+.cancel {
+  @extend.button;
+  &.cancel_root {
+    margin-left: var(--xl);
+  }
+}

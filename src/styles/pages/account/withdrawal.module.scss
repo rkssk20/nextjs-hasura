@@ -1,0 +1,30 @@
+// 全体
+.field {
+  padding: var(--md);
+  text-align: center;
+}
+
+// タイトル
+.title {
+  padding-bottom: var(--md);
+  text-align: center;
+}
+
+// 詳細
+.details {
+  padding-bottom: var(--md);
+  text-align: left;
+}
+
+// リスト
+.list_item {
+  padding-top: var(--sm);
+  text-align: left;
+}
+
+// チェックボックス
+.checkbox {
+  width: 100%;
+  padding-top: var(--md);
+  padding-bottom: var(--md);
+}

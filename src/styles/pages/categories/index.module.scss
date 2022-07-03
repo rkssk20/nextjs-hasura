@@ -1,0 +1,27 @@
+// タイトル
+.title {
+  padding: var(--lg);
+}
+
+// カテゴリ全体
+.content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+// 各カテゴリボタン
+.button {
+  &.button_root {
+    border-radius: 13px;
+    min-width: 150px;
+    min-height: 130px;
+    padding: var(--md);
+    margin: var(--md);
+    flex-direction: column;
+  }
+  .button_start_icon {
+    margin: 0 0 var(--sm);
+  }
+}

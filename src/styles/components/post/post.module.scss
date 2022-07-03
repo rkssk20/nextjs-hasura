@@ -1,0 +1,14 @@
+// 投稿全体
+.card {
+  &.card_root {
+    border-radius: 0;
+  }
+}
+
+// 投稿のクリック部分
+.actionarea {
+  &.actionarea_root {
+    padding: var(--md);
+    border-bottom: var(--border);
+  }
+}

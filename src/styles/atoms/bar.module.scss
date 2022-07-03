@@ -1,0 +1,11 @@
+// タブ全体
+.tabs {
+  .tabs_flex_container {
+    border-bottom: var(--border);
+  }
+}
+
+// 各タブ
+.tab {
+  width: calc(100% / 2);
+}

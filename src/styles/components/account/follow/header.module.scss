@@ -1,0 +1,11 @@
+@use '@/styles/utils';
+
+// 全体
+.app_bar {
+  &.app_bar_root {
+    top: 48px;
+    @include utils.mq(md) {
+      top: 56px;
+    }
+  }
+}

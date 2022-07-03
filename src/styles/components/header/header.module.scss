@@ -1,0 +1,40 @@
+@use '@/styles/utils';
+
+// ヘッダーの中身全体
+.toolbar {
+  &.toolbar_root {
+    min-height: 48px;
+    width: 100%;
+    max-width: 1074px;
+    margin-right: auto;
+    margin-left: auto;
+    @include utils.mq(md) {
+      min-height: 56px;
+    }
+  }
+}
+
+// ハンバーガーメニューのボタン
+.hamburger_button {
+  &.hamburger_button_root {
+    margin-right: var(--sm);
+  }
+}
+
+// タイトルのリンク全体
+.title_link {
+  display: flex;
+}
+
+// タイトル
+.title {
+  -webkit-user-drag: none;
+}
+
+// 検索アイコン
+.search_icon {
+  &.search_icon_root {
+    margin-left: auto;
+    margin-right: var(--sm);
+  }
+}

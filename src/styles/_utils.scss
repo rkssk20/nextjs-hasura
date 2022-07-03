@@ -1,0 +1,13 @@
+$breakpoints: (
+  'sm': 'screen and (min-width: 700px)',
+  'md': 'screen and (min-width: 768px)',
+  'lg': 'screen and (min-width: 998px)',
+  'xl': 'screen and (min-width: 1098px)',
+) !default;
+
+// メディアクエリ
+@mixin mq($size) {
+  @media #{map-get($breakpoints, $size)} {
+    @content;
+  }
+}

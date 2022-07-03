@@ -1,0 +1,26 @@
+@use '@/styles/utils';
+
+// 画像がないときの背景
+.noimage {
+  width: 100%;
+  height: calc((100vw / 16) * 9);
+  max-height: 394.1px;
+  background-color: #2b825b;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include utils.mq(md) {
+    height: calc(((100vw - 298px) / 16) * 9);
+  }
+}
+
+// 画像がない時の文字
+.noimage_text {
+  user-select: none;
+  &.noimage_text_root {
+    padding: var(--md);
+    font-weight: 600;
+    text-align: center;
+  }
+}

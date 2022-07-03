@@ -1,0 +1,29 @@
+// 全体
+.field {
+  border-top: var(--border);
+  border-bottom: var(--border);
+  position: relative;
+}
+
+// コメントフォーム
+.input_base {
+  &.input_base_root {
+    width: 100%;
+    padding: var(--md) var(--md) 64px;
+    align-items: flex-start;
+    &.input_base_disabled {
+      cursor: text;
+    }
+  }
+  .input_base_input {
+    padding-top: 6px;
+    padding-left: var(--sm);
+  }
+}
+
+// 下部のボタンなど
+.under {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+}

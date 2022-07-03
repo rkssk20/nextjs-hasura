@@ -1,0 +1,9 @@
+.button {
+  &.button_root {
+    color: white;
+    border-radius: 9999px;
+  }
+  &.button_outlined_root {
+    border-radius: 9999px;
+  }
+}

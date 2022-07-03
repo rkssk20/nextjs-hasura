@@ -1,0 +1,30 @@
+// 返信読み込みボタン
+.more_button {
+  width: 100%;
+  &.more_button_root {
+    padding: var(--md);
+    padding-left: var(--md);
+    font-weight: 400;
+    justify-content: flex-start;
+  }
+}
+
+// 返信読み込みボタンのテキストの一部
+.more_text {
+  font-weight: 600;
+}
+
+// 返信ボタン、さらに読み込むボタンの全体
+.more_field {
+  min-height: 58.25px;
+  display: flex;
+  align-items: center;
+}
+
+// ローディング全体
+.circular_field {
+  height: 58.25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

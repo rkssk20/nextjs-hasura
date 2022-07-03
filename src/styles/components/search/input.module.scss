@@ -1,0 +1,35 @@
+// オートコンプリート関連
+.autocomplete {
+  &.autocomplete_root {
+    position: relative;
+    top: var(--md);
+    margin-bottom: var(--xl);
+    margin-right: var(--md);
+    margin-left: var(--md);
+  }
+  .autocomplete_input {
+    width: calc(100% - 40px);
+    height: 40px;
+    padding-left: var(--md);
+    border: none;
+    border-radius: 9999px;
+    font-size: var(--md);
+    background-color: inherit;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+// オートコンプリートのポップアップ部分
+.autocomplete_popper {
+  .autocomplete_option {
+    border-radius: 9999px;
+  }
+}
+
+// 入力欄全体
+.input_field {
+  border-radius: 9999px;
+  background-color: var(--c-gray);
+}

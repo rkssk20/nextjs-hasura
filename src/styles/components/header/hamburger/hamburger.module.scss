@@ -1,0 +1,26 @@
+@use '@/styles/utils';
+
+// 全体
+.drawer {
+  .drawer_paper {
+    width: 220px;
+  }
+  .back_root {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+}
+
+
+// 各ボタン
+.list_item_button {
+  &.list_item_button_root {
+    border-radius: 9999px;
+  }
+}
+
+// 線
+.divider {
+  &.divider_root {
+    margin: var(--xs) var(--md);
+  }
+}

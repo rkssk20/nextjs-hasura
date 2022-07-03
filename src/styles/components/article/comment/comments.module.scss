@@ -1,0 +1,33 @@
+// タイトル
+.title {
+  padding: var(--md);
+}
+
+// コメント数
+.comments {
+  padding-left: var(--sm);
+  font-weight: 600;
+}
+
+// 各コメント
+.card {
+  border-bottom: var(--border);
+}
+
+// コメントがない場合の全体
+.empty_field {
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// さらに表示ボタン
+.more_button {
+  &.more_button_root {
+    width: 100%;
+    padding-top: var(--md);
+    padding-bottom: var(--md);
+    font-weight: 400;
+  }
+}

@@ -1,0 +1,22 @@
+// 各ボタン
+.list_item_button {
+  &.list_item_button_root {
+    border-radius: 9999px;
+  }
+}
+
+// フォロー、フォロワー
+.list_item_follow {
+  &.list_item_follow_root {
+    padding-top: 0;
+  }
+}
+
+// フォロワー
+.list_text_follow {
+  .list_text_follow_primary {
+    > a:last-child {
+      margin-left: var(--md);
+    }
+  }
+}

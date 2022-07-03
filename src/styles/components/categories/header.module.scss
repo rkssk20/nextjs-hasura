@@ -1,0 +1,23 @@
+@mixin flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+// カテゴリ一覧に戻る全体
+.category {
+  @include flex;
+  padding: var(--md) var(--md) 0;
+}
+
+// カテゴリ上部全体
+.title {
+  @include flex;
+  padding: var(--md);
+  justify-content: center;
+}
+
+// カテゴリ名
+.title_text {
+  padding-left: var(--xl);
+}

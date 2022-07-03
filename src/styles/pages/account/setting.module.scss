@@ -1,0 +1,11 @@
+// 退会上の線
+.divider {
+  &.divider_root {
+    margin-bottom: var(--md);
+  }
+}
+
+// 退会したの線
+.under_divider {
+  padding-top: var(--md);
+}

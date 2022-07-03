@@ -1,0 +1,16 @@
+// 全体
+.field {
+  padding: var(--md);
+  display: flex;
+  align-items: center;
+}
+
+// タイトル
+.title {
+  padding-left: var(--md);
+}
+
+// 投稿日時
+.created {
+  flex-shrink: 0;
+}

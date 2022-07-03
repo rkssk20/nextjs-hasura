@@ -1,0 +1,16 @@
+// タイトル
+.title {
+  padding-bottom: var(--md);
+}
+
+// リンク
+.link {
+  &.link_root {
+    margin-right: auto;
+  }
+}
+
+.sample {
+  width: 100%;
+  padding-top: var(--sm);
+}

@@ -1,0 +1,34 @@
+// 全体
+.actions {
+  padding-top: var(--sm);
+  display: flex;
+  align-items: center;
+}
+
+// いいねアイコン
+.favorite {
+  margin-right: var(--sm);
+}
+
+// コメント数全体
+.comments_field {
+  display: flex;
+  align-items: center;
+}
+
+// コメントアイコン
+.comments_icon {
+  margin-left: var(--md);
+}
+
+// コメント数
+.comments_count {
+  padding-left: var(--sm);
+}
+
+// 詳細ボタン
+.icon_button {
+  &.icon_button_root {
+    margin-left: auto;
+  }
+}

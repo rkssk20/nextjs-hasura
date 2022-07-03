@@ -1,0 +1,41 @@
+// プロフィール右側
+.profile_right {
+  width: 100%;
+  padding-left: var(--lg);
+}
+
+// ローディング
+.circular {
+  &.circular_root {
+    margin-top: var(--md);
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+// 各ボタン
+.buttons {
+  width: 100%;
+  margin-top: var(--md);
+  > *:first-child {
+    margin-right: var(--md);
+  }
+}
+
+// 詳細
+.details {
+  padding-top: var(--md);
+  padding-bottom: var(--md);
+}
+
+// フォロー、フォロワー数
+.span_count {
+  font-weight: 600;
+}
+
+// フォロワー
+.follower {
+  &.follower_root {
+    margin-left: var(--md);
+  }
+}

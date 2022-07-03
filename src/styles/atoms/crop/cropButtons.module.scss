@@ -1,0 +1,11 @@
+// ボタン全体
+.button_field {
+  padding: var(--md);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-end;
+  & > button:last-child {
+    margin-left: var(--sm);
+  }
+}

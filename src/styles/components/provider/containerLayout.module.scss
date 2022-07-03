@@ -1,0 +1,14 @@
+@use '@/styles/utils';
+
+.container {
+  height: 100%;
+  min-height: calc(100vh - 48px);
+  background-color: white;
+  border-radius: 0 0 16px 16px;
+  @include utils.mq(sm) {
+    border-radius: 16px;
+  }
+  @include utils.mq(md) {
+    min-height: calc(100vh - 56px);
+  }
+}
