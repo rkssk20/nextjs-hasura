@@ -1,14 +1,12 @@
-## Next.js × Supabase
+## Next.js × Hasura
 
-Next.js と Supabase を使用した技術ブログ風のポートフォリオです。
+Next.js と Hasura を使用した技術ブログ風のポートフォリオです。
 
-[Next.js × Supabase](https://nextjs-supabase.tk)
-
-<br>
+[Next.js × Hasura](https://nextjs-hasura.tk)
 
 ## 技術選定
 
-詳細は、[今回の技術選定](https://nextjs-supabase.tk)をご覧ください。
+詳細は、[今回の技術選定](https://nextjs-hasura.tk)をご覧ください。
 
 ### フロント
 
@@ -20,7 +18,9 @@ Next.js と Supabase を使用した技術ブログ風のポートフォリオ�
 
 ### サーバー
 
-- Supabase (認証、DB、API、ストレージ)
+- Hasura (GraphQL サーバー)
+- NextAuth.js (認証)
+- Heroku PorstgreSQL (DB)
 
 ### ホスティング
 
@@ -47,7 +47,7 @@ Next.js と Supabase を使用した技術ブログ風のポートフォリオ�
 
 ### 全文検索
 
-- Supabase の API
+<!-- - Supabase の API -->
 
 ### 検索履歴、下書き
 
