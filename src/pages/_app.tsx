@@ -9,6 +9,8 @@ import useGA from '@/hooks/useGA'
 import muiTheme from '@/lib/muiTheme'
 import Auth from '@/components/provider/Auth'
 
+import { SessionProvider } from 'next-auth/react'
+
 import '@/styles/globals.scss'
 import {ThemeProvider} from '@mui/material/styles'
 
@@ -20,7 +22,7 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
+const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? ((page) => page)
   
   useGA() 
@@ -30,14 +32,16 @@ const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => {
     <RecoilRoot>
       {/* react-query */}
       <QueryClientProvider client={client}>
-        <Auth>
-          {/* Mui */}
-          <ThemeProvider theme={ muiTheme }>
-            {getLayout(<Component {...pageProps} />)}
+        <SessionProvider session={ session }>
+          <Auth>
+            {/* Mui */}
+            <ThemeProvider theme={ muiTheme }>
+              {getLayout(<Component {...pageProps} />)}
 
-            <ReactQueryDevtools initialIsOpen={false} />
-          </ThemeProvider>
-        </Auth>
+              <ReactQueryDevtools initialIsOpen={false} />
+            </ThemeProvider>
+          </Auth>
+        </SessionProvider>
       </QueryClientProvider>
     </RecoilRoot>
   )
