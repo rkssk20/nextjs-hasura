@@ -1,12 +1,11 @@
-import { definitions } from '@/types/supabase'
 import Category from '@/atoms/Category'
 
 import styles from '@/styles/components/article/title.module.scss'
 import Typography from '@mui/material/Typography'
 
 type TitleProps = {
-  categories: definitions['categories'][]
-  title: definitions['articles']['title']
+  categories: { id: number, category: number }[]
+  title: string
 }
 
 const Title = ({ categories, title }: TitleProps) => {

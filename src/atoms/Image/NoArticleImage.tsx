@@ -1,7 +1,7 @@
 import styles from '@/styles/atoms/noArticleImage.module.scss'
 import Typography from '@mui/material/Typography'
 
-const NoArticleImage = ({ title }: { title: string }) => {
+const NoArticleImage = ({ title }: { title: string | null | undefined }) => {
   return (
     <div className={styles.noimage}>
       <Typography

@@ -1,4 +1,3 @@
-import { ArticleType } from '@/types/types'
 import Category from '@/atoms/Category'
 
 import styles from '@/styles/components/post/content.module.scss'
@@ -6,9 +5,9 @@ import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
 
 interface ContentProps {
-  title: ArticleType['title']
-  details: ArticleType['details']
-  categories: ArticleType['categories']
+  title: string
+  details: string
+  categories: number[]
 }
 
 const Content = ({ title, details, categories }: ContentProps) => {

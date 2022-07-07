@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { useRecoilValue } from 'recoil'
+import { accountState } from '@/lib/recoil'
 import useProfilesDetails from '@/hooks/select/useProfilesDetails'
 import useSetting from '@/hooks/mutate/update/useSetting'
 import { ContainedButton, DisabledButton } from '@/atoms/Button'
@@ -12,19 +14,30 @@ import InputBase from '@mui/material/InputBase'
 const Input = () => {
   const [newUserName, setNewUserName] = useState('')
   const [newDetails, setNewDetails] = useState<string | null>('')
-  const { data, isFetching } = useProfilesDetails()
-  const { isLoading, mutate } = useSetting({ newUserName, newDetails })
+  const { data, loading } = useProfilesDetails()
+  const { mutateFunction, loading: settingLoading } = useSetting()
+  const account = useRecoilValue(accountState)
 
   useEffect(() => {
-    if (!data) return
+    if (!data?.profiles_by_pk) return
 
-    setNewUserName(data.username)
-    setNewDetails(data.details ?? null)
+    setNewUserName(data.profiles_by_pk.username)
+    setNewDetails(data.profiles_by_pk.details ?? null)
   }, [data])
 
-  if (isFetching) <Circular />
+  const handleSetting = () => {
+    mutateFunction({
+      variables: {
+        id: account.data?.id,
+        username: newUserName,
+        details: newDetails
+      }
+    })
+  }
 
-  if (data === undefined) return null
+  if (loading) <Circular />
+
+  if (data?.profiles_by_pk === undefined) return null
 
   return (
     <div>
@@ -79,12 +92,14 @@ const Input = () => {
       </div>
 
       <div className={styles.save}>
-        {(newUserName.length > 0 && data.username !== newUserName) ||
-        data.details !== newDetails ? (
-          <ContainedButton text='保存する' handle={() => mutate()} />
-        ) : (
+        { settingLoading ?
+          <Circular />
+          :
+          (newUserName.length > 0) && ((data.profiles_by_pk?.username !== newUserName) || (data.profiles_by_pk?.details !== newDetails)) ?
+          <ContainedButton text='保存する' handle={ handleSetting } />
+          :
           <DisabledButton text='保存する' />
-        )}
+        }
       </div>
     </div>
   )

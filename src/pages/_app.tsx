@@ -3,13 +3,14 @@ import { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import { RecoilRoot } from 'recoil'
 import { QueryClientProvider } from 'react-query'
-import { ReactQueryDevtools } from 'react-query/devtools'
+import { SessionProvider } from 'next-auth/react'
+import { ApolloProvider } from '@apollo/client'
 import client from '@/lib/queryClient'
+import initializeApollo from '@/lib/apolloClient'
 import useGA from '@/hooks/useGA'
 import muiTheme from '@/lib/muiTheme'
 import Auth from '@/components/provider/Auth'
 
-import { SessionProvider } from 'next-auth/react'
 
 import '@/styles/globals.scss'
 import {ThemeProvider} from '@mui/material/styles'
@@ -30,19 +31,20 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }: AppPropsWith
   return (
     // recoil
     <RecoilRoot>
-      {/* react-query */}
-      <QueryClientProvider client={client}>
-        <SessionProvider session={ session }>
-          <Auth>
-            {/* Mui */}
-            <ThemeProvider theme={ muiTheme }>
-              {getLayout(<Component {...pageProps} />)}
-
-              <ReactQueryDevtools initialIsOpen={false} />
-            </ThemeProvider>
-          </Auth>
-        </SessionProvider>
-      </QueryClientProvider>
+      {/* apollo */}
+      <ApolloProvider client={ initializeApollo() }>
+        {/* react-query */}
+        <QueryClientProvider client={client}>
+          <SessionProvider session={ session }>
+            <Auth>
+              {/* Mui */}
+              <ThemeProvider theme={ muiTheme }>
+                {getLayout(<Component {...pageProps} />)}
+              </ThemeProvider>
+            </Auth>
+          </SessionProvider>
+        </QueryClientProvider>
+      </ApolloProvider>
     </RecoilRoot>
   )
 }

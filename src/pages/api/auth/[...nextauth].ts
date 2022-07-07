@@ -54,14 +54,14 @@ export default NextAuth({
           algorithm: "HS256",
         });
 
-        const query = `query MyQuery($id: String!) {
+        const query = `query GetProfiles($id: String!) {
           profiles_by_pk(id: $id) {
             username
             avatar
           }
         }`;
 
-        const data = await fetch(process.env.HASURA_ENDPOINT as string, {
+        const data = await fetch(process.env.NEXT_PUBLIC_HASURA_ENDPOINT as string, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -78,14 +78,14 @@ export default NextAuth({
         const result = await data.json()
 
         if(!result.data.profiles_by_pk) {
-          const mutate = `mutation MyMutation($username: String) {
+          const mutate = `mutation InsertProfiles($username: String) {
             insert_profiles_one(object: {username: $username}) {
               username
               id
             }
           }`;
 
-          await fetch(process.env.HASURA_ENDPOINT as string, {
+          await fetch(process.env.NEXT_PUBLIC_HASURA_ENDPOINT as string, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -99,15 +99,17 @@ export default NextAuth({
             })
           })
 
+          session.accessToken = encodedToken
           session.id = token.sub!;
-          session.usename = token.name;
+          session.username = token.name;
           session.avatar = undefined;
-
+          
           return session;
           
         } else {
+          session.accessToken = encodedToken
           session.id = token.sub!;
-          session.usename = result.data.profiles_by_pk.username;
+          session.username = result.data.profiles_by_pk.username;
           session.avatar = result.data.profiles_by_pk.avatar;
 
           return session;

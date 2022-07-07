@@ -1,5 +1,6 @@
 import type { ReactElement } from 'react'
-import useCategoriesArticles from '@/hooks/select/useCategoriesArticles'
+import type { ArticleType } from '@/types/types'
+import useServerlessArticles from '@/hooks/select/useServerlessArticles'
 import useObserver from '@/hooks/atoms/useObserver'
 import Circular from '@/atoms/Circular'
 import Header from '@/components/categories/Header'
@@ -9,8 +10,8 @@ import Post from '@/components/post/Post'
 import Side from '@/components/side/Side'
 
 const Serverless = () => {
-  const { data, isFetching, hasNextPage, fetchNextPage } = useCategoriesArticles(1)
-  const setRef = useObserver({ hasNextPage, fetchNextPage })
+  const { data, loading, fetchMore, hasNextPage } = useServerlessArticles()
+  const setRef = useObserver({ hasNextPage, fetchMore })
 
   return (
     <ContainerLayout
@@ -22,19 +23,17 @@ const Serverless = () => {
       <Header text='サーバーレス' url='serverless' />
 
       {/* 投稿一覧 */}
-      {data &&
-        data.pages.map((page, page_index) =>
-          page.map((item, index) => (
-            <Post
-              key={item.id}
-              data={item}
-              setRef={data.pages.length - 1 === page_index && page.length - 1 === index && setRef}
-            />
-          )),
-        )}
+      { data && data.articles.map((item, index) =>
+          <Post
+            key={item.id}
+            data={item as ArticleType}
+            setRef={index === (data.articles.length - 1) && setRef}
+          />
+        )
+      }
 
       {/* 読み込み中 */}
-      {isFetching && <Circular />}
+      {loading && <Circular />}
     </ContainerLayout>
   )
 }

@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { signIn, signOut } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 
 import styles from '@/styles/atoms/loginContent.module.scss'
 import Typography from '@mui/material/Typography'
@@ -65,8 +65,6 @@ const LoginContent = () => {
           </Typography>
         </Button>
       ))}
-
-      <button onClick={() => signOut()}>サインアウト</button>
     </div>
   )
 }

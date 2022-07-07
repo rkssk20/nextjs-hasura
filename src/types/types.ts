@@ -7,19 +7,18 @@ export type CategoriesProps = {
   url: 'front' | 'serverless'
 }
 
-// 記事一つ
 export type ArticleType = {
-  id: definitions['articles']['id']
-  user_id: definitions['articles']['user_id']
-  image: definitions['articles']['image']
-  title: definitions['articles']['title']
-  details: definitions['articles']['details']
-  like_count: definitions['articles']['like_count']
-  comment_count: definitions['articles']['comment_count']
-  created_at: definitions['articles']['created_at']
-  avatar: definitions['profiles']['avatar']
-  username: definitions['profiles']['username']
-  categories: string[] | number[]
+  id: string;
+  user_id: string;
+  title: string;
+  image: string | null;
+  details: string;
+  username: string;
+  avatar: string | null;
+  comment_count: number;
+  like_count: number;
+  created_at: string;
+  categories: number[];
 }
 
 // アカウントトップ10

@@ -42,10 +42,12 @@ const Actions = ({ like_count, user_id, path }: ActionsProps) => {
 
   return (
     <div className={styles.card_actions}>
-      {account.data ? (
-        <LoginLike path={path} setLikeCountState={setLikeCountState} />
-      ) : (
-        <LogoutLike />
+      {!account.loading && (
+        account.data ? (
+          <LoginLike path={path} setLikeCountState={setLikeCountState} />
+        ) : (
+          <LogoutLike />
+        )
       )}
 
       {/* いいね数 */}

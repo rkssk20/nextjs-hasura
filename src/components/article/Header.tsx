@@ -15,7 +15,7 @@ interface HeaderProps {
 }
 
 const Header = ({ user_id, avatar, name, created_at }: HeaderProps) => {
-  const created = new Date(created_at)
+  const created = new Date(created_at + 'Z')
 
   return (
     <div className={styles.field}>
@@ -23,7 +23,7 @@ const Header = ({ user_id, avatar, name, created_at }: HeaderProps) => {
       <NextLink href={`/account/${user_id}`} as={`/account/${user_id}`} passHref>
         <MuiLink underline='none'>
           { avatar ?
-            <AvatarIcon src={  process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/avatars/' + avatar } variant='link' />
+            <AvatarIcon src={ avatar } variant='link' />
             :
             <InitialIcon username={name} variant='link' />
           }
@@ -40,7 +40,7 @@ const Header = ({ user_id, avatar, name, created_at }: HeaderProps) => {
 
         {/* 投稿日時 */}
         <Typography className={styles.created} variant='caption'>
-          {created.getFullYear() + '年' + created.getMonth() + '月' + created.getDay() + '日'}
+          {created.getFullYear() + '年' + (created.getMonth() + 1) + '月' + created.getDate() + '日'}
         </Typography>
       </div>
     </div>

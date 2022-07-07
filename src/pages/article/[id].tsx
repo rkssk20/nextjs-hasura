@@ -1,7 +1,5 @@
 import type { GetStaticProps, GetStaticPaths } from 'next'
-import type { definitions } from '@/types/supabase'
 import RemarkDown from '@/lib/remarkDown'
-import { supabase } from '@/lib/supabaseClient'
 import ArticleImage from '@/atoms/Image/ArticleImage'
 import NoArtcileImage from '@/atoms/Image/NoArticleImage'
 import PageLayout from '@/components/provider/PageLayout'
@@ -24,31 +22,47 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   if (!id || typeof id !== 'string') return { notFound: true }
 
+  try {
+    const data = await fetch(process.env.NEXT_PUBLIC_HASURA_ENDPOINT as string, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        query: `query GetArtiles($id: String!) {
+          articles_by_pk(id: $id) {
+            title
+            image
+            details
+            user_id
+            like_count
+            comment_count
+            created_at
+            categories {
+              category
+              id
+            }
+            profiles: articles_profiles_relation {
+              avatar
+              username
+            }
+          }
+        }
+      `,
+        variables: {
+          id
+        },
+      })
+    })
 
-    const { data, error } = await supabase
-      .from<definitions['articles']>('articles')
-      .select(
-        `user_id,
-      title,
-      details,
-      image,
-      like_count,
-      comment_count,
-      created_at,
-      profiles!reference_articles_profiles(username, avatar),
-      categories(id, category)'`,
-      )
-      .eq('id', id)
-      .single()
+    const result = await data.json()
 
-    if (error || !data) throw error
-
-    const remark = await RemarkDown(data.details)
+    const remark = await RemarkDown(result.data.articles_by_pk.details)
 
     return {
       props: {
         item: {
-          ...data,
+          ...result.data.articles_by_pk,
           details: remark,
         },
         path: id,
@@ -56,7 +70,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       // 5分キャッシュ
       revalidate: 300,
     }
-
+  } catch {
+    return { notFound: true }
+  }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -68,14 +84,22 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 interface ArticleProps {
   item: {
-    user_id: definitions['articles']['user_id']
-    title: definitions['articles']['title']
-    details: definitions['articles']['details']
-    image: definitions['articles']['image']
-    like_count: definitions['articles']['like_count']
-    comment_count: definitions['articles']['comment_count']
-    created_at: definitions['articles']['created_at']
-  } & { profiles: definitions['profiles'] } & { categories: definitions['categories'][] }
+    user_id: string
+    title: string
+    details: string
+    image: string | undefined
+    like_count: number
+    comment_count: number
+    created_at: string
+    profiles: {
+      username: string
+      avatar: string | undefined
+    }
+    categories: {
+      id: number
+      category: number
+    }[]
+  }
   path: string
 }
 

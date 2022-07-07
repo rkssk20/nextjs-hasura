@@ -10,7 +10,30 @@ import Post from '@/components/post/Post'
 import { definitions } from '@/types/supabase'
 import { supabase } from '@/lib/supabaseClient'
 
+import { GET_PROFILES_DETAILS } from '@/graphql/queries'
+
 const Home = () => {
+
+  useEffect(() => {
+    (async() => {
+      const data = await fetch(process.env.NEXT_PUBLIC_HASURA_ENDPOINT as string, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: GET_PROFILES_DETAILS,
+          variables: {
+            id: '107807841208428290747'
+          },
+        })
+      })
+
+      const result = await data.json()
+
+      console.log(result)
+  })()
+  }, [])
   return (
     <ContainerLayout
       type='website'

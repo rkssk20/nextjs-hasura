@@ -1,5 +1,5 @@
 const CreatedAt = (created_at: string) => {
-  const date = new Date(created_at)
+  const date = new Date(created_at + 'Z')
   const elapsed = Number(new Date()) - Number(date)
 
   // 投稿されてから1時間以内は分表示
