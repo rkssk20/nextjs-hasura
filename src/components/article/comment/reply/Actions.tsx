@@ -18,13 +18,12 @@ const Report = dynamic(import('@/components/dialog/Report'))
 type Props = {
   id: GetRepliesQuery['replies'][0]['id']
   user_id: GetRepliesQuery['replies'][0]['user_id']
-  comment_id: GetRepliesQuery['replies'][0]['comment_id']
   comment: GetRepliesQuery['replies'][0]['comment']
   like_count: GetRepliesQuery['replies'][0]['like_count']
-  replies_like_id: number | undefined
+  replies_like_id: number | null
 }
 
-const Actions = ({ id, user_id, comment_id, comment, like_count, replies_like_id }: Props) => {
+const Actions = ({ id, user_id, comment, like_count, replies_like_id }: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [dialog, setDialog] = useState(false)
   const open = Boolean(anchorEl)
@@ -49,7 +48,7 @@ const Actions = ({ id, user_id, comment_id, comment, like_count, replies_like_id
       <div className={styles.actions_field}>
         {/* いいねボタン */}
         {account.data ? (
-          <LoginLike comment_id={comment_id} id={id} replies_like_id={replies_like_id} />
+          <LoginLike id={id} replies_like_id={replies_like_id} />
         ) : (
           <LogoutLike />
         )}

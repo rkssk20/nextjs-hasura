@@ -59,13 +59,12 @@ const DeleteLikes = ({replies_like_id}: {replies_like_id: number}) => {
 }
 
 type LoginLikeProps = {
-  comment_id: GetRepliesQuery['replies'][0]['comment_id']
   id: GetRepliesQuery['replies'][0]['id']
-  replies_like_id: number | undefined
+  replies_like_id: number | null
 }
 
 // ログイン時のいいねボタン
-export const LoginLike = ({ comment_id, id, replies_like_id }: LoginLikeProps) => {
+export const LoginLike = ({ id, replies_like_id }: LoginLikeProps) => {
   return replies_like_id ? <DeleteLikes replies_like_id={ replies_like_id } /> : <InsertLikes id={ id } />
 }
 

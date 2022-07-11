@@ -27,7 +27,7 @@ const ShowReplies = ({ path, id }: ShowReplyProps) => {
           <Header
             username={item.profile.username}
             user_id={item.user_id}
-            avatar={item.profile.avatar as string | undefined}
+            avatar={item.profile.avatar as string | null}
             created_at={item.created_at}
           />
 
@@ -35,9 +35,8 @@ const ShowReplies = ({ path, id }: ShowReplyProps) => {
           <Actions
             id={item.id}
             user_id={item.user_id}
-            comment_id={item.comment_id}
             comment={item.comment}
-            replies_like_id={item?.replies_likes[0]?.id as number | undefined}
+            replies_like_id={item?.replies_likes[0]?.id as number | null}
             like_count={item.like_count}
           />
         </div>
