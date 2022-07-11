@@ -1,16 +1,16 @@
 import { useMutation } from '@apollo/client'
 import { useSetRecoilState } from 'recoil'
-import { INSERT_COMMENTS } from '@/graphql/mutate'
+import { DELETE_REPLIES_LIKES } from '@/graphql/mutate'
 import { notificateState } from '@/lib/recoil'
 
-const useInsertComments = () => {
+const useDeleteRepliesLikes = () => {
   const setNotificate = useSetRecoilState(notificateState)
 
-  const [mutateFunction, { loading}] = useMutation(INSERT_COMMENTS, {
+  const [mutateFunction, { loading }] = useMutation(DELETE_REPLIES_LIKES, {
     onCompleted: () => {
       setNotificate({
         open: true,
-        message: 'コメントを投稿しました'
+        message: 'いいねを取り消しました'
       })
     },
     onError: () => {
@@ -24,4 +24,4 @@ const useInsertComments = () => {
   return { mutateFunction, loading }
 }
 
-export default useInsertComments
+export default useDeleteRepliesLikes

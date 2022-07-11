@@ -10,7 +10,7 @@ const usePersonArticles = (path: string) => {
   const [cursor, setCursor] = useState(String(new Date().toJSON()))
   const setNotificate = useSetRecoilState(notificateState)
 
-  const { data, previousData, loading, networkStatus, fetchMore } = useQuery<GetPersonArticlesQuery>(GET_PERSON_ARTICLES, {
+  const { data, previousData, networkStatus, fetchMore } = useQuery<GetPersonArticlesQuery>(GET_PERSON_ARTICLES, {
     variables: {
       _eq: path
     },
@@ -24,9 +24,14 @@ const usePersonArticles = (path: string) => {
           setHasNextPage(false)
           return
         }
+      } else if (data.articles.length < 10) {
+        setHasNextPage(false)
+        return
       }
 
-      setCursor(data.articles[data.articles.length - 1].created_at)
+      if(data.articles.length > 0) {
+        setCursor(data.articles[data.articles.length - 1].created_at)
+      }
     },
     onError: () => {
       setNotificate({
@@ -36,7 +41,7 @@ const usePersonArticles = (path: string) => {
     }
   })
 
-  return { data, loading, networkStatus, fetchMore, hasNextPage, cursor }
+  return { data, networkStatus, fetchMore, hasNextPage, cursor }
 }
 
 export default usePersonArticles

@@ -42,7 +42,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
               category
               id
             }
-            profiles: articles_profiles_relation {
+            profile {
               avatar
               username
             }
@@ -91,9 +91,9 @@ interface ArticleProps {
     like_count: number
     comment_count: number
     created_at: string
-    profiles: {
+    profile: {
       username: string
-      avatar: string | undefined
+      avatar: string | null
     }
     categories: {
       id: number
@@ -109,7 +109,7 @@ const Article = ({ item, path }: ArticleProps) => {
       type='article'
       title={item.title}
       description={item.details.replace(/\_|\*|\\|\`|\#|\+|\-|\!|\{|\}|\[|\]/g, '').slice(0, 100)}
-      image={item.image ? (process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/' + item.image) : 'nextjssupabase'}
+      image={item.image ? item.image : 'nextjssupabase'}
     >
       {/* 画像 */}
       {item.image ? <ArticleImage image={item.image} /> : <NoArtcileImage title={item.title} />}
@@ -120,8 +120,8 @@ const Article = ({ item, path }: ArticleProps) => {
       {/* 投稿者、投稿日時 */}
       <Header
         user_id={item.user_id}
-        avatar={ item.profiles.avatar }
-        name={item.profiles.username}
+        avatar={ item.profile.avatar }
+        name={item.profile.username}
         created_at={item.created_at}
       />
 

@@ -7,16 +7,22 @@ import { LoginForm, LogoutForm } from '@/atoms/Form'
 
 import styles from '@/styles/components/article/comment/commentForm.module.scss'
 import Skeleton from '@mui/material/Skeleton'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const Login = ({ path, username }: { path: string; username: string }) => {
   const [text, setText] = useState('')
-  const { mutate, isLoading } = useInsertComments(path)
+  const { mutateFunction, loading } = useInsertComments()
 
   // コメントの投稿
   const handlePost = () => {
-    if (isLoading) return
+    if (loading) return
 
-    mutate(text)
+    mutateFunction({
+      variables: {
+        comment: text,
+        articles_id: path
+      }
+    })
 
     setText('')
   }
@@ -25,11 +31,15 @@ const Login = ({ path, username }: { path: string; username: string }) => {
     <LoginForm text={text} setText={setText} name={username} placeholder='コメントする'>
       <div className={styles.under}>
         {/* 送信ボタン */}
-        {Boolean(text) ? (
-          <ContainedButton text='送信' handle={handlePost} />
-        ) : (
-          <DisabledButton text='送信' />
-        )}
+        { loading ?
+          <CircularProgress size={ 30 } />
+          :
+          Boolean(text) ? (
+            <ContainedButton text='送信' handle={handlePost} />
+          ) : (
+            <DisabledButton text='送信' />
+          )
+        }
       </div>
     </LoginForm>
   )

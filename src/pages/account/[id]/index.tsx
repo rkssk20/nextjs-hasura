@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react'
 import type { GetServerSideProps } from 'next'
-import type { ArticleType } from '@/types/types'
+import type { ArticleType, ProfileType } from '@/types/types'
 import Side from '@/components/side/Side'
 import usePersonArticles from '@/hooks/select/usePersonArticles'
 import useObserver from '@/hooks/atoms/useObserver'
@@ -48,35 +48,35 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         path: id
       }
     }
-  } catch {
+  } catch(error) {
+    console.log(error)
     return { notFound: true }
   }
 }
 
-type AccountProps = {
-  item: {
-    id: string
-    username: string
-    avatar: string | undefined
-    details: string
-    follow_count: number
-    follower_count: number
-  }
+type AccountProps = ProfileType & {
   path: string
 }
 
 const Account = ({ item, path }: AccountProps) => {
-  const { data, loading, networkStatus, fetchMore, hasNextPage, cursor } = usePersonArticles(path)
-  const setRef = useObserver({ hasNextPage, fetchMore, cursor })
+  const { data, networkStatus, fetchMore, hasNextPage, cursor } = usePersonArticles(path)
+
+  const handleMore = () => {
+    hasNextPage && fetchMore({
+      variables: {
+        _lt: cursor
+      }
+    })
+  }
+
+  const setRef = useObserver({ handleMore })
 
   return (
     <ContainerLayout
       type='profile'
       title={item.username}
       description={item.details || ''}
-      image={ item.avatar ?
-        process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/avatars/' + item.avatar : ''
-      }
+      image={ item.avatar ? item.avatar : ''  }
     >
       {/* アカウント情報 */}
       <Profile path={path} item={item} />
@@ -91,10 +91,10 @@ const Account = ({ item, path }: AccountProps) => {
             data={item as ArticleType}
             setRef={index === (data.articles.length - 1) && setRef}
           />
-        ) : !loading && <Empty text='まだ投稿がありません' />
+        ) : (networkStatus === 7) && <Empty text='まだ投稿がありません' />
       }
 
-      {(loading || (networkStatus === 3)) && <Circular />}
+      {((networkStatus === 1) || (networkStatus === 3)) && <Circular />}
     </ContainerLayout>
   )
 }

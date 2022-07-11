@@ -1,19 +1,16 @@
 import { useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { useSetRecoilState } from 'recoil'
-import { GET_SEARCH_ARTICLES } from '@/graphql/queries'
-import type { GetSearchArticlesQuery } from '@/types/generated/graphql'
+import { GET_NO_SEARCH_ARTICLES } from '@/graphql/queries'
+import type { GetNoSearchArticlesQuery } from '@/types/generated/graphql'
 import { notificateState } from '@/lib/recoil'
 
-const useArticlesSearch = (word: string | string[]) => {
+const useNoSearchArticles = () => {
   const [hasNextPage, setHasNextPage] = useState(true)
   const [cursor, setCursor] = useState(String(new Date().toJSON()))
   const setNotificate = useSetRecoilState(notificateState)
 
-  const { data, previousData, networkStatus, fetchMore } = useQuery<GetSearchArticlesQuery>(GET_SEARCH_ARTICLES, {
-    variables: {
-      _like: '%' + word + '%'
-    },
+  const { data, previousData, networkStatus, fetchMore } = useQuery<GetNoSearchArticlesQuery>(GET_NO_SEARCH_ARTICLES, {
     nextFetchPolicy: 'cache-first',
     notifyOnNetworkStatusChange: true,
     onCompleted: (data) => {
@@ -44,4 +41,4 @@ const useArticlesSearch = (word: string | string[]) => {
   return { data, networkStatus, fetchMore, hasNextPage, cursor }
 }
 
-export default useArticlesSearch
+export default useNoSearchArticles

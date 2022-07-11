@@ -18,9 +18,9 @@ type CommentsProps = {
 
 const Comments = ({ path, comments }: CommentsProps) => {
   // コメントの取得
-  const { data, refetch, isFetching, hasNextPage, fetchNextPage } = useSelectComments(path)
+  const { firstQuery, data, networkStatus, fetchMore, hasNextPage, cursor } = useSelectComments(path)
   // タイトルを監視して初回の取得
-  const ref = useFirstObserve(refetch)
+  const ref = useFirstObserve(firstQuery)
 
   return (
     <div>
@@ -38,59 +38,55 @@ const Comments = ({ path, comments }: CommentsProps) => {
       <CommentForm path={path} />
 
       {/* コメント欄 */}
-      {data && data?.pages[0].length > 0
-        ? data.pages.map((pages) =>
-            pages.map((item) => (
-              <Card
-                key={item.id}
-                id={'comment' + String(item.id)}
-                className={styles.card}
-                elevation={0}
-              >
-                {/* アカウント、投稿時間 */}
-                <Header
-                  username={item.profiles.username}
-                  user_id={item.user_id}
-                  avatar={item.profiles.avatar}
-                  created_at={item.created_at}
-                />
+      { data && (data.comments.length > 0) ? data.comments.map(item =>
+        <Card
+          key={item.id}
+          id={'comment' + String(item.id)}
+          className={styles.card}
+          elevation={0}
+        >
+          {/* アカウント、投稿時間 */}
+          <Header
+            username={item.profile.username}
+            user_id={item.user_id}
+            avatar={item.profile.avatar as string | null}
+            created_at={item.created_at}
+          />
 
-                {/* いいね、詳細ボタン */}
-                <Actions
-                  path={path}
-                  id={item.id}
-                  user_id={item.user_id}
-                  comment={item.comment}
-                  like_count={item.like_count}
-                  comments_likes={item.comments_likes}
-                />
+          {/* いいね、詳細ボタン */}
+          <Actions
+            path={path}
+            id={item.id}
+            user_id={item.user_id}
+            comment={item.comment}
+            like_count={item.like_count}
+            comments_likes_id={item?.comments_likes[0]?.id}
+          />
 
-                {/* リプライ欄 */}
-                {item.reply_count > 0 && (
-                  <Replies path={path} id={item.id} reply_count={item.reply_count} />
-                )}
-              </Card>
-            )),
-          )
-        : !isFetching && (
-            <div className={styles.empty_field}>
-              <Typography variant='body1'>まだコメントがありません。</Typography>
-            </div>
+          {/* リプライ欄 */}
+          {item.reply_count > 0 && (
+            <Replies path={path} id={item.id} reply_count={item.reply_count} />
           )}
+        </Card>
+        ) : (networkStatus === 7) && (
+          <div className={styles.empty_field}>
+            <Typography variant='body1'>まだコメントがありません。</Typography>
+          </div>
+        )}
 
       {/* さらに表示ボタン */}
-      {data && data?.pages.length > 0 && !isFetching && hasNextPage && (
+      {data && (data?.comments.length > 0) && (networkStatus === 7) && hasNextPage && (
         <Button
           className={styles.more_button}
           classes={{ root: styles.more_button_root }}
-          onClick={() => fetchNextPage()}
+          onClick={() => fetchMore({ variables: { _lt: cursor } })}
         >
           さらに表示
         </Button>
       )}
 
       {/* ローディング */}
-      {isFetching && <Circular />}
+      {((networkStatus === 1) || (networkStatus === 3)) && <Circular />}
     </div>
   )
 }

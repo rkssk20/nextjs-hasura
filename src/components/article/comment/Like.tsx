@@ -1,7 +1,8 @@
 import { ReactElement, useState } from 'react'
 import dynamic from 'next/dynamic'
-import type { definitions } from '@/types/supabase'
-import useMutateCommentsLikes from '@/hooks/mutate/useMutateCommentsLikes'
+import type { GetCommentsQuery } from '@/types/generated/graphql'
+import useInsertCommetnsLikes from '@/hooks/mutate/insert/useInsertCommentsLikes'
+import useDeleteCommentsLikes from '@/hooks/mutate/delete/useDeleteCommentsLikes'
 
 import IconButton from '@mui/material/IconButton'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
@@ -17,31 +18,56 @@ const Like = ({ handle, children }: { handle: () => void; children: ReactElement
   )
 }
 
-type LoginLikeProps = {
-  path: string
-  id: definitions['replies']['id']
-  comments_likes: definitions['comments_likes'][] | undefined
-}
+const InsertLike = ({ id }: { id: number }) => {
+  const { mutateFunction, loading } = useInsertCommetnsLikes()
 
-// ログイン時のいいねボタン
-export const LoginLike = ({ path, id, comments_likes }: LoginLikeProps) => {
-  const { mutate, isLoading } = useMutateCommentsLikes(path, id)
-
-  // いいね
   const handleLikes = () => {
-    if (isLoading) return
+    if(loading) return
 
-    mutate(comments_likes && comments_likes.length > 0 ? comments_likes[0].id : undefined)
+    mutateFunction({
+      variables: {
+        comment_id: id
+      }
+    })
   }
 
   return (
     <Like handle={handleLikes}>
-      {comments_likes && comments_likes[0]?.id ? (
-        <FavoriteIcon />
-      ) : (
-        <FavoriteBorderIcon color='action' />
-      )}
+      <FavoriteBorderIcon color='action' />
     </Like>
+  )
+}
+
+const DeleteLike = ({ comments_likes_id }: { comments_likes_id: number }) => {
+  const { mutateFunction, loading } = useDeleteCommentsLikes()
+
+  const handleLikes = () => {
+    if(loading) return
+
+    mutateFunction({
+      variables: {
+        id: comments_likes_id
+      }
+    })
+  }
+
+  return (
+    <Like handle={handleLikes}>
+      <FavoriteIcon />
+    </Like>
+  )
+}
+
+type LoginLikeProps = {
+  id: number
+  comments_likes_id: number | undefined
+}
+
+// ログイン時のいいねボタン
+export const LoginLike = ({ id, comments_likes_id }: LoginLikeProps) => {
+  return (
+    comments_likes_id ?
+    <DeleteLike comments_likes_id={ comments_likes_id } /> : <InsertLike id={ id } />
   )
 }
 

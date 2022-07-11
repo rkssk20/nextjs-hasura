@@ -1,5 +1,4 @@
 import NextLink from 'next/link'
-import type { definitions } from '@/types/supabase'
 import CreatedAt from '@/lib/createdAt'
 import InitialIcon from '@/atoms/Icon/InitialIcon'
 import AvatarIcon from '@/atoms/Icon/AvatarIcon'
@@ -9,9 +8,9 @@ import MuiLink from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 
 type HeaderProps = {
-  username: definitions['profiles']['username']
-  user_id: definitions['profiles']['id']
-  avatar: definitions['profiles']['avatar']
+  username: string
+  user_id: string
+  avatar: string | null
   created_at: string
 }
 
@@ -25,9 +24,7 @@ const Header = ({ username, user_id, avatar, created_at }: HeaderProps) => {
         <MuiLink underline='none'>
           {avatar ? (
             <AvatarIcon
-              src={
-                process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/avatars/' + avatar
-              }
+              src={ avatar }
               variant='link'
             />
           ) : (

@@ -12,14 +12,19 @@ type Props = DialogProps & {
 }
 
 const ArticleDelete = ({ dialog, handleClose, path }: Props) => {
-  const { mutate, isLoading } = useArticleDelete(path)
+  const { mutateFunction, loading } = useArticleDelete()
 
   const list = ['記事に関するデータ', '記事へのコメント', '記事、コメントへのいいね']
 
   // 記事を削除
   const handleDelete = () => {
-    if (isLoading) return
-    mutate()
+    if (loading) return
+
+    mutateFunction({
+      variables: {
+        id: path
+      }
+    })
   }
 
   return (

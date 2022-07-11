@@ -1,26 +1,18 @@
 import { useState, useEffect } from 'react'
 
 type Props = {
-  hasNextPage: boolean | undefined
-  fetchMore: Function
-  cursor: string
+  handleMore: () => void
 }
 
 // 無限スクロール用。最後の要素が表示されたかを返す
-const useObserver = ({ hasNextPage, fetchMore, cursor }: Props) => {
+const useObserver = ({ handleMore  }: Props) => {
   const [ref, setRef] = useState<HTMLDivElement | null>(null)
 
   useEffect(() => {
     if (ref === null) return
 
     const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        hasNextPage && fetchMore({
-          variables: {
-            _lt: cursor
-          }
-        })
-      }
+      entry.isIntersecting && handleMore()
     })
 
     observer.observe(ref)

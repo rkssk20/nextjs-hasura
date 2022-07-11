@@ -16,40 +16,37 @@ type ShowReplyProps = {
 
 const ShowReplies = ({ path, id }: ShowReplyProps) => {
   const [formOpen, setFormOpen] = useState(false)
-  const { data, isFetching, hasNextPage, fetchNextPage } = useSelectReplies(id)
+  const { data, networkStatus, fetchMore, hasNextPage, cursor } = useSelectReplies(id)
 
   return (
     <div>
       {/* リプライ欄 */}
-      {data &&
-        data.pages.map((pages) =>
-          pages.map((item) => (
-            <div key={item.id} id={'reply' + String(item.id)}>
-              {/* アカウント、投稿日時 */}
-              <Header
-                username={item.profiles.username}
-                user_id={item.user_id}
-                avatar={item.profiles.avatar}
-                created_at={item.created_at}
-              />
+      {data && data.replies.map((item) =>
+        <div key={item.id} id={'reply' + String(item.id)}>
+          {/* アカウント、投稿日時 */}
+          <Header
+            username={item.profile.username}
+            user_id={item.user_id}
+            avatar={item.profile.avatar as string | undefined}
+            created_at={item.created_at}
+          />
 
-              {/* いいね、詳細ボタン */}
-              <Actions
-                id={item.id}
-                user_id={item.user_id}
-                comment_id={item.comment_id}
-                comment={item.comment}
-                replies_like={item.replies_likes}
-                like_count={item.like_count}
-              />
-            </div>
-          )),
-        )}
+          {/* いいね、詳細ボタン */}
+          <Actions
+            id={item.id}
+            user_id={item.user_id}
+            comment_id={item.comment_id}
+            comment={item.comment}
+            replies_like_id={item?.replies_likes[0]?.id as number | undefined}
+            like_count={item.like_count}
+          />
+        </div>
+      )}
 
-      {!isFetching && (
+      {(networkStatus === 7) && (
         <div className={styles.more_field}>
           {/* 返信ボタン */}
-          {data && data.pages[0].length > 0 && (
+          {data && data.replies.length > 0 && (
             <Button
               className={styles.reply_button}
               style={{ marginLeft: 16, borderRadius: 9999, flexShrink: 0 }}
@@ -67,7 +64,7 @@ const ShowReplies = ({ path, id }: ShowReplyProps) => {
             <Button
               className={styles.more_button}
               classes={{ root: styles.more_button_root }}
-              onClick={() => fetchNextPage()}
+              onClick={() => fetchMore({ variables: { _lt: cursor } })}
             >
               返信をさらに表示
             </Button>
@@ -79,7 +76,7 @@ const ShowReplies = ({ path, id }: ShowReplyProps) => {
       {formOpen && <ReplyForm path={path} id={id} setFormOpen={setFormOpen} />}
 
       {/* ローディング */}
-      {isFetching && (
+      {((networkStatus === 1) || (networkStatus === 3)) && (
         <div className={styles.circular_field}>
           <CircularProgress size={32} />
         </div>

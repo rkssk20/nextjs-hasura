@@ -7,9 +7,6 @@ import PageLayout from '@/components/provider/PageLayout'
 import ContainerLayout from '@/components/provider/ContainerLayout'
 import Post from '@/components/post/Post'
 
-import { definitions } from '@/types/supabase'
-import { supabase } from '@/lib/supabaseClient'
-
 import { GET_PROFILES_DETAILS } from '@/graphql/queries'
 
 const Home = () => {

@@ -1,7 +1,8 @@
 import { useState, ReactElement } from 'react'
 import dynamic from 'next/dynamic'
-import type { definitions } from '@/types/supabase'
-import useMutateRepliesLike from '@/hooks/mutate/useMutateRepliesLikes'
+import type { GetRepliesQuery } from '@/types/generated/graphql'
+import useInsertRepliesLikes from '@/hooks/mutate/insert/useInsertRepliesLikes'
+import useDeleteRepliesLikes from '@/hooks/mutate/delete/useDeleteRepliesLikes'
 
 import IconButton from '@mui/material/IconButton'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
@@ -17,28 +18,55 @@ const Like = ({ handle, children }: { handle: () => void; children: ReactElement
   )
 }
 
-type LoginLikeProps = {
-  comment_id: definitions['replies']['comment_id']
-  id: definitions['replies']['id']
-  replies_like: definitions['replies_likes'][] | undefined
-}
+const InsertLikes = ({id}: {id: number}) => {
+  const { mutateFunction, loading } = useInsertRepliesLikes()
 
-// ログイン時のいいねボタン
-export const LoginLike = ({ comment_id, id, replies_like }: LoginLikeProps) => {
-  const { mutate, isLoading } = useMutateRepliesLike(comment_id, id)
-
-  // いいね
   const handleLikes = () => {
-    if (isLoading) return
+    if(loading) return
 
-    mutate(replies_like && replies_like.length > 0 ? replies_like[0].id : undefined)
+    mutateFunction({
+      variables: {
+        replies_id: id
+      }
+    })
   }
 
   return (
     <Like handle={handleLikes}>
-      {replies_like && replies_like[0]?.id ? <FavoriteIcon /> : <FavoriteBorderIcon color='action' />}
+      <FavoriteBorderIcon color='action' />
     </Like>
   )
+}
+
+const DeleteLikes = ({replies_like_id}: {replies_like_id: number}) => {
+  const { mutateFunction, loading } = useDeleteRepliesLikes()
+
+  const handleLikes = () => {
+    if(loading) return
+
+    mutateFunction({
+      variables: {
+        id: replies_like_id
+      } 
+    })
+  }
+
+  return (
+    <Like handle={handleLikes}>
+      <FavoriteIcon />
+    </Like>
+  )
+}
+
+type LoginLikeProps = {
+  comment_id: GetRepliesQuery['replies'][0]['comment_id']
+  id: GetRepliesQuery['replies'][0]['id']
+  replies_like_id: number | undefined
+}
+
+// ログイン時のいいねボタン
+export const LoginLike = ({ comment_id, id, replies_like_id }: LoginLikeProps) => {
+  return replies_like_id ? <DeleteLikes replies_like_id={ replies_like_id } /> : <InsertLikes id={ id } />
 }
 
 // ログアウト時のいいねボタン

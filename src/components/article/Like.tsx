@@ -1,8 +1,8 @@
 import { ReactElement, Dispatch, SetStateAction, useState } from 'react'
 import dynamic from 'next/dynamic'
 import useSelectLikes from '@/hooks/select/useSelectLikes'
-import useInsertLike from '@/hooks/mutate/useInsertLike'
-import useDeleteLike from '@/hooks/mutate/useDeleteLike'
+import useInsertLike from '@/hooks/mutate/insert/useInsertLike'
+import useDeleteLike from '@/hooks/mutate/delete/useDeleteLike'
 
 import IconButton from '@mui/material/IconButton'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'

@@ -10,8 +10,17 @@ import Post from '@/components/post/Post'
 import Side from '@/components/side/Side'
 
 const Front = () => {
-  const { data, loading, fetchMore, hasNextPage } = useFrontArticles()
-  const setRef = useObserver({ hasNextPage, fetchMore })
+  const { data, loading, fetchMore, networkStatus, hasNextPage, cursor } = useFrontArticles()
+
+  const handleMore = () => {
+    hasNextPage && fetchMore({
+      variables: {
+        _lt: cursor
+      }
+    })
+  }
+
+  const setRef = useObserver({ handleMore })
 
   return (
     <ContainerLayout
@@ -33,7 +42,7 @@ const Front = () => {
       }
 
       {/* 読み込み中 */}
-      {loading && <Circular />}
+      {(loading || (networkStatus === 3)) && <Circular />}
     </ContainerLayout>
   )
 }

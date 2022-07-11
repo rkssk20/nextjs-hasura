@@ -1,5 +1,4 @@
 import NextLink from 'next/link'
-import type { definitions } from '@/types/supabase'
 import InitialIcon from '@/atoms/Icon/InitialIcon'
 import AvatarIcon from '@/atoms/Icon/AvatarIcon'
 
@@ -8,10 +7,10 @@ import MuiLink from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 
 interface HeaderProps {
-  user_id: definitions['articles']['user_id']
-  avatar: definitions['profiles']['avatar']
-  name: definitions['profiles']['username']
-  created_at: definitions['articles']['created_at']
+  user_id: string
+  avatar: string | null
+  name: string
+  created_at: string
 }
 
 const Header = ({ user_id, avatar, name, created_at }: HeaderProps) => {

@@ -1,6 +1,5 @@
 import type { Dispatch, SetStateAction } from 'react'
 import { useRouter } from 'next/router'
-import type { definitions } from '@/types/supabase'
 import AvatarIcon from '@/atoms/Icon/AvatarIcon'
 import InitialIcon from '@/atoms/Icon/InitialIcon'
 
@@ -10,10 +9,10 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 
 type AccountProps = {
-  id: definitions['profiles']['id']
-  username: definitions['profiles']['username']
-  avatar: definitions['profiles']['avatar']
-  details: definitions['profiles']['details']
+  id: string
+  username: string
+  avatar: string | null
+  details: string | null
   setRef: Dispatch<SetStateAction<HTMLDivElement | null>> | false
 }
 
@@ -31,9 +30,7 @@ const Account = ({ id, username, avatar, details, setRef }: AccountProps) => {
       <ListItemIcon>
         {avatar ? (
           <AvatarIcon
-            src={
-              process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/avatars/' + avatar
-            }
+            src={ avatar }
             variant='medium'
           />
         ) : (

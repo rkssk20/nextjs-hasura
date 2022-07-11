@@ -1,18 +1,18 @@
 import { useState } from 'react'
-import { useQuery } from '@apollo/client'
 import { useSetRecoilState } from 'recoil'
-import { GET_SEARCH_ARTICLES } from '@/graphql/queries'
-import type { GetSearchArticlesQuery } from '@/types/generated/graphql'
+import { useQuery } from '@apollo/client'
+import { GET_PERSON_LIKES_ARTICLES } from '@/graphql/queries'
+import type { GetPersonLikesArticlesQuery } from '@/types/generated/graphql'
 import { notificateState } from '@/lib/recoil'
 
-const useArticlesSearch = (word: string | string[]) => {
+const usePersonLikesArticles = (path: string) => {
   const [hasNextPage, setHasNextPage] = useState(true)
   const [cursor, setCursor] = useState(String(new Date().toJSON()))
   const setNotificate = useSetRecoilState(notificateState)
 
-  const { data, previousData, networkStatus, fetchMore } = useQuery<GetSearchArticlesQuery>(GET_SEARCH_ARTICLES, {
+  const { data, previousData, loading, networkStatus, fetchMore } = useQuery<GetPersonLikesArticlesQuery>(GET_PERSON_LIKES_ARTICLES, {
     variables: {
-      _like: '%' + word + '%'
+      _eq: path
     },
     nextFetchPolicy: 'cache-first',
     notifyOnNetworkStatusChange: true,
@@ -24,13 +24,13 @@ const useArticlesSearch = (word: string | string[]) => {
           setHasNextPage(false)
           return
         }
-      } else if (data.articles.length < 10) {
+      } else if(data.articles.length < 10) {
         setHasNextPage(false)
         return
       }
 
       if(data.articles.length > 0) {
-        setCursor(data.articles[data.articles.length - 1].created_at)
+        setCursor(data.articles[data.articles.length - 1].likes_created)
       }
     },
     onError: () => {
@@ -41,7 +41,7 @@ const useArticlesSearch = (word: string | string[]) => {
     }
   })
 
-  return { data, networkStatus, fetchMore, hasNextPage, cursor }
+  return { data, loading, networkStatus, fetchMore, hasNextPage, cursor }
 }
 
-export default useArticlesSearch
+export default usePersonLikesArticles

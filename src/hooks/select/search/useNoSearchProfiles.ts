@@ -1,18 +1,26 @@
 import { useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { useSetRecoilState } from 'recoil'
-import { GET_REPLIES } from '@/graphql/queries'
-import type { GetRepliesQuery } from '@/types/generated/graphql'
+import { GET_NO_SEARCH_PROFILES } from '@/graphql/queries'
+import type { GetNoSearchProfilesQuery } from '@/types/generated/graphql'
 import { notificateState } from '@/lib/recoil'
 
-const useSelectReplies = (comment_id: number) => {
+type CursorType = {
+  id: string
+  follower_count: number | null
+}
+
+const useNoSearchProfiles = () => {
   const [hasNextPage, setHasNextPage] = useState(true)
-  const [cursor, setCursor] = useState(String(new Date().toJSON()))
+  const [cursor, setCursor] = useState<CursorType>({
+    id: "",
+    follower_count: null
+  })
   const setNotificate = useSetRecoilState(notificateState)
 
-  const { data, previousData, networkStatus, fetchMore } = useQuery<GetRepliesQuery>(GET_REPLIES, {
+  const  { data, previousData, networkStatus, fetchMore } = useQuery<GetNoSearchProfilesQuery>(GET_NO_SEARCH_PROFILES, {
     variables: {
-      _eq: comment_id
+      _and: {}
     },
     nextFetchPolicy: 'cache-first',
     notifyOnNetworkStatusChange: true,
@@ -20,17 +28,20 @@ const useSelectReplies = (comment_id: number) => {
       if(previousData) {
         // 全ての結果の長さ - 前回までの長さ = 最後に取得した長さ
         // これが10件以下の場合、hasNextPageをfalseにする
-        if((data.replies.length - previousData.replies.length) < 10) {
+        if((data.profiles.length - previousData.profiles.length) < 10) {
           setHasNextPage(false)
           return
         }
-      } else if (data.replies.length < 10) {
+      } else if (data.profiles.length < 10) {
         setHasNextPage(false)
         return
       }
 
-      if(data.replies.length > 0) {
-        setCursor(data.replies[data.replies.length - 1].created_at)
+      if(data.profiles.length > 0) {
+        setCursor({
+          id: data.profiles[data.profiles.length - 1].id,
+          follower_count: data.profiles[data.profiles.length - 1].follower_count
+        })
       }
     },
     onError: () => {
@@ -44,4 +55,4 @@ const useSelectReplies = (comment_id: number) => {
   return { data, networkStatus, fetchMore, hasNextPage, cursor }
 }
 
-export default useSelectReplies
+export default useNoSearchProfiles

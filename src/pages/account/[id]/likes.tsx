@@ -1,8 +1,7 @@
 import type { ReactElement } from 'react'
 import type { GetServerSideProps } from 'next'
-import type { definitions } from '@/types/supabase'
-import { supabase } from '@/lib/supabaseClient'
-import useLikesArticles from '@/hooks/select/useLikesArticles'
+import type { ArticleType } from '@/types/types'
+import usePersonLikesArticles from '@/hooks/select/usePersonLikesArticles'
 import useObserver from '@/hooks/atoms/useObserver'
 import Circular from '@/atoms/Circular'
 import Empty from '@/atoms/Empty'
@@ -16,21 +15,37 @@ import Post from '@/components/post/Post'
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const id = params?.id
 
-  if (typeof id !== 'string') return { notFound: true }
+  if (!id || typeof id !== 'string') return { notFound: true }
 
   try {
-    const { data, error } = await supabase
-      .from<definitions['profiles']>('profiles')
-      .select('username, avatar, details, follow_count, follower_count')
-      .eq('id', id)
-      .single()
+    const data = await fetch(process.env.NEXT_PUBLIC_HASURA_ENDPOINT as string, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        query: `query MyQuery($id: String!) {
+          profiles_by_pk(id: $id) {
+            username
+            avatar
+            details
+            follow_count
+            follower_count
+          }
+        }
+      `,
+        variables: {
+          id
+        },
+      })
+    })
 
-    if (error) throw error
+    const result = await data.json()
 
     return {
       props: {
-        item: data,
-        path: id,
+        item: result.data.profiles_by_pk,
+        path: id
       }
     }
   } catch {
@@ -39,22 +54,36 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 }
 
 type AccountProps = {
-  item: definitions['profiles']
+  item: {
+    id: string
+    username: string
+    avatar: string | undefined
+    details: string
+    follow_count: number
+    follower_count: number
+  }
   path: string
 }
 
 const Likes = ({ item, path }: AccountProps) => {
-  const { data, isFetching, hasNextPage, fetchNextPage } = useLikesArticles(path)
-  const setRef = useObserver({ hasNextPage, fetchNextPage })
+  const { data, networkStatus, fetchMore, hasNextPage, cursor } = usePersonLikesArticles(path)
+
+  const handleMore = () => {
+    hasNextPage && fetchMore({
+      variables: {
+        _lt: cursor
+      }
+    })
+  }
+  
+  const setRef = useObserver({ handleMore })
 
   return (
     <ContainerLayout
       type='profile'
       title={item.username + 'がいいねした投稿一覧'}
       description={item.details || ''}
-      image={ item.avatar ?
-        process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/avatars/' + item.avatar : ''
-      }
+      image={ item.avatar ? item.avatar : '' }
     >
       {/* アカウント情報 */}
       <Profile path={path} item={item} />
@@ -63,19 +92,16 @@ const Likes = ({ item, path }: AccountProps) => {
       <Bar path={path} />
 
       {/* 自分の投稿一覧 */}
-      {data && data.pages[0].length > 0
-        ? data.pages.map((page, page_index) =>
-            page.map((item, index) => (
-              <Post
-                key={item.id}
-                data={item}
-                setRef={data.pages.length - 1 === page_index && page.length - 1 === index && setRef}
-              />
-            )),
-          )
-        : !isFetching && <Empty text='まだいいねした投稿がありません' />}
+      { data && (data.articles.length > 0) ? data.articles.map((item, index) =>
+          <Post
+            key={item.id}
+            data={item as ArticleType}
+            setRef={index === (data.articles.length - 1) && setRef}
+          />
+        ) : (networkStatus === 7) && <Empty text='まだいいねした投稿がありません' />
+      }
 
-      {isFetching && <Circular />}
+      {((networkStatus === 1) || (networkStatus === 3)) && <Circular />}
     </ContainerLayout>
   )
 }

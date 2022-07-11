@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import NextLink from 'next/link'
 import { useRecoilValue } from 'recoil'
 import { signOut } from 'next-auth/react'
-import type { definitions } from '@/types/supabase'
+import type { ProfileType } from '@/types/types'
 import { accountState } from '@/lib/recoil'
 import AvatarIcon from '@/atoms/Icon/AvatarIcon'
 import { ContainedButton, OutlinedButton } from '@/atoms/Button'
@@ -16,9 +16,8 @@ import Stack from '@mui/material/Stack'
 import MuiLink from '@mui/material/Link'
 import CircularProgress from '@mui/material/CircularProgress'
 
-type ProfileProps = {
+type ProfileProps = ProfileType & {
   path: string
-  item: definitions['profiles']
 }
 
 const Profile = ({ path, item }: ProfileProps) => {

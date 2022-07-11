@@ -18,6 +18,8 @@ const Input = () => {
   const { mutateFunction, loading: settingLoading } = useSetting()
   const account = useRecoilValue(accountState)
 
+  console.log(loading)
+
   useEffect(() => {
     if (!data?.profiles_by_pk) return
 
@@ -35,7 +37,7 @@ const Input = () => {
     })
   }
 
-  if (loading) <Circular />
+  if (loading) return <Circular />
 
   if (data?.profiles_by_pk === undefined) return null
 

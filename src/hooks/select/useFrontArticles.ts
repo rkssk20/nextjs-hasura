@@ -10,18 +10,28 @@ const useFrontArticles = () => {
   const [cursor, setCursor] = useState(new Date().toJSON())
   const setNotificate = useSetRecoilState(notificateState)
 
-  const {data, loading, fetchMore} = useQuery<GetFrontArticlesQuery>(GET_FRONT_ARTICLES, {
+  const {data, previousData, loading, networkStatus, fetchMore} = useQuery<GetFrontArticlesQuery>(GET_FRONT_ARTICLES, {
     variables: {
-      _eq: 1,
-      _lt: cursor
+      _eq: 1
     },
+    nextFetchPolicy: 'cache-first',
+    notifyOnNetworkStatusChange: true,
     onCompleted: (data) => {
-      if(data.articles.length < 10) {
+      if(previousData) {
+        // 全ての結果の長さ - 前回までの長さ = 最後に取得した長さ
+        // これが10件以下の場合、hasNextPageをfalseにする
+        if((data.articles.length - previousData.articles.length) < 10) {
+          setHasNextPage(false)
+          return
+        }
+      } else if(data.articles.length < 10) {
         setHasNextPage(false)
         return
       }
 
-      setCursor(data.articles[data.articles.length - 1].created_at)
+      if(data.articles.length > 0) {
+        setCursor(data.articles[data.articles.length - 1].created_at)
+      }
     },
     onError: () => {
       setNotificate({
@@ -31,7 +41,7 @@ const useFrontArticles = () => {
     }
   })
 
-  return { data, loading, fetchMore, hasNextPage }
+  return { data, loading, fetchMore, networkStatus, hasNextPage, cursor }
 }
 
 export default useFrontArticles

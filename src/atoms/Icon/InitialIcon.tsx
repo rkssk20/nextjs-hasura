@@ -1,11 +1,10 @@
 import Color from '@/lib/color'
-import { definitions } from '@/types/supabase'
 
 import styles from '@/styles/atoms/initialIcon.module.scss'
 import Avatar from '@mui/material/Avatar'
 
 interface AvatarIconProps {
-  username: definitions['profiles']['username']
+  username: string
   variant: 'medium' | 'large' | 'link'
 }
 

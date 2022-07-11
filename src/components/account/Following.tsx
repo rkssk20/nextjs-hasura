@@ -1,33 +1,57 @@
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
-import useSelectFollow from '@/hooks/select/useSelectFolow'
-import useMutateFollow from '@/hooks/mutate/useMutateFollow'
+import { useRecoilValue } from 'recoil'
+import { accountState } from '@/lib/recoil'
+import useSelectFollows from '@/hooks/select/useSelectFolows'
+import useInsertFollows from '@/hooks/mutate/insert/useInsertFollows'
+import useDeleteFollows from '@/hooks/mutate/delete/useDeleteFollows'
 import { ContainedButton, OutlinedButton } from '@/atoms/Button'
-import { supabase } from '@/lib/supabaseClient'
 
 const Login = dynamic(import('@/components/dialog/Login'))
 
 import styles from '@/styles/components/account/following.module.scss'
 import CircularProgress from '@mui/material/CircularProgress'
 
-// ログイン時、フォローまたはフォローを外すボタン
-const LoginFollowing = ({ path }: { path: string }) => {
-  const { data, isFetching } = useSelectFollow(path)
-  const { mutate, isLoading } = useMutateFollow(path)
+const InsertFollows = ({path}: {path: string}) => {
+  const { mutateFunction, loading } = useInsertFollows()
 
-  // フォロー、フォローを外す
   const handleMutate = () => {
-    if (isLoading) return
-    mutate(data?.id)
+    if(loading) return
+
+    mutateFunction({
+      variables: {
+        follower_id: path
+      }
+    })
   }
 
-  return isFetching ? (
-    <CircularProgress size={38.25} />
-  ) : data ? (
-    <ContainedButton text='フォロー中' handle={handleMutate} />
-  ) : (
-    <OutlinedButton text='フォロー' handle={handleMutate} />
-  )
+
+  return <OutlinedButton text='フォロー' handle={handleMutate} />
+}
+
+const DeleteFollows = ({id}: {id: number }) => {
+  const { mutateFunction, loading } = useDeleteFollows()
+
+  const handleMutate = () => {
+    if(loading) return 
+
+    mutateFunction({
+      variables: {
+        id
+      }
+    })
+  }
+
+  return <ContainedButton text='フォロー中' handle={handleMutate} />
+}
+
+// ログイン時、フォローまたはフォローを外すボタン
+const LoginFollowing = ({ path, id }: { path: string, id: string }) => {
+  const { data, loading } = useSelectFollows(path, id)
+
+  if(loading) return <CircularProgress size={38.25} />
+
+  return (data?.follows.length === 1) ? <DeleteFollows id={ data.follows[0].id } /> : <InsertFollows path={ path } />
 }
 
 // ログアウト時、ログインボタン
@@ -40,10 +64,14 @@ const LogoutFollowing = () => {
 }
 
 const Following = ({ path }: { path: string }) => {
+  const account = useRecoilValue(accountState)
+
+  if(account.loading) return <CircularProgress size={38.25} />
+
   return (
     <div className={styles.follow_button}>
       {/* ログイン状態で切り替え */}
-      {supabase.auth.user() ? <LoginFollowing path={path} /> : <LogoutFollowing />}
+      {account.data ? <LoginFollowing path={path} id={ account.data.id } /> : <LogoutFollowing />}
     </div>
   )
 }

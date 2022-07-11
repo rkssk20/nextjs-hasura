@@ -19,13 +19,8 @@ export type Scalars = {
   timestamp: any;
 };
 
-export type Int_Cast_Exp = {
-  String?: InputMaybe<String_Comparison_Exp>;
-};
-
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
 export type Int_Comparison_Exp = {
-  _cast?: InputMaybe<Int_Cast_Exp>;
   _eq?: InputMaybe<Scalars['Int']>;
   _gt?: InputMaybe<Scalars['Int']>;
   _gte?: InputMaybe<Scalars['Int']>;
@@ -381,6 +376,239 @@ export type Categories_Variance_Order_By = {
   id?: InputMaybe<Order_By>;
 };
 
+/** columns and relationships of "comments" */
+export type Comments = {
+  __typename?: 'comments';
+  /** An object relationship */
+  article: Articles;
+  articles_id: Scalars['String'];
+  comment: Scalars['String'];
+  /** An array relationship */
+  comments_likes: Array<Comments_Likes>;
+  created_at: Scalars['timestamp'];
+  id: Scalars['Int'];
+  like_count: Scalars['Int'];
+  /** An object relationship */
+  profile: Profiles;
+  reply_count: Scalars['Int'];
+  user_id: Scalars['String'];
+};
+
+
+/** columns and relationships of "comments" */
+export type CommentsComments_LikesArgs = {
+  distinct_on?: InputMaybe<Array<Comments_Likes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Comments_Likes_Order_By>>;
+  where?: InputMaybe<Comments_Likes_Bool_Exp>;
+};
+
+/** Boolean expression to filter rows from the table "comments". All fields are combined with a logical 'AND'. */
+export type Comments_Bool_Exp = {
+  _and?: InputMaybe<Array<Comments_Bool_Exp>>;
+  _not?: InputMaybe<Comments_Bool_Exp>;
+  _or?: InputMaybe<Array<Comments_Bool_Exp>>;
+  article?: InputMaybe<Articles_Bool_Exp>;
+  articles_id?: InputMaybe<String_Comparison_Exp>;
+  comment?: InputMaybe<String_Comparison_Exp>;
+  comments_likes?: InputMaybe<Comments_Likes_Bool_Exp>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  like_count?: InputMaybe<Int_Comparison_Exp>;
+  profile?: InputMaybe<Profiles_Bool_Exp>;
+  reply_count?: InputMaybe<Int_Comparison_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** columns and relationships of "comments_likes" */
+export type Comments_Likes = {
+  __typename?: 'comments_likes';
+  comment_id?: Maybe<Scalars['Int']>;
+  id: Scalars['Int'];
+  user_id: Scalars['String'];
+};
+
+/** order by aggregate values of table "comments_likes" */
+export type Comments_Likes_Aggregate_Order_By = {
+  avg?: InputMaybe<Comments_Likes_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Comments_Likes_Max_Order_By>;
+  min?: InputMaybe<Comments_Likes_Min_Order_By>;
+  stddev?: InputMaybe<Comments_Likes_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Comments_Likes_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Comments_Likes_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Comments_Likes_Sum_Order_By>;
+  var_pop?: InputMaybe<Comments_Likes_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Comments_Likes_Var_Samp_Order_By>;
+  variance?: InputMaybe<Comments_Likes_Variance_Order_By>;
+};
+
+/** order by avg() on columns of table "comments_likes" */
+export type Comments_Likes_Avg_Order_By = {
+  comment_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "comments_likes". All fields are combined with a logical 'AND'. */
+export type Comments_Likes_Bool_Exp = {
+  _and?: InputMaybe<Array<Comments_Likes_Bool_Exp>>;
+  _not?: InputMaybe<Comments_Likes_Bool_Exp>;
+  _or?: InputMaybe<Array<Comments_Likes_Bool_Exp>>;
+  comment_id?: InputMaybe<Int_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** order by max() on columns of table "comments_likes" */
+export type Comments_Likes_Max_Order_By = {
+  comment_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** order by min() on columns of table "comments_likes" */
+export type Comments_Likes_Min_Order_By = {
+  comment_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** Ordering options when selecting data from "comments_likes". */
+export type Comments_Likes_Order_By = {
+  comment_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "comments_likes" */
+export enum Comments_Likes_Select_Column {
+  /** column name */
+  CommentId = 'comment_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** order by stddev() on columns of table "comments_likes" */
+export type Comments_Likes_Stddev_Order_By = {
+  comment_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** order by stddev_pop() on columns of table "comments_likes" */
+export type Comments_Likes_Stddev_Pop_Order_By = {
+  comment_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** order by stddev_samp() on columns of table "comments_likes" */
+export type Comments_Likes_Stddev_Samp_Order_By = {
+  comment_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** order by sum() on columns of table "comments_likes" */
+export type Comments_Likes_Sum_Order_By = {
+  comment_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** order by var_pop() on columns of table "comments_likes" */
+export type Comments_Likes_Var_Pop_Order_By = {
+  comment_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** order by var_samp() on columns of table "comments_likes" */
+export type Comments_Likes_Var_Samp_Order_By = {
+  comment_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** order by variance() on columns of table "comments_likes" */
+export type Comments_Likes_Variance_Order_By = {
+  comment_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+};
+
+/** Ordering options when selecting data from "comments". */
+export type Comments_Order_By = {
+  article?: InputMaybe<Articles_Order_By>;
+  articles_id?: InputMaybe<Order_By>;
+  comment?: InputMaybe<Order_By>;
+  comments_likes_aggregate?: InputMaybe<Comments_Likes_Aggregate_Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  like_count?: InputMaybe<Order_By>;
+  profile?: InputMaybe<Profiles_Order_By>;
+  reply_count?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "comments" */
+export enum Comments_Select_Column {
+  /** column name */
+  ArticlesId = 'articles_id',
+  /** column name */
+  Comment = 'comment',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  LikeCount = 'like_count',
+  /** column name */
+  ReplyCount = 'reply_count',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** columns and relationships of "follows" */
+export type Follows = {
+  __typename?: 'follows';
+  created_at: Scalars['timestamp'];
+  follower_id: Scalars['String'];
+  id: Scalars['Int'];
+  /** An object relationship */
+  profile: Profiles;
+  user_id: Scalars['String'];
+};
+
+/** Boolean expression to filter rows from the table "follows". All fields are combined with a logical 'AND'. */
+export type Follows_Bool_Exp = {
+  _and?: InputMaybe<Array<Follows_Bool_Exp>>;
+  _not?: InputMaybe<Follows_Bool_Exp>;
+  _or?: InputMaybe<Array<Follows_Bool_Exp>>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  follower_id?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  profile?: InputMaybe<Profiles_Bool_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** Ordering options when selecting data from "follows". */
+export type Follows_Order_By = {
+  created_at?: InputMaybe<Order_By>;
+  follower_id?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  profile?: InputMaybe<Profiles_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "follows" */
+export enum Follows_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  FollowerId = 'follower_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UserId = 'user_id'
+}
+
 /** columns and relationships of "front_articles" */
 export type Front_Articles = {
   __typename?: 'front_articles';
@@ -468,6 +696,96 @@ export type Likes = {
   profile: Profiles;
   user_id: Scalars['String'];
 };
+
+/** columns and relationships of "likes_articles" */
+export type Likes_Articles = {
+  __typename?: 'likes_articles';
+  avatar?: Maybe<Scalars['String']>;
+  categories?: Maybe<Scalars['_int2']>;
+  comment_count?: Maybe<Scalars['Int']>;
+  created_at?: Maybe<Scalars['timestamp']>;
+  details?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
+  like_count?: Maybe<Scalars['Int']>;
+  likes_created?: Maybe<Scalars['timestamp']>;
+  likes_id?: Maybe<Scalars['Int']>;
+  likes_user?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+};
+
+/** Boolean expression to filter rows from the table "likes_articles". All fields are combined with a logical 'AND'. */
+export type Likes_Articles_Bool_Exp = {
+  _and?: InputMaybe<Array<Likes_Articles_Bool_Exp>>;
+  _not?: InputMaybe<Likes_Articles_Bool_Exp>;
+  _or?: InputMaybe<Array<Likes_Articles_Bool_Exp>>;
+  avatar?: InputMaybe<String_Comparison_Exp>;
+  categories?: InputMaybe<_Int2_Comparison_Exp>;
+  comment_count?: InputMaybe<Int_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  details?: InputMaybe<String_Comparison_Exp>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  image?: InputMaybe<String_Comparison_Exp>;
+  like_count?: InputMaybe<Int_Comparison_Exp>;
+  likes_created?: InputMaybe<Timestamp_Comparison_Exp>;
+  likes_id?: InputMaybe<Int_Comparison_Exp>;
+  likes_user?: InputMaybe<String_Comparison_Exp>;
+  title?: InputMaybe<String_Comparison_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
+  username?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** Ordering options when selecting data from "likes_articles". */
+export type Likes_Articles_Order_By = {
+  avatar?: InputMaybe<Order_By>;
+  categories?: InputMaybe<Order_By>;
+  comment_count?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  details?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  image?: InputMaybe<Order_By>;
+  like_count?: InputMaybe<Order_By>;
+  likes_created?: InputMaybe<Order_By>;
+  likes_id?: InputMaybe<Order_By>;
+  likes_user?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+  username?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "likes_articles" */
+export enum Likes_Articles_Select_Column {
+  /** column name */
+  Avatar = 'avatar',
+  /** column name */
+  Categories = 'categories',
+  /** column name */
+  CommentCount = 'comment_count',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Details = 'details',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Image = 'image',
+  /** column name */
+  LikeCount = 'like_count',
+  /** column name */
+  LikesCreated = 'likes_created',
+  /** column name */
+  LikesId = 'likes_id',
+  /** column name */
+  LikesUser = 'likes_user',
+  /** column name */
+  Title = 'title',
+  /** column name */
+  UserId = 'user_id',
+  /** column name */
+  Username = 'username'
+}
 
 /** Boolean expression to filter rows from the table "likes". All fields are combined with a logical 'AND'. */
 export type Likes_Bool_Exp = {
@@ -595,6 +913,106 @@ export enum Person_Articles_Select_Column {
   Username = 'username'
 }
 
+/** columns and relationships of "person_followers" */
+export type Person_Followers = {
+  __typename?: 'person_followers';
+  avatar?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamp']>;
+  details?: Maybe<Scalars['String']>;
+  follower_id?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+};
+
+/** Boolean expression to filter rows from the table "person_followers". All fields are combined with a logical 'AND'. */
+export type Person_Followers_Bool_Exp = {
+  _and?: InputMaybe<Array<Person_Followers_Bool_Exp>>;
+  _not?: InputMaybe<Person_Followers_Bool_Exp>;
+  _or?: InputMaybe<Array<Person_Followers_Bool_Exp>>;
+  avatar?: InputMaybe<String_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  details?: InputMaybe<String_Comparison_Exp>;
+  follower_id?: InputMaybe<String_Comparison_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
+  username?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** Ordering options when selecting data from "person_followers". */
+export type Person_Followers_Order_By = {
+  avatar?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  details?: InputMaybe<Order_By>;
+  follower_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+  username?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "person_followers" */
+export enum Person_Followers_Select_Column {
+  /** column name */
+  Avatar = 'avatar',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Details = 'details',
+  /** column name */
+  FollowerId = 'follower_id',
+  /** column name */
+  UserId = 'user_id',
+  /** column name */
+  Username = 'username'
+}
+
+/** columns and relationships of "person_follows" */
+export type Person_Follows = {
+  __typename?: 'person_follows';
+  avatar?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamp']>;
+  details?: Maybe<Scalars['String']>;
+  follower_id?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+};
+
+/** Boolean expression to filter rows from the table "person_follows". All fields are combined with a logical 'AND'. */
+export type Person_Follows_Bool_Exp = {
+  _and?: InputMaybe<Array<Person_Follows_Bool_Exp>>;
+  _not?: InputMaybe<Person_Follows_Bool_Exp>;
+  _or?: InputMaybe<Array<Person_Follows_Bool_Exp>>;
+  avatar?: InputMaybe<String_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  details?: InputMaybe<String_Comparison_Exp>;
+  follower_id?: InputMaybe<String_Comparison_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
+  username?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** Ordering options when selecting data from "person_follows". */
+export type Person_Follows_Order_By = {
+  avatar?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  details?: InputMaybe<Order_By>;
+  follower_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+  username?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "person_follows" */
+export enum Person_Follows_Select_Column {
+  /** column name */
+  Avatar = 'avatar',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Details = 'details',
+  /** column name */
+  FollowerId = 'follower_id',
+  /** column name */
+  UserId = 'user_id',
+  /** column name */
+  Username = 'username'
+}
+
 /** columns and relationships of "profiles" */
 export type Profiles = {
   __typename?: 'profiles';
@@ -669,18 +1087,44 @@ export type Query_Root = {
   categories: Array<Categories>;
   /** fetch data from the table: "categories" using primary key columns */
   categories_by_pk?: Maybe<Categories>;
+  /** fetch data from the table: "comments" */
+  comments: Array<Comments>;
+  /** fetch data from the table: "comments" using primary key columns */
+  comments_by_pk?: Maybe<Comments>;
+  /** An array relationship */
+  comments_likes: Array<Comments_Likes>;
+  /** fetch data from the table: "comments_likes" using primary key columns */
+  comments_likes_by_pk?: Maybe<Comments_Likes>;
+  /** fetch data from the table: "follows" */
+  follows: Array<Follows>;
+  /** fetch data from the table: "follows" using primary key columns */
+  follows_by_pk?: Maybe<Follows>;
   /** fetch data from the table: "front_articles" */
   front_articles: Array<Front_Articles>;
   /** fetch data from the table: "likes" */
   likes: Array<Likes>;
+  /** fetch data from the table: "likes_articles" */
+  likes_articles: Array<Likes_Articles>;
   /** fetch data from the table: "likes" using primary key columns */
   likes_by_pk?: Maybe<Likes>;
   /** fetch data from the table: "person_articles" */
   person_articles: Array<Person_Articles>;
+  /** fetch data from the table: "person_followers" */
+  person_followers: Array<Person_Followers>;
+  /** fetch data from the table: "person_follows" */
+  person_follows: Array<Person_Follows>;
   /** fetch data from the table: "profiles" */
   profiles: Array<Profiles>;
   /** fetch data from the table: "profiles" using primary key columns */
   profiles_by_pk?: Maybe<Profiles>;
+  /** fetch data from the table: "replies" */
+  replies: Array<Replies>;
+  /** fetch data from the table: "replies" using primary key columns */
+  replies_by_pk?: Maybe<Replies>;
+  /** An array relationship */
+  replies_likes: Array<Replies_Likes>;
+  /** fetch data from the table: "replies_likes" using primary key columns */
+  replies_likes_by_pk?: Maybe<Replies_Likes>;
   /** fetch data from the table: "serverless_articles" */
   serverless_articles: Array<Serverless_Articles>;
 };
@@ -714,6 +1158,48 @@ export type Query_RootCategories_By_PkArgs = {
 };
 
 
+export type Query_RootCommentsArgs = {
+  distinct_on?: InputMaybe<Array<Comments_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Comments_Order_By>>;
+  where?: InputMaybe<Comments_Bool_Exp>;
+};
+
+
+export type Query_RootComments_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Query_RootComments_LikesArgs = {
+  distinct_on?: InputMaybe<Array<Comments_Likes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Comments_Likes_Order_By>>;
+  where?: InputMaybe<Comments_Likes_Bool_Exp>;
+};
+
+
+export type Query_RootComments_Likes_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Query_RootFollowsArgs = {
+  distinct_on?: InputMaybe<Array<Follows_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Follows_Order_By>>;
+  where?: InputMaybe<Follows_Bool_Exp>;
+};
+
+
+export type Query_RootFollows_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
 export type Query_RootFront_ArticlesArgs = {
   distinct_on?: InputMaybe<Array<Front_Articles_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -732,6 +1218,15 @@ export type Query_RootLikesArgs = {
 };
 
 
+export type Query_RootLikes_ArticlesArgs = {
+  distinct_on?: InputMaybe<Array<Likes_Articles_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Likes_Articles_Order_By>>;
+  where?: InputMaybe<Likes_Articles_Bool_Exp>;
+};
+
+
 export type Query_RootLikes_By_PkArgs = {
   id: Scalars['Int'];
 };
@@ -743,6 +1238,24 @@ export type Query_RootPerson_ArticlesArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Person_Articles_Order_By>>;
   where?: InputMaybe<Person_Articles_Bool_Exp>;
+};
+
+
+export type Query_RootPerson_FollowersArgs = {
+  distinct_on?: InputMaybe<Array<Person_Followers_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Person_Followers_Order_By>>;
+  where?: InputMaybe<Person_Followers_Bool_Exp>;
+};
+
+
+export type Query_RootPerson_FollowsArgs = {
+  distinct_on?: InputMaybe<Array<Person_Follows_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Person_Follows_Order_By>>;
+  where?: InputMaybe<Person_Follows_Bool_Exp>;
 };
 
 
@@ -760,6 +1273,34 @@ export type Query_RootProfiles_By_PkArgs = {
 };
 
 
+export type Query_RootRepliesArgs = {
+  distinct_on?: InputMaybe<Array<Replies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Replies_Order_By>>;
+  where?: InputMaybe<Replies_Bool_Exp>;
+};
+
+
+export type Query_RootReplies_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Query_RootReplies_LikesArgs = {
+  distinct_on?: InputMaybe<Array<Replies_Likes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Replies_Likes_Order_By>>;
+  where?: InputMaybe<Replies_Likes_Bool_Exp>;
+};
+
+
+export type Query_RootReplies_Likes_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
 export type Query_RootServerless_ArticlesArgs = {
   distinct_on?: InputMaybe<Array<Serverless_Articles_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -767,6 +1308,198 @@ export type Query_RootServerless_ArticlesArgs = {
   order_by?: InputMaybe<Array<Serverless_Articles_Order_By>>;
   where?: InputMaybe<Serverless_Articles_Bool_Exp>;
 };
+
+/** columns and relationships of "replies" */
+export type Replies = {
+  __typename?: 'replies';
+  comment: Scalars['String'];
+  /** An object relationship */
+  commentByCommentId: Comments;
+  comment_id: Scalars['Int'];
+  created_at: Scalars['timestamp'];
+  id: Scalars['Int'];
+  like_count: Scalars['Int'];
+  /** An object relationship */
+  profile: Profiles;
+  /** An array relationship */
+  replies_likes: Array<Replies_Likes>;
+  user_id: Scalars['String'];
+};
+
+
+/** columns and relationships of "replies" */
+export type RepliesReplies_LikesArgs = {
+  distinct_on?: InputMaybe<Array<Replies_Likes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Replies_Likes_Order_By>>;
+  where?: InputMaybe<Replies_Likes_Bool_Exp>;
+};
+
+/** Boolean expression to filter rows from the table "replies". All fields are combined with a logical 'AND'. */
+export type Replies_Bool_Exp = {
+  _and?: InputMaybe<Array<Replies_Bool_Exp>>;
+  _not?: InputMaybe<Replies_Bool_Exp>;
+  _or?: InputMaybe<Array<Replies_Bool_Exp>>;
+  comment?: InputMaybe<String_Comparison_Exp>;
+  commentByCommentId?: InputMaybe<Comments_Bool_Exp>;
+  comment_id?: InputMaybe<Int_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  like_count?: InputMaybe<Int_Comparison_Exp>;
+  profile?: InputMaybe<Profiles_Bool_Exp>;
+  replies_likes?: InputMaybe<Replies_Likes_Bool_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** columns and relationships of "replies_likes" */
+export type Replies_Likes = {
+  __typename?: 'replies_likes';
+  id: Scalars['Int'];
+  /** An object relationship */
+  profile: Profiles;
+  replies_id?: Maybe<Scalars['Int']>;
+  /** An object relationship */
+  reply?: Maybe<Replies>;
+  user_id: Scalars['String'];
+};
+
+/** order by aggregate values of table "replies_likes" */
+export type Replies_Likes_Aggregate_Order_By = {
+  avg?: InputMaybe<Replies_Likes_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Replies_Likes_Max_Order_By>;
+  min?: InputMaybe<Replies_Likes_Min_Order_By>;
+  stddev?: InputMaybe<Replies_Likes_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Replies_Likes_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Replies_Likes_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Replies_Likes_Sum_Order_By>;
+  var_pop?: InputMaybe<Replies_Likes_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Replies_Likes_Var_Samp_Order_By>;
+  variance?: InputMaybe<Replies_Likes_Variance_Order_By>;
+};
+
+/** order by avg() on columns of table "replies_likes" */
+export type Replies_Likes_Avg_Order_By = {
+  id?: InputMaybe<Order_By>;
+  replies_id?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "replies_likes". All fields are combined with a logical 'AND'. */
+export type Replies_Likes_Bool_Exp = {
+  _and?: InputMaybe<Array<Replies_Likes_Bool_Exp>>;
+  _not?: InputMaybe<Replies_Likes_Bool_Exp>;
+  _or?: InputMaybe<Array<Replies_Likes_Bool_Exp>>;
+  id?: InputMaybe<Int_Comparison_Exp>;
+  profile?: InputMaybe<Profiles_Bool_Exp>;
+  replies_id?: InputMaybe<Int_Comparison_Exp>;
+  reply?: InputMaybe<Replies_Bool_Exp>;
+  user_id?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** order by max() on columns of table "replies_likes" */
+export type Replies_Likes_Max_Order_By = {
+  id?: InputMaybe<Order_By>;
+  replies_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** order by min() on columns of table "replies_likes" */
+export type Replies_Likes_Min_Order_By = {
+  id?: InputMaybe<Order_By>;
+  replies_id?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** Ordering options when selecting data from "replies_likes". */
+export type Replies_Likes_Order_By = {
+  id?: InputMaybe<Order_By>;
+  profile?: InputMaybe<Profiles_Order_By>;
+  replies_id?: InputMaybe<Order_By>;
+  reply?: InputMaybe<Replies_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "replies_likes" */
+export enum Replies_Likes_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  RepliesId = 'replies_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** order by stddev() on columns of table "replies_likes" */
+export type Replies_Likes_Stddev_Order_By = {
+  id?: InputMaybe<Order_By>;
+  replies_id?: InputMaybe<Order_By>;
+};
+
+/** order by stddev_pop() on columns of table "replies_likes" */
+export type Replies_Likes_Stddev_Pop_Order_By = {
+  id?: InputMaybe<Order_By>;
+  replies_id?: InputMaybe<Order_By>;
+};
+
+/** order by stddev_samp() on columns of table "replies_likes" */
+export type Replies_Likes_Stddev_Samp_Order_By = {
+  id?: InputMaybe<Order_By>;
+  replies_id?: InputMaybe<Order_By>;
+};
+
+/** order by sum() on columns of table "replies_likes" */
+export type Replies_Likes_Sum_Order_By = {
+  id?: InputMaybe<Order_By>;
+  replies_id?: InputMaybe<Order_By>;
+};
+
+/** order by var_pop() on columns of table "replies_likes" */
+export type Replies_Likes_Var_Pop_Order_By = {
+  id?: InputMaybe<Order_By>;
+  replies_id?: InputMaybe<Order_By>;
+};
+
+/** order by var_samp() on columns of table "replies_likes" */
+export type Replies_Likes_Var_Samp_Order_By = {
+  id?: InputMaybe<Order_By>;
+  replies_id?: InputMaybe<Order_By>;
+};
+
+/** order by variance() on columns of table "replies_likes" */
+export type Replies_Likes_Variance_Order_By = {
+  id?: InputMaybe<Order_By>;
+  replies_id?: InputMaybe<Order_By>;
+};
+
+/** Ordering options when selecting data from "replies". */
+export type Replies_Order_By = {
+  comment?: InputMaybe<Order_By>;
+  commentByCommentId?: InputMaybe<Comments_Order_By>;
+  comment_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  like_count?: InputMaybe<Order_By>;
+  profile?: InputMaybe<Profiles_Order_By>;
+  replies_likes_aggregate?: InputMaybe<Replies_Likes_Aggregate_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "replies" */
+export enum Replies_Select_Column {
+  /** column name */
+  Comment = 'comment',
+  /** column name */
+  CommentId = 'comment_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  LikeCount = 'like_count',
+  /** column name */
+  UserId = 'user_id'
+}
 
 /** columns and relationships of "serverless_articles" */
 export type Serverless_Articles = {
@@ -843,13 +1576,8 @@ export enum Serverless_Articles_Select_Column {
   Username = 'username'
 }
 
-export type Smallint_Cast_Exp = {
-  String?: InputMaybe<String_Comparison_Exp>;
-};
-
 /** Boolean expression to compare columns of type "smallint". All fields are combined with logical 'AND'. */
 export type Smallint_Comparison_Exp = {
-  _cast?: InputMaybe<Smallint_Cast_Exp>;
   _eq?: InputMaybe<Scalars['smallint']>;
   _gt?: InputMaybe<Scalars['smallint']>;
   _gte?: InputMaybe<Scalars['smallint']>;
@@ -871,18 +1599,44 @@ export type Subscription_Root = {
   categories: Array<Categories>;
   /** fetch data from the table: "categories" using primary key columns */
   categories_by_pk?: Maybe<Categories>;
+  /** fetch data from the table: "comments" */
+  comments: Array<Comments>;
+  /** fetch data from the table: "comments" using primary key columns */
+  comments_by_pk?: Maybe<Comments>;
+  /** An array relationship */
+  comments_likes: Array<Comments_Likes>;
+  /** fetch data from the table: "comments_likes" using primary key columns */
+  comments_likes_by_pk?: Maybe<Comments_Likes>;
+  /** fetch data from the table: "follows" */
+  follows: Array<Follows>;
+  /** fetch data from the table: "follows" using primary key columns */
+  follows_by_pk?: Maybe<Follows>;
   /** fetch data from the table: "front_articles" */
   front_articles: Array<Front_Articles>;
   /** fetch data from the table: "likes" */
   likes: Array<Likes>;
+  /** fetch data from the table: "likes_articles" */
+  likes_articles: Array<Likes_Articles>;
   /** fetch data from the table: "likes" using primary key columns */
   likes_by_pk?: Maybe<Likes>;
   /** fetch data from the table: "person_articles" */
   person_articles: Array<Person_Articles>;
+  /** fetch data from the table: "person_followers" */
+  person_followers: Array<Person_Followers>;
+  /** fetch data from the table: "person_follows" */
+  person_follows: Array<Person_Follows>;
   /** fetch data from the table: "profiles" */
   profiles: Array<Profiles>;
   /** fetch data from the table: "profiles" using primary key columns */
   profiles_by_pk?: Maybe<Profiles>;
+  /** fetch data from the table: "replies" */
+  replies: Array<Replies>;
+  /** fetch data from the table: "replies" using primary key columns */
+  replies_by_pk?: Maybe<Replies>;
+  /** An array relationship */
+  replies_likes: Array<Replies_Likes>;
+  /** fetch data from the table: "replies_likes" using primary key columns */
+  replies_likes_by_pk?: Maybe<Replies_Likes>;
   /** fetch data from the table: "serverless_articles" */
   serverless_articles: Array<Serverless_Articles>;
 };
@@ -916,6 +1670,48 @@ export type Subscription_RootCategories_By_PkArgs = {
 };
 
 
+export type Subscription_RootCommentsArgs = {
+  distinct_on?: InputMaybe<Array<Comments_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Comments_Order_By>>;
+  where?: InputMaybe<Comments_Bool_Exp>;
+};
+
+
+export type Subscription_RootComments_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Subscription_RootComments_LikesArgs = {
+  distinct_on?: InputMaybe<Array<Comments_Likes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Comments_Likes_Order_By>>;
+  where?: InputMaybe<Comments_Likes_Bool_Exp>;
+};
+
+
+export type Subscription_RootComments_Likes_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Subscription_RootFollowsArgs = {
+  distinct_on?: InputMaybe<Array<Follows_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Follows_Order_By>>;
+  where?: InputMaybe<Follows_Bool_Exp>;
+};
+
+
+export type Subscription_RootFollows_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
 export type Subscription_RootFront_ArticlesArgs = {
   distinct_on?: InputMaybe<Array<Front_Articles_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -934,6 +1730,15 @@ export type Subscription_RootLikesArgs = {
 };
 
 
+export type Subscription_RootLikes_ArticlesArgs = {
+  distinct_on?: InputMaybe<Array<Likes_Articles_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Likes_Articles_Order_By>>;
+  where?: InputMaybe<Likes_Articles_Bool_Exp>;
+};
+
+
 export type Subscription_RootLikes_By_PkArgs = {
   id: Scalars['Int'];
 };
@@ -945,6 +1750,24 @@ export type Subscription_RootPerson_ArticlesArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Person_Articles_Order_By>>;
   where?: InputMaybe<Person_Articles_Bool_Exp>;
+};
+
+
+export type Subscription_RootPerson_FollowersArgs = {
+  distinct_on?: InputMaybe<Array<Person_Followers_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Person_Followers_Order_By>>;
+  where?: InputMaybe<Person_Followers_Bool_Exp>;
+};
+
+
+export type Subscription_RootPerson_FollowsArgs = {
+  distinct_on?: InputMaybe<Array<Person_Follows_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Person_Follows_Order_By>>;
+  where?: InputMaybe<Person_Follows_Bool_Exp>;
 };
 
 
@@ -962,6 +1785,34 @@ export type Subscription_RootProfiles_By_PkArgs = {
 };
 
 
+export type Subscription_RootRepliesArgs = {
+  distinct_on?: InputMaybe<Array<Replies_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Replies_Order_By>>;
+  where?: InputMaybe<Replies_Bool_Exp>;
+};
+
+
+export type Subscription_RootReplies_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+export type Subscription_RootReplies_LikesArgs = {
+  distinct_on?: InputMaybe<Array<Replies_Likes_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Replies_Likes_Order_By>>;
+  where?: InputMaybe<Replies_Likes_Bool_Exp>;
+};
+
+
+export type Subscription_RootReplies_Likes_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
 export type Subscription_RootServerless_ArticlesArgs = {
   distinct_on?: InputMaybe<Array<Serverless_Articles_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -970,13 +1821,8 @@ export type Subscription_RootServerless_ArticlesArgs = {
   where?: InputMaybe<Serverless_Articles_Bool_Exp>;
 };
 
-export type Timestamp_Cast_Exp = {
-  String?: InputMaybe<String_Comparison_Exp>;
-};
-
 /** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
 export type Timestamp_Comparison_Exp = {
-  _cast?: InputMaybe<Timestamp_Cast_Exp>;
   _eq?: InputMaybe<Scalars['timestamp']>;
   _gt?: InputMaybe<Scalars['timestamp']>;
   _gte?: InputMaybe<Scalars['timestamp']>;
@@ -997,21 +1843,53 @@ export type GetProfilesDetailsQuery = { __typename?: 'query_root', profiles_by_p
 
 export type GetPersonArticlesQueryVariables = Exact<{
   _eq: Scalars['String'];
-  _lt: Scalars['timestamp'];
+  _lt?: InputMaybe<Scalars['timestamp']>;
 }>;
 
 
 export type GetPersonArticlesQuery = { __typename?: 'query_root', articles: Array<{ __typename?: 'person_articles', id?: string | null, user_id?: string | null, title?: string | null, image?: string | null, details?: string | null, username?: string | null, avatar?: string | null, comment_count?: number | null, like_count?: number | null, created_at?: any | null, categories?: any | null }> };
 
+export type GetPersonLikesArticlesQueryVariables = Exact<{
+  _eq: Scalars['String'];
+  _lt?: InputMaybe<Scalars['timestamp']>;
+}>;
+
+
+export type GetPersonLikesArticlesQuery = { __typename?: 'query_root', articles: Array<{ __typename?: 'likes_articles', id?: string | null, user_id?: string | null, title?: string | null, image?: string | null, details?: string | null, username?: string | null, avatar?: string | null, comment_count?: number | null, like_count?: number | null, created_at?: any | null, categories?: any | null, likes_created?: any | null }> };
+
+export type GetPersonFollowsQueryVariables = Exact<{
+  _lt?: InputMaybe<Scalars['timestamp']>;
+  _eq: Scalars['String'];
+}>;
+
+
+export type GetPersonFollowsQuery = { __typename?: 'query_root', person_follows: Array<{ __typename?: 'person_follows', username?: string | null, avatar?: string | null, details?: string | null, follower_id?: string | null, created_at?: any | null }> };
+
+export type GetPersonFollowersQueryVariables = Exact<{
+  _lt?: InputMaybe<Scalars['timestamp']>;
+  _eq: Scalars['String'];
+}>;
+
+
+export type GetPersonFollowersQuery = { __typename?: 'query_root', person_followers: Array<{ __typename?: 'person_followers', user_id?: string | null, username?: string | null, avatar?: string | null, details?: string | null, follower_id?: string | null, created_at?: any | null }> };
+
+export type GetFollowsQueryVariables = Exact<{
+  _eq: Scalars['String'];
+  _eq1: Scalars['String'];
+}>;
+
+
+export type GetFollowsQuery = { __typename?: 'query_root', follows: Array<{ __typename?: 'follows', id: number, follower_id: string }> };
+
 export type GetFrontArticlesQueryVariables = Exact<{
-  _lt: Scalars['timestamp'];
+  _lt?: InputMaybe<Scalars['timestamp']>;
 }>;
 
 
 export type GetFrontArticlesQuery = { __typename?: 'query_root', articles: Array<{ __typename?: 'front_articles', id?: string | null, title?: string | null, image?: string | null, details?: string | null, user_id?: string | null, like_count?: number | null, comment_count?: number | null, created_at?: any | null, categories?: any | null, avatar?: string | null, username?: string | null }> };
 
 export type GetServerlessArticlesQueryVariables = Exact<{
-  _lt: Scalars['timestamp'];
+  _lt?: InputMaybe<Scalars['timestamp']>;
 }>;
 
 
@@ -1023,6 +1901,52 @@ export type GetLikesQueryVariables = Exact<{
 
 
 export type GetLikesQuery = { __typename?: 'query_root', likes: Array<{ __typename?: 'likes', id: number }> };
+
+export type GetCommentsQueryVariables = Exact<{
+  _eq: Scalars['String'];
+  _lt?: InputMaybe<Scalars['timestamp']>;
+}>;
+
+
+export type GetCommentsQuery = { __typename?: 'query_root', comments: Array<{ __typename?: 'comments', id: number, user_id: string, like_count: number, reply_count: number, created_at: any, comment: string, comments_likes: Array<{ __typename?: 'comments_likes', id: number }>, profile: { __typename?: 'profiles', id: string, username: string, avatar?: string | null } }> };
+
+export type GetRepliesQueryVariables = Exact<{
+  _eq: Scalars['Int'];
+  _lt?: InputMaybe<Scalars['timestamp']>;
+}>;
+
+
+export type GetRepliesQuery = { __typename?: 'query_root', replies: Array<{ __typename?: 'replies', id: number, user_id: string, comment_id: number, like_count: number, created_at: any, comment: string, profile: { __typename?: 'profiles', username: string, avatar?: string | null }, replies_likes: Array<{ __typename?: 'replies_likes', id: number }> }> };
+
+export type GetNoSearchArticlesQueryVariables = Exact<{
+  _lt?: InputMaybe<Scalars['timestamp']>;
+}>;
+
+
+export type GetNoSearchArticlesQuery = { __typename?: 'query_root', articles: Array<{ __typename?: 'person_articles', id?: string | null, user_id?: string | null, title?: string | null, image?: string | null, details?: string | null, username?: string | null, avatar?: string | null, comment_count?: number | null, like_count?: number | null, created_at?: any | null, categories?: any | null }> };
+
+export type GetSearchArticlesQueryVariables = Exact<{
+  _like: Scalars['String'];
+  _lt?: InputMaybe<Scalars['timestamp']>;
+}>;
+
+
+export type GetSearchArticlesQuery = { __typename?: 'query_root', articles: Array<{ __typename?: 'person_articles', id?: string | null, user_id?: string | null, title?: string | null, details?: string | null, username?: string | null, image?: string | null, comment_count?: number | null, like_count?: number | null, created_at?: any | null, categories?: any | null }> };
+
+export type GetNoSearchProfilesQueryVariables = Exact<{
+  _and?: InputMaybe<Array<Profiles_Bool_Exp> | Profiles_Bool_Exp>;
+}>;
+
+
+export type GetNoSearchProfilesQuery = { __typename?: 'query_root', profiles: Array<{ __typename?: 'profiles', id: string, username: string, avatar?: string | null, details?: string | null, follow_count: number, follower_count: number }> };
+
+export type GetSearchProfilesQueryVariables = Exact<{
+  _and?: InputMaybe<Array<Profiles_Bool_Exp> | Profiles_Bool_Exp>;
+  _ilike: Scalars['String'];
+}>;
+
+
+export type GetSearchProfilesQuery = { __typename?: 'query_root', profiles: Array<{ __typename?: 'profiles', id: string, username: string, avatar?: string | null, details?: string | null, follow_count: number, follower_count: number }> };
 
 
 export const GetProfilesDetailsDocument = gql`
@@ -1063,7 +1987,7 @@ export type GetProfilesDetailsQueryHookResult = ReturnType<typeof useGetProfiles
 export type GetProfilesDetailsLazyQueryHookResult = ReturnType<typeof useGetProfilesDetailsLazyQuery>;
 export type GetProfilesDetailsQueryResult = Apollo.QueryResult<GetProfilesDetailsQuery, GetProfilesDetailsQueryVariables>;
 export const GetPersonArticlesDocument = gql`
-    query GetPersonArticles($_eq: String!, $_lt: timestamp!) {
+    query GetPersonArticles($_eq: String!, $_lt: timestamp = "now()") {
   articles: person_articles(
     where: {user_id: {_eq: $_eq}, created_at: {_lt: $_lt}}
     order_by: {created_at: desc}
@@ -1112,8 +2036,185 @@ export function useGetPersonArticlesLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type GetPersonArticlesQueryHookResult = ReturnType<typeof useGetPersonArticlesQuery>;
 export type GetPersonArticlesLazyQueryHookResult = ReturnType<typeof useGetPersonArticlesLazyQuery>;
 export type GetPersonArticlesQueryResult = Apollo.QueryResult<GetPersonArticlesQuery, GetPersonArticlesQueryVariables>;
+export const GetPersonLikesArticlesDocument = gql`
+    query GetPersonLikesArticles($_eq: String!, $_lt: timestamp = "now()") {
+  articles: likes_articles(
+    where: {user_id: {_eq: $_eq}, likes_created: {_lt: $_lt}}
+    order_by: {likes_created: desc}
+    limit: 10
+  ) {
+    id
+    user_id
+    title
+    image
+    details
+    username
+    avatar
+    comment_count
+    like_count
+    created_at
+    categories
+    likes_created
+  }
+}
+    `;
+
+/**
+ * __useGetPersonLikesArticlesQuery__
+ *
+ * To run a query within a React component, call `useGetPersonLikesArticlesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPersonLikesArticlesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPersonLikesArticlesQuery({
+ *   variables: {
+ *      _eq: // value for '_eq'
+ *      _lt: // value for '_lt'
+ *   },
+ * });
+ */
+export function useGetPersonLikesArticlesQuery(baseOptions: Apollo.QueryHookOptions<GetPersonLikesArticlesQuery, GetPersonLikesArticlesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPersonLikesArticlesQuery, GetPersonLikesArticlesQueryVariables>(GetPersonLikesArticlesDocument, options);
+      }
+export function useGetPersonLikesArticlesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPersonLikesArticlesQuery, GetPersonLikesArticlesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPersonLikesArticlesQuery, GetPersonLikesArticlesQueryVariables>(GetPersonLikesArticlesDocument, options);
+        }
+export type GetPersonLikesArticlesQueryHookResult = ReturnType<typeof useGetPersonLikesArticlesQuery>;
+export type GetPersonLikesArticlesLazyQueryHookResult = ReturnType<typeof useGetPersonLikesArticlesLazyQuery>;
+export type GetPersonLikesArticlesQueryResult = Apollo.QueryResult<GetPersonLikesArticlesQuery, GetPersonLikesArticlesQueryVariables>;
+export const GetPersonFollowsDocument = gql`
+    query GetPersonFollows($_lt: timestamp = "now()", $_eq: String!) {
+  person_follows(
+    limit: 10
+    order_by: {created_at: desc}
+    where: {created_at: {_lt: $_lt}, user_id: {_eq: $_eq}}
+  ) {
+    username
+    avatar
+    details
+    follower_id
+    created_at
+  }
+}
+    `;
+
+/**
+ * __useGetPersonFollowsQuery__
+ *
+ * To run a query within a React component, call `useGetPersonFollowsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPersonFollowsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPersonFollowsQuery({
+ *   variables: {
+ *      _lt: // value for '_lt'
+ *      _eq: // value for '_eq'
+ *   },
+ * });
+ */
+export function useGetPersonFollowsQuery(baseOptions: Apollo.QueryHookOptions<GetPersonFollowsQuery, GetPersonFollowsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPersonFollowsQuery, GetPersonFollowsQueryVariables>(GetPersonFollowsDocument, options);
+      }
+export function useGetPersonFollowsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPersonFollowsQuery, GetPersonFollowsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPersonFollowsQuery, GetPersonFollowsQueryVariables>(GetPersonFollowsDocument, options);
+        }
+export type GetPersonFollowsQueryHookResult = ReturnType<typeof useGetPersonFollowsQuery>;
+export type GetPersonFollowsLazyQueryHookResult = ReturnType<typeof useGetPersonFollowsLazyQuery>;
+export type GetPersonFollowsQueryResult = Apollo.QueryResult<GetPersonFollowsQuery, GetPersonFollowsQueryVariables>;
+export const GetPersonFollowersDocument = gql`
+    query GetPersonFollowers($_lt: timestamp = "now()", $_eq: String!) {
+  person_followers(
+    limit: 10
+    order_by: {created_at: desc}
+    where: {created_at: {_lt: $_lt}, follower_id: {_eq: $_eq}}
+  ) {
+    user_id
+    username
+    avatar
+    details
+    follower_id
+    created_at
+  }
+}
+    `;
+
+/**
+ * __useGetPersonFollowersQuery__
+ *
+ * To run a query within a React component, call `useGetPersonFollowersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPersonFollowersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPersonFollowersQuery({
+ *   variables: {
+ *      _lt: // value for '_lt'
+ *      _eq: // value for '_eq'
+ *   },
+ * });
+ */
+export function useGetPersonFollowersQuery(baseOptions: Apollo.QueryHookOptions<GetPersonFollowersQuery, GetPersonFollowersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPersonFollowersQuery, GetPersonFollowersQueryVariables>(GetPersonFollowersDocument, options);
+      }
+export function useGetPersonFollowersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPersonFollowersQuery, GetPersonFollowersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPersonFollowersQuery, GetPersonFollowersQueryVariables>(GetPersonFollowersDocument, options);
+        }
+export type GetPersonFollowersQueryHookResult = ReturnType<typeof useGetPersonFollowersQuery>;
+export type GetPersonFollowersLazyQueryHookResult = ReturnType<typeof useGetPersonFollowersLazyQuery>;
+export type GetPersonFollowersQueryResult = Apollo.QueryResult<GetPersonFollowersQuery, GetPersonFollowersQueryVariables>;
+export const GetFollowsDocument = gql`
+    query GetFollows($_eq: String!, $_eq1: String!) {
+  follows(where: {user_id: {_eq: $_eq}, follower_id: {_eq: $_eq1}}, limit: 1) {
+    id
+    follower_id
+  }
+}
+    `;
+
+/**
+ * __useGetFollowsQuery__
+ *
+ * To run a query within a React component, call `useGetFollowsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFollowsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetFollowsQuery({
+ *   variables: {
+ *      _eq: // value for '_eq'
+ *      _eq1: // value for '_eq1'
+ *   },
+ * });
+ */
+export function useGetFollowsQuery(baseOptions: Apollo.QueryHookOptions<GetFollowsQuery, GetFollowsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetFollowsQuery, GetFollowsQueryVariables>(GetFollowsDocument, options);
+      }
+export function useGetFollowsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFollowsQuery, GetFollowsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetFollowsQuery, GetFollowsQueryVariables>(GetFollowsDocument, options);
+        }
+export type GetFollowsQueryHookResult = ReturnType<typeof useGetFollowsQuery>;
+export type GetFollowsLazyQueryHookResult = ReturnType<typeof useGetFollowsLazyQuery>;
+export type GetFollowsQueryResult = Apollo.QueryResult<GetFollowsQuery, GetFollowsQueryVariables>;
 export const GetFrontArticlesDocument = gql`
-    query GetFrontArticles($_lt: timestamp!) {
+    query GetFrontArticles($_lt: timestamp = "now()") {
   articles: front_articles(
     where: {created_at: {_lt: $_lt}}
     order_by: {created_at: desc}
@@ -1150,7 +2251,7 @@ export const GetFrontArticlesDocument = gql`
  *   },
  * });
  */
-export function useGetFrontArticlesQuery(baseOptions: Apollo.QueryHookOptions<GetFrontArticlesQuery, GetFrontArticlesQueryVariables>) {
+export function useGetFrontArticlesQuery(baseOptions?: Apollo.QueryHookOptions<GetFrontArticlesQuery, GetFrontArticlesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetFrontArticlesQuery, GetFrontArticlesQueryVariables>(GetFrontArticlesDocument, options);
       }
@@ -1162,7 +2263,7 @@ export type GetFrontArticlesQueryHookResult = ReturnType<typeof useGetFrontArtic
 export type GetFrontArticlesLazyQueryHookResult = ReturnType<typeof useGetFrontArticlesLazyQuery>;
 export type GetFrontArticlesQueryResult = Apollo.QueryResult<GetFrontArticlesQuery, GetFrontArticlesQueryVariables>;
 export const GetServerlessArticlesDocument = gql`
-    query GetServerlessArticles($_lt: timestamp!) {
+    query GetServerlessArticles($_lt: timestamp = "now()") {
   articles: serverless_articles(
     where: {created_at: {_lt: $_lt}}
     order_by: {created_at: desc}
@@ -1199,7 +2300,7 @@ export const GetServerlessArticlesDocument = gql`
  *   },
  * });
  */
-export function useGetServerlessArticlesQuery(baseOptions: Apollo.QueryHookOptions<GetServerlessArticlesQuery, GetServerlessArticlesQueryVariables>) {
+export function useGetServerlessArticlesQuery(baseOptions?: Apollo.QueryHookOptions<GetServerlessArticlesQuery, GetServerlessArticlesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetServerlessArticlesQuery, GetServerlessArticlesQueryVariables>(GetServerlessArticlesDocument, options);
       }
@@ -1212,7 +2313,7 @@ export type GetServerlessArticlesLazyQueryHookResult = ReturnType<typeof useGetS
 export type GetServerlessArticlesQueryResult = Apollo.QueryResult<GetServerlessArticlesQuery, GetServerlessArticlesQueryVariables>;
 export const GetLikesDocument = gql`
     query GetLikes($_eq: String!) {
-  likes(where: {articles_id: {_eq: $_eq}}) {
+  likes(where: {articles_id: {_eq: $_eq}}, limit: 1) {
     id
   }
 }
@@ -1245,3 +2346,296 @@ export function useGetLikesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetLikesQueryHookResult = ReturnType<typeof useGetLikesQuery>;
 export type GetLikesLazyQueryHookResult = ReturnType<typeof useGetLikesLazyQuery>;
 export type GetLikesQueryResult = Apollo.QueryResult<GetLikesQuery, GetLikesQueryVariables>;
+export const GetCommentsDocument = gql`
+    query GetComments($_eq: String!, $_lt: timestamp = "now()") {
+  comments(
+    where: {articles_id: {_eq: $_eq}, created_at: {_lt: $_lt}}
+    order_by: {created_at: desc}
+    limit: 10
+  ) {
+    id
+    user_id
+    like_count
+    reply_count
+    created_at
+    comment
+    comments_likes(limit: 1) {
+      id
+    }
+    profile {
+      id
+      username
+      avatar
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCommentsQuery__
+ *
+ * To run a query within a React component, call `useGetCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCommentsQuery({
+ *   variables: {
+ *      _eq: // value for '_eq'
+ *      _lt: // value for '_lt'
+ *   },
+ * });
+ */
+export function useGetCommentsQuery(baseOptions: Apollo.QueryHookOptions<GetCommentsQuery, GetCommentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCommentsQuery, GetCommentsQueryVariables>(GetCommentsDocument, options);
+      }
+export function useGetCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCommentsQuery, GetCommentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCommentsQuery, GetCommentsQueryVariables>(GetCommentsDocument, options);
+        }
+export type GetCommentsQueryHookResult = ReturnType<typeof useGetCommentsQuery>;
+export type GetCommentsLazyQueryHookResult = ReturnType<typeof useGetCommentsLazyQuery>;
+export type GetCommentsQueryResult = Apollo.QueryResult<GetCommentsQuery, GetCommentsQueryVariables>;
+export const GetRepliesDocument = gql`
+    query GetReplies($_eq: Int!, $_lt: timestamp = "now()") {
+  replies(
+    limit: 10
+    where: {comment_id: {_eq: $_eq}, created_at: {_lt: $_lt}}
+    order_by: {created_at: desc}
+  ) {
+    id
+    user_id
+    comment_id
+    like_count
+    created_at
+    comment
+    profile {
+      username
+      avatar
+    }
+    replies_likes {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetRepliesQuery__
+ *
+ * To run a query within a React component, call `useGetRepliesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRepliesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRepliesQuery({
+ *   variables: {
+ *      _eq: // value for '_eq'
+ *      _lt: // value for '_lt'
+ *   },
+ * });
+ */
+export function useGetRepliesQuery(baseOptions: Apollo.QueryHookOptions<GetRepliesQuery, GetRepliesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRepliesQuery, GetRepliesQueryVariables>(GetRepliesDocument, options);
+      }
+export function useGetRepliesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRepliesQuery, GetRepliesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRepliesQuery, GetRepliesQueryVariables>(GetRepliesDocument, options);
+        }
+export type GetRepliesQueryHookResult = ReturnType<typeof useGetRepliesQuery>;
+export type GetRepliesLazyQueryHookResult = ReturnType<typeof useGetRepliesLazyQuery>;
+export type GetRepliesQueryResult = Apollo.QueryResult<GetRepliesQuery, GetRepliesQueryVariables>;
+export const GetNoSearchArticlesDocument = gql`
+    query GetNoSearchArticles($_lt: timestamp = "now()") {
+  articles: person_articles(
+    where: {user_id: {}, created_at: {_lt: $_lt}}
+    order_by: {created_at: desc}
+    limit: 10
+  ) {
+    id
+    user_id
+    title
+    image
+    details
+    username
+    avatar
+    comment_count
+    like_count
+    created_at
+    categories
+  }
+}
+    `;
+
+/**
+ * __useGetNoSearchArticlesQuery__
+ *
+ * To run a query within a React component, call `useGetNoSearchArticlesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNoSearchArticlesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNoSearchArticlesQuery({
+ *   variables: {
+ *      _lt: // value for '_lt'
+ *   },
+ * });
+ */
+export function useGetNoSearchArticlesQuery(baseOptions?: Apollo.QueryHookOptions<GetNoSearchArticlesQuery, GetNoSearchArticlesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNoSearchArticlesQuery, GetNoSearchArticlesQueryVariables>(GetNoSearchArticlesDocument, options);
+      }
+export function useGetNoSearchArticlesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNoSearchArticlesQuery, GetNoSearchArticlesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNoSearchArticlesQuery, GetNoSearchArticlesQueryVariables>(GetNoSearchArticlesDocument, options);
+        }
+export type GetNoSearchArticlesQueryHookResult = ReturnType<typeof useGetNoSearchArticlesQuery>;
+export type GetNoSearchArticlesLazyQueryHookResult = ReturnType<typeof useGetNoSearchArticlesLazyQuery>;
+export type GetNoSearchArticlesQueryResult = Apollo.QueryResult<GetNoSearchArticlesQuery, GetNoSearchArticlesQueryVariables>;
+export const GetSearchArticlesDocument = gql`
+    query GetSearchArticles($_like: String!, $_lt: timestamp = "now()") {
+  articles: person_articles(
+    where: {created_at: {_lt: $_lt}, _or: [{title: {_like: $_like}}, {details: {_like: $_like}}]}
+    order_by: {created_at: desc}
+    limit: 10
+  ) {
+    id
+    user_id
+    title
+    details
+    username
+    image
+    comment_count
+    like_count
+    created_at
+    categories
+    username
+  }
+}
+    `;
+
+/**
+ * __useGetSearchArticlesQuery__
+ *
+ * To run a query within a React component, call `useGetSearchArticlesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSearchArticlesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSearchArticlesQuery({
+ *   variables: {
+ *      _like: // value for '_like'
+ *      _lt: // value for '_lt'
+ *   },
+ * });
+ */
+export function useGetSearchArticlesQuery(baseOptions: Apollo.QueryHookOptions<GetSearchArticlesQuery, GetSearchArticlesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSearchArticlesQuery, GetSearchArticlesQueryVariables>(GetSearchArticlesDocument, options);
+      }
+export function useGetSearchArticlesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSearchArticlesQuery, GetSearchArticlesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSearchArticlesQuery, GetSearchArticlesQueryVariables>(GetSearchArticlesDocument, options);
+        }
+export type GetSearchArticlesQueryHookResult = ReturnType<typeof useGetSearchArticlesQuery>;
+export type GetSearchArticlesLazyQueryHookResult = ReturnType<typeof useGetSearchArticlesLazyQuery>;
+export type GetSearchArticlesQueryResult = Apollo.QueryResult<GetSearchArticlesQuery, GetSearchArticlesQueryVariables>;
+export const GetNoSearchProfilesDocument = gql`
+    query GetNoSearchProfiles($_and: [profiles_bool_exp!] = {follower_count: {_lte: null}, id: {_lt: ""}}) {
+  profiles(
+    where: {_and: $_and}
+    limit: 10
+    order_by: {follower_count: desc, id: desc}
+  ) {
+    id
+    username
+    avatar
+    details
+    follow_count
+    follower_count
+  }
+}
+    `;
+
+/**
+ * __useGetNoSearchProfilesQuery__
+ *
+ * To run a query within a React component, call `useGetNoSearchProfilesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNoSearchProfilesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNoSearchProfilesQuery({
+ *   variables: {
+ *      _and: // value for '_and'
+ *   },
+ * });
+ */
+export function useGetNoSearchProfilesQuery(baseOptions?: Apollo.QueryHookOptions<GetNoSearchProfilesQuery, GetNoSearchProfilesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNoSearchProfilesQuery, GetNoSearchProfilesQueryVariables>(GetNoSearchProfilesDocument, options);
+      }
+export function useGetNoSearchProfilesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNoSearchProfilesQuery, GetNoSearchProfilesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNoSearchProfilesQuery, GetNoSearchProfilesQueryVariables>(GetNoSearchProfilesDocument, options);
+        }
+export type GetNoSearchProfilesQueryHookResult = ReturnType<typeof useGetNoSearchProfilesQuery>;
+export type GetNoSearchProfilesLazyQueryHookResult = ReturnType<typeof useGetNoSearchProfilesLazyQuery>;
+export type GetNoSearchProfilesQueryResult = Apollo.QueryResult<GetNoSearchProfilesQuery, GetNoSearchProfilesQueryVariables>;
+export const GetSearchProfilesDocument = gql`
+    query GetSearchProfiles($_and: [profiles_bool_exp!] = {follower_count: {_lte: null}, id: {_lt: ""}}, $_ilike: String!) {
+  profiles(
+    where: {_and: $_and, _or: [{username: {_ilike: $_ilike}}, {details: {_ilike: $_ilike}}]}
+    limit: 10
+    order_by: {follower_count: desc, id: desc}
+  ) {
+    id
+    username
+    avatar
+    details
+    follow_count
+    follower_count
+  }
+}
+    `;
+
+/**
+ * __useGetSearchProfilesQuery__
+ *
+ * To run a query within a React component, call `useGetSearchProfilesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSearchProfilesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSearchProfilesQuery({
+ *   variables: {
+ *      _and: // value for '_and'
+ *      _ilike: // value for '_ilike'
+ *   },
+ * });
+ */
+export function useGetSearchProfilesQuery(baseOptions: Apollo.QueryHookOptions<GetSearchProfilesQuery, GetSearchProfilesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSearchProfilesQuery, GetSearchProfilesQueryVariables>(GetSearchProfilesDocument, options);
+      }
+export function useGetSearchProfilesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSearchProfilesQuery, GetSearchProfilesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSearchProfilesQuery, GetSearchProfilesQueryVariables>(GetSearchProfilesDocument, options);
+        }
+export type GetSearchProfilesQueryHookResult = ReturnType<typeof useGetSearchProfilesQuery>;
+export type GetSearchProfilesLazyQueryHookResult = ReturnType<typeof useGetSearchProfilesLazyQuery>;
+export type GetSearchProfilesQueryResult = Apollo.QueryResult<GetSearchProfilesQuery, GetSearchProfilesQueryVariables>;

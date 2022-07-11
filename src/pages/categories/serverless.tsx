@@ -10,8 +10,17 @@ import Post from '@/components/post/Post'
 import Side from '@/components/side/Side'
 
 const Serverless = () => {
-  const { data, loading, fetchMore, hasNextPage } = useServerlessArticles()
-  const setRef = useObserver({ hasNextPage, fetchMore })
+  const { data, loading, fetchMore, networkStatus, hasNextPage, cursor } = useServerlessArticles()
+
+  const handleMore = () => {
+    hasNextPage && fetchMore({
+      variables: {
+        _lt: cursor
+      }
+    })
+  }
+
+  const setRef = useObserver({ handleMore })
 
   return (
     <ContainerLayout
@@ -33,7 +42,7 @@ const Serverless = () => {
       }
 
       {/* 読み込み中 */}
-      {loading && <Circular />}
+      {(loading || (networkStatus === 3)) && <Circular />}
     </ContainerLayout>
   )
 }

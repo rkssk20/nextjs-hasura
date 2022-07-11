@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { signIn } from 'next-auth/react'
+import { signIn, signOut } from 'next-auth/react'
 
 import styles from '@/styles/atoms/loginContent.module.scss'
 import Typography from '@mui/material/Typography'
@@ -22,7 +22,9 @@ const LoginContent = () => {
   ]
 
   const handleAuth = async (provider: string) => {
-    signIn((provider === 'Twitter') ? 'twitter' : (provider === 'Facebook') ? 'facebook' : 'google')
+    signIn((provider === 'Twitter') ? 'twitter' : (provider === 'Facebook') ? 'facebook' : 'google', {
+      callbackUrl: '/'
+    })
   }
 
   return (
@@ -65,6 +67,8 @@ const LoginContent = () => {
           </Typography>
         </Button>
       ))}
+
+      <button onClick={ () => signOut()}>a</button>
     </div>
   )
 }
