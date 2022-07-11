@@ -1,54 +1,47 @@
-import { useInfiniteQuery } from 'react-query'
+import { useState } from 'react'
+import { useQuery } from '@apollo/client'
 import { useSetRecoilState } from 'recoil'
-import type { ArticleType } from '@/types/types'
+import { GET_SEARCH_ARTICLES } from '@/graphql/queries'
+import type { GetSearchArticlesQuery } from '@/types/generated/graphql'
 import { notificateState } from '@/lib/recoil'
-import { supabase } from '@/lib/supabaseClient'
-
-const FetchData = async (
-  pageParam: { like_count: number; created_at: string } | undefined,
-  word: string | string[],
-) => {
-  const { data, error } = pageParam
-    ? // 初回読み込み
-      await supabase.rpc('handle_articles_search_more', {
-        word,
-        lcount: pageParam.like_count,
-        created: pageParam.created_at,
-      })
-    : // 追加読み込み
-      await supabase.rpc('handle_articles_search', {
-        word,
-      })
-
-  if (error) throw error
-
-  return data as unknown as ArticleType[]
-}
 
 const useArticlesSearch = (word: string | string[]) => {
+  const [hasNextPage, setHasNextPage] = useState(true)
+  const [cursor, setCursor] = useState(String(new Date().toJSON()))
   const setNotificate = useSetRecoilState(notificateState)
 
-  const { data, isFetching, hasNextPage, fetchNextPage } = useInfiniteQuery(
-    ['articles_search', word],
-    ({ pageParam }) => FetchData(pageParam, word),
-    {
-      onError: () => {
-        setNotificate({
-          open: true,
-          message: 'エラーが発生しました。',
-        })
-      },
-      getNextPageParam: (lastPage) =>
-        lastPage && lastPage.length === 10
-          ? {
-              like_count: lastPage[lastPage.length - 1].like_count,
-              created_at: lastPage[lastPage.length - 1].created_at,
-            }
-          : false,
+  const { data, previousData, networkStatus, fetchMore } = useQuery<GetSearchArticlesQuery>(GET_SEARCH_ARTICLES, {
+    variables: {
+      _like: '%' + word + '%'
     },
-  )
+    nextFetchPolicy: 'cache-first',
+    notifyOnNetworkStatusChange: true,
+    onCompleted: (data) => {
+      if(previousData) {
+        // 全ての結果の長さ - 前回までの長さ = 最後に取得した長さ
+        // これが10件以下の場合、hasNextPageをfalseにする
+        if((data.articles.length - previousData.articles.length) < 10) {
+          setHasNextPage(false)
+          return
+        }
+      } else if (data.articles.length < 10) {
+        setHasNextPage(false)
+        return
+      }
 
-  return { data, isFetching, hasNextPage, fetchNextPage }
+      if(data.articles.length > 0) {
+        setCursor(data.articles[data.articles.length - 1].created_at)
+      }
+    },
+    onError: () => {
+      setNotificate({
+        open: true,
+        message: 'エラーが発生しました'
+      })
+    }
+  })
+
+  return { data, networkStatus, fetchMore, hasNextPage, cursor }
 }
 
 export default useArticlesSearch

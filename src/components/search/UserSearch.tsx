@@ -5,27 +5,41 @@ import Empty from '@/atoms/Empty'
 import Account from '@/components/account/follow/Account'
 
 const UserSearch = ({ word }: { word: string | string[] }) => {
-  const { data, isFetching, hasNextPage, fetchNextPage } = useUserSearch(word)
-  const setRef = useObserver({ hasNextPage, fetchNextPage })
+  const { data, networkStatus, fetchMore, hasNextPage, cursor } = useUserSearch(word)
+
+  const handleMore = () => {
+    hasNextPage && fetchMore({
+      variables: {
+        _ilike: "%" + word + "%",
+        _and: {
+          follow_count: {
+            _lte: cursor.follower_count
+          },
+          id: {
+            _lt: cursor.id
+          }
+        }
+      }
+    })
+  }
+
+  const setRef = useObserver({ handleMore })
 
   return (
     <>
-      {data && data?.pages[0].length > 0
-        ? data.pages.map((page, page_index) =>
-          page.map((item, index) => (
-            <Account
-              key={item.id}
-              id={item.id}
-              username={item.username}
-              avatar={item.avatar}
-              details={item.details}
-              setRef={data.pages.length - 1 === page_index && page.length - 1 === index && setRef}
-            />
-          )),
-        ) : !isFetching && <Empty text='検索結果はありません' />
+      {data && (data?.profiles.length > 0) ? data.profiles.map((item, index) => (
+        <Account
+          key={item.id}
+          id={item.id}
+          username={item.username}
+          avatar={item.avatar as string | null}
+          details={item.details as string | null}
+          setRef={data.profiles.length - 1 === index && data.profiles.length - 1 === index && setRef}
+        />)
+      ) : (networkStatus === 7) && <Empty text='検索結果はありません' />
       }
 
-      {isFetching && <Circular />}
+      {((networkStatus === 1) || (networkStatus === 3)) && <Circular />}
     </>
   )
 }

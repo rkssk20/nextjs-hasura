@@ -1,5 +1,4 @@
 import type { DialogProps } from '@/types/types'
-import type { definitions } from '@/types/supabase'
 import useCommentDelete from '@/hooks/mutate/delete/useCommentDelete'
 import Dialog from '@/components/dialog/Dialog'
 
@@ -9,17 +8,21 @@ import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 
 type Props = DialogProps & {
-  path: string
-  id: definitions['comments']['id']
+  id: number
 }
 
-const CommentDelete = ({ dialog, handleClose, path, id }: Props) => {
-  const { mutate, isLoading } = useCommentDelete({ path, id, handleClose })
+const CommentDelete = ({ dialog, handleClose, id }: Props) => {
+  const { mutateFunction, loading } = useCommentDelete(handleClose)
 
   // 記事を削除
   const handleDelete = () => {
-    if (isLoading) return
-    mutate()
+    if (loading) return
+
+    mutateFunction( {
+      variables: {
+        id
+      }
+    })
   }
 
   return (

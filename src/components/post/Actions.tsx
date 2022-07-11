@@ -1,5 +1,4 @@
 import type { Dispatch, SetStateAction, TouchEvent, MouseEvent } from 'react'
-import type { ArticleType } from '@/types/types'
 
 import styles from '@/styles/components/post/actions.module.scss'
 import IconButton from '@mui/material/IconButton'
@@ -9,8 +8,8 @@ import Typography from '@mui/material/Typography'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 
 type ActionsProps = {
-  like_count: ArticleType['like_count']
-  comment_count: ArticleType['comment_count']
+  like_count: number
+  comment_count: number
   setDialog: Dispatch<SetStateAction<boolean>>
 }
 
@@ -27,13 +26,13 @@ const Actions = ({ like_count, comment_count, setDialog }: ActionsProps) => {
       <FavoriteBorderIcon className={styles.favorite} color='action' />
 
       {/* いいね数 */}
-      <Typography variant='caption'>{like_count.toLocaleString()}</Typography>
+      <Typography variant='caption'>{ like_count.toLocaleString()}</Typography>
 
       {/* コメントアイコン */}
-      {comment_count > 0 && <ChatBubbleOutlineIcon className={styles.comments_icon} />}
+      { (comment_count > 0) && <ChatBubbleOutlineIcon className={styles.comments_icon} />}
 
       {/* コメント数 */}
-      {comment_count > 0 && (
+      { (comment_count > 0) && (
         <Typography className={styles.comments_count} variant='caption'>
           {comment_count.toLocaleString()}
         </Typography>

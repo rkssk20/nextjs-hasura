@@ -1,6 +1,6 @@
 import { useState, Dispatch, SetStateAction } from 'react'
 import { useRouter } from 'next/router'
-import { ArticleType } from '@/types/types'
+import type { ArticleType } from '@/types/types'
 import ArticleImage from '@/atoms/Image/ArticleImage'
 import NoArticleImage from '@/atoms/Image/NoArticleImage'
 import Header from '@/components/post/Header'
@@ -47,7 +47,11 @@ const Post = ({ data, setRef }: PostProps) => {
         )}
 
         {/* タイトル、詳細、タグ */}
-        <Content title={data.title} details={data.details} categories={data.categories} />
+        <Content
+          title={data.title}
+          details={data.details}
+          categories={data.categories}
+        />
 
         {/* 投稿時間、いいね、コメント数、詳細ボタン */}
         <Actions

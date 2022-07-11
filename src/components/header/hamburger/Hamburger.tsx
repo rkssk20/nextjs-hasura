@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useRecoilValue } from 'recoil'
 import { accountState } from '@/lib/recoil'
-import { supabase } from '@/lib/supabaseClient'
 import Loading from '@/components/header/hamburger/Loading'
 import Login from '@/components/header/hamburger/Login'
 import Logout from '@/components/header/hamburger/Logout'
@@ -26,7 +25,6 @@ type HamburgerProps = {
 const Hamburger = ({ hamburger, setHamburger }: HamburgerProps) => {
   const router = useRouter()
   const account = useRecoilValue(accountState)
-  const id = supabase.auth.user()?.id
 
   const main_list = [
     {
@@ -66,9 +64,9 @@ const Hamburger = ({ hamburger, setHamburger }: HamburgerProps) => {
       {/* アカウント関連のリンク  */}
       {account.loading ? (
         <Loading />
-      ) : id && account.data ? (
+      ) : account.data ? (
         <Login
-          id={id}
+          id={account.data.id as string}
           username={account.data.username}
           avatar={account.data.avatar}
           handleClose={handleClose}

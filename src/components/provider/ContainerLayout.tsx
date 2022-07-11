@@ -13,13 +13,13 @@ type Props = {
 }
 
 const ContainerLayout: NextPage<Props> = ({ type, title, description, image, children }) => {
-  const ogpTitle = title ? title + ' | Next.js × Supabase' : 'Next.js × Supabase'
+  const ogpTitle = title ? title + ' | Next.js × Hasura' : 'Next.js × Hasura'
   const ogpDescription = description
     ? description
-    : 'Next.jsとSupabaseを使用したテンプレート。技術ブログ風。'
+    : 'Next.jsとHasuraを使用したテンプレート。技術ブログ風。'
   const ogpImageUrl = image
     ? `${process.env.NEXT_PUBLIC_STORAGE_URL}/${image}.png`
-    : `${process.env.NEXT_PUBLIC_STORAGE_URL}/nextjssupabase.png`
+    : `${process.env.NEXT_PUBLIC_STORAGE_URL}/top.png`
 
   return (
     <div className={styles.container}>

@@ -9,8 +9,8 @@ import IconButton from '@mui/material/IconButton'
 import ClearIcon from '@mui/icons-material/Clear'
 
 interface ImageProps {
-  image: Blob | null
-  setImage: Dispatch<SetStateAction<Blob | null>>
+  image: string | null
+  setImage: Dispatch<SetStateAction<string | null>>
 }
 
 const Image = ({ image, setImage }: ImageProps) => {
@@ -69,7 +69,7 @@ const Image = ({ image, setImage }: ImageProps) => {
             }
             anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
           >
-            <img className={styles.image} alt='選択中の画像' src={URL.createObjectURL(image)} />
+            <img className={styles.image} alt='選択中の画像' src={image} />
           </Badge>
         </div>
       )}

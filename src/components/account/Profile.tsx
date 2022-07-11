@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router'
 import NextLink from 'next/link'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
-import type { definitions } from '@/types/supabase'
-import { supabase } from '@/lib/supabaseClient'
-import { accountState, notificateState } from '@/lib/recoil'
+import { useRecoilValue } from 'recoil'
+import { signOut } from 'next-auth/react'
+import type { ProfileType } from '@/types/types'
+import { accountState } from '@/lib/recoil'
 import AvatarIcon from '@/atoms/Icon/AvatarIcon'
 import { ContainedButton, OutlinedButton } from '@/atoms/Button'
 import InitialIcon from '@/atoms/Icon/InitialIcon'
@@ -16,31 +16,17 @@ import Stack from '@mui/material/Stack'
 import MuiLink from '@mui/material/Link'
 import CircularProgress from '@mui/material/CircularProgress'
 
-type ProfileProps = {
+type ProfileProps = ProfileType & {
   path: string
-  item: definitions['profiles']
 }
 
 const Profile = ({ path, item }: ProfileProps) => {
   const account = useRecoilValue(accountState)
-  const setNotificate = useSetRecoilState(notificateState)
-  const user = supabase.auth.user()
   const router = useRouter()
 
   // ログアウト処理
   const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut()
-
-    if (error) {
-      setNotificate({
-        open: true,
-        message: 'ログアウトに失敗しました。',
-      })
-
-      return
-    }
-
-    router.push('/')
+    signOut({ callbackUrl: '/' })
   }
 
   return (
@@ -49,9 +35,7 @@ const Profile = ({ path, item }: ProfileProps) => {
         {/* ユーザーアイコン */}
         {item.avatar ? (
           <AvatarIcon
-            src={
-              process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/avatars/' + item.avatar
-            }
+            src={ item.avatar }
             variant='large'
           />
         ) : (
@@ -70,7 +54,7 @@ const Profile = ({ path, item }: ProfileProps) => {
               classes={{ root: styles.circular_root }}
               size={38.25}
             />
-          ) : path == user?.id ? (
+          ) : (path == account.data?.id) ? (
             // 本人なら設定、ログアウト
             <Stack
               className={styles.buttons}

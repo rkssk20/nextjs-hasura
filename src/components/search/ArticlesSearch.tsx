@@ -1,3 +1,4 @@
+import type { ArticleType } from '@/types/types'
 import useObserver from '@/hooks/atoms/useObserver'
 import useArticlesSearch from '@/hooks/select/search/useArticlesSearch'
 import Circular from '@/atoms/Circular'
@@ -5,24 +6,32 @@ import Empty from '@/atoms/Empty'
 import Post from '@/components/post/Post'
 
 const ArticlesSearch = ({ word }: { word: string | string[] }) => {
-  const { data, isFetching, hasNextPage, fetchNextPage } = useArticlesSearch(word)
-  const setRef = useObserver({ hasNextPage, fetchNextPage })
+  const { data, networkStatus, fetchMore, hasNextPage, cursor } = useArticlesSearch(word)
+  
+  const handleMore = () => {
+    hasNextPage && fetchMore({
+      variables: {
+        _like: "%" + word + "%",
+        _lt: cursor
+      }
+    })
+  }
+
+  const setRef = useObserver({ handleMore })
+
 
   return (
     <>
-      {data && data.pages[0].length > 0
-        ? data.pages.map((page, page_index) =>
-          page.map((item, index) => (
-            <Post
-              key={item.id}
-              data={item}
-              setRef={data.pages.length - 1 === page_index && page.length - 1 === index && setRef}
-            />
-          )),
-        ) : !isFetching && <Empty text='検索結果はありません' />
+      {data && (data.articles.length > 0) ? data.articles.map((item, index) =>
+        <Post
+          key={item.id}
+          data={item as ArticleType}
+          setRef={ data.articles.length - 1 === index && setRef}
+        />
+        ) : (networkStatus === 7) && <Empty text='検索結果はありません' />
       }
 
-      {isFetching && <Circular />}
+      {((networkStatus === 1) || (networkStatus === 3)) && <Circular />}
     </>
   )
 }

@@ -6,7 +6,7 @@ const ArticleImage = ({ image }: { image: string }) => {
   return (
     <div className={styles.image_fill}>
       <Image
-        src={process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/' + image}
+        src={image}
         quality={70}
         alt='見出し画像'
         layout='fill'

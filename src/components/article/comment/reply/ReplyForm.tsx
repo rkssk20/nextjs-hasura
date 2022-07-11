@@ -20,12 +20,18 @@ type LoginProps = ReplyFormProps & {
 
 const Login = ({ path, id, setFormOpen, username }: LoginProps) => {
   const [text, setText] = useState('')
-  const { mutate, isLoading } = useInsertReplies(path, id)
+  const { mutateFunction, loading } = useInsertReplies()
 
   // 返信を送信
   const handlePost = () => {
-    if (isLoading) return
-    mutate(text)
+    if (loading) return
+
+    mutateFunction({
+      variables: {
+        comment_id: id,
+        comment: text
+      }
+    })
     setFormOpen(false)
   }
 

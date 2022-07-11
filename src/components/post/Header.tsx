@@ -1,6 +1,5 @@
 import type { MouseEvent, TouchEvent } from 'react'
 import NextLink from 'next/link'
-import { ArticleType } from '@/types/types'
 import CreatedAt from '@/lib/createdAt'
 import AvatarIcon from '@/atoms/Icon/AvatarIcon'
 import InitialIcon from '@/atoms/Icon/InitialIcon'
@@ -10,10 +9,10 @@ import MuiLink from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 
 interface HeaderProps {
-  id: ArticleType['id']
-  username: ArticleType['username']
-  avatar: ArticleType['avatar']
-  created_at: ArticleType['created_at']
+  id: string
+  username: string
+  avatar: string | null
+  created_at: string
 }
 
 const Header = ({ id, username, avatar, created_at }: HeaderProps) => {
@@ -31,12 +30,10 @@ const Header = ({ id, username, avatar, created_at }: HeaderProps) => {
         >
           {avatar ? (
             <AvatarIcon
-              src={
-                process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/avatars/' + avatar
-              }
+              src={avatar}
               variant='link'
             />
-          ) : (
+          ) : username && (
             <InitialIcon username={username} variant='link' />
           )}
         </MuiLink>

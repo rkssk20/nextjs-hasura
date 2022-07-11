@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useRecoilValue } from 'recoil'
-import { definitions } from '@/types/supabase'
-import { supabase } from '@/lib/supabaseClient'
+import type { GetRepliesQuery } from '@/types/generated/graphql'
 import { accountState } from '@/lib/recoil'
 import { LoginLike, LogoutLike } from '@/components/article/comment/reply/Like'
 
@@ -17,15 +16,14 @@ const ReplyDelete = dynamic(import('@/components/dialog/ReplyDelete'))
 const Report = dynamic(import('@/components/dialog/Report'))
 
 type Props = {
-  id: definitions['replies']['id']
-  user_id: definitions['replies']['user_id']
-  comment_id: definitions['replies']['comment_id']
-  comment: definitions['replies']['comment']
-  like_count: definitions['replies']['like_count']
-  replies_like: definitions['replies_likes'][] | undefined
+  id: GetRepliesQuery['replies'][0]['id']
+  user_id: GetRepliesQuery['replies'][0]['user_id']
+  comment: GetRepliesQuery['replies'][0]['comment']
+  like_count: GetRepliesQuery['replies'][0]['like_count']
+  replies_like_id: number | null
 }
 
-const Actions = ({ id, user_id, comment_id, comment, like_count, replies_like }: Props) => {
+const Actions = ({ id, user_id, comment, like_count, replies_like_id }: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [dialog, setDialog] = useState(false)
   const open = Boolean(anchorEl)
@@ -50,7 +48,7 @@ const Actions = ({ id, user_id, comment_id, comment, like_count, replies_like }:
       <div className={styles.actions_field}>
         {/* いいねボタン */}
         {account.data ? (
-          <LoginLike comment_id={comment_id} id={id} replies_like={replies_like} />
+          <LoginLike id={id} replies_like_id={replies_like_id} />
         ) : (
           <LogoutLike />
         )}
@@ -61,34 +59,35 @@ const Actions = ({ id, user_id, comment_id, comment, like_count, replies_like }:
         </Typography>
 
         {/* 詳細ボタン */}
-        <IconButton
-          className={styles.icon_button}
-          classes={{ root: styles.icon_button_root }}
-          aria-label='詳細'
-          id='positioned-button'
-          aria-controls={open ? 'positioned-menu' : undefined}
-          aria-haspopup='true'
-          aria-expanded={open ? 'true' : undefined}
-          onClick={(e) => setAnchorEl(e.currentTarget)}
-        >
-          <MoreVertIcon />
-        </IconButton>
+        { !account.loading &&
+          <IconButton
+            className={styles.icon_button}
+            classes={{ root: styles.icon_button_root }}
+            aria-label='詳細'
+            id='positioned-button'
+            aria-controls={open ? 'positioned-menu' : undefined}
+            aria-haspopup='true'
+            aria-expanded={open ? 'true' : undefined}
+            onClick={(e) => setAnchorEl(e.currentTarget)}
+          >
+            <MoreVertIcon />
+          </IconButton>
+        }
 
         {/* 詳細メニュー */}
         <Menu id='positioned-menu' anchorEl={anchorEl} open={open} onClose={handleClose}>
           <MenuItem onClick={handleDialogOpen}>
-            {user_id === supabase.auth.user()?.id ? 'コメントを削除' : 'コメントの問題を報告'}
+            {user_id === account.data?.id ? 'コメントを削除' : 'コメントの問題を報告'}
           </MenuItem>
         </Menu>
       </div>
 
-      {dialog && user_id === supabase.auth.user()?.id ? (
+      {dialog && user_id === account.data?.id ? (
         // 削除ダイアログ
         <ReplyDelete
           dialog={dialog}
           handleClose={() => setDialog(false)}
           id={id}
-          comment_id={comment_id}
         />
       ) : (
         // 報告ダイアログ

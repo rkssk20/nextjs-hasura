@@ -18,7 +18,7 @@ const Icon = ({ newUserName }: IconProps) => {
   const [selectImage, setSelectImage] = useState('')
   const account = useRecoilValue(accountState)
   const setNotificate = useSetRecoilState(notificateState)
-  const { mutate } = useAvatarDelete()
+  const { mutateFunction, loading } = useAvatarDelete()
   const color = Color(newUserName)
 
   // 画像選択
@@ -29,6 +29,7 @@ const Icon = ({ newUserName }: IconProps) => {
 
   // 現在のアバターを削除
   const handleCancel = () => {
+    if(loading) return
     // アバター画像がない場合
     if (!account.data?.avatar) {
       setNotificate({
@@ -39,7 +40,7 @@ const Icon = ({ newUserName }: IconProps) => {
       return
     }
 
-    mutate()
+    mutateFunction()
   }
 
   return (

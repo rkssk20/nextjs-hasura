@@ -1,15 +1,11 @@
 import Image from 'next/image'
-import { useSetRecoilState } from 'recoil'
-import { supabase } from '@/lib/supabaseClient'
-import { notificateState } from '@/lib/recoil'
+import { signIn, signOut } from 'next-auth/react'
 
 import styles from '@/styles/atoms/loginContent.module.scss'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 
 const LoginContent = () => {
-  const setNotificate = useSetRecoilState(notificateState)
-
   const social = [
     {
       text: 'Twitter',
@@ -26,19 +22,9 @@ const LoginContent = () => {
   ]
 
   const handleAuth = async (provider: string) => {
-    try {
-      const { error } = await supabase.auth.signIn({
-        provider:
-          provider === 'Twitter' ? 'twitter' : provider === 'Facebook' ? 'facebook' : 'google',
-      })
-
-      if (error) throw error
-    } catch (error) {
-      setNotificate({
-        open: true,
-        message: '認証でエラーが発生しました。',
-      })
-    }
+    signIn((provider === 'Twitter') ? 'twitter' : (provider === 'Facebook') ? 'facebook' : 'google', {
+      callbackUrl: '/'
+    })
   }
 
   return (
@@ -81,6 +67,8 @@ const LoginContent = () => {
           </Typography>
         </Button>
       ))}
+
+      <button onClick={ () => signOut()}>a</button>
     </div>
   )
 }

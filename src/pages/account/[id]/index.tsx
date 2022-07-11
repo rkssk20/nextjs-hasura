@@ -1,8 +1,7 @@
 import type { ReactElement } from 'react'
 import type { GetServerSideProps } from 'next'
+import type { ArticleType, ProfileType } from '@/types/types'
 import Side from '@/components/side/Side'
-import type { definitions } from '@/types/supabase'
-import { supabase } from '@/lib/supabaseClient'
 import usePersonArticles from '@/hooks/select/usePersonArticles'
 import useObserver from '@/hooks/atoms/useObserver'
 import Circular from '@/atoms/Circular'
@@ -19,42 +18,65 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!id || typeof id !== 'string') return { notFound: true }
 
   try {
-    const { data, error } = await supabase
-      .from<definitions['profiles']>('profiles')
-      .select('username, avatar, details, follow_count, follower_count')
-      .eq('id', id)
-      .single()
+    const data = await fetch(process.env.NEXT_PUBLIC_HASURA_ENDPOINT as string, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        query: `query MyQuery($id: String!) {
+          profiles_by_pk(id: $id) {
+            username
+            avatar
+            details
+            follow_count
+            follower_count
+          }
+        }
+      `,
+        variables: {
+          id
+        },
+      })
+    })
 
-    if (error) throw error
+    const result = await data.json()
 
     return {
       props: {
-        item: data,
-        path: id,
+        item: result.data.profiles_by_pk,
+        path: id
       }
     }
-  } catch {
+  } catch(error) {
+    console.log(error)
     return { notFound: true }
   }
 }
 
-type AccountProps = {
-  item: definitions['profiles']
+type AccountProps = ProfileType & {
   path: string
 }
 
 const Account = ({ item, path }: AccountProps) => {
-  const { data, isFetching, hasNextPage, fetchNextPage } = usePersonArticles(path)
-  const setRef = useObserver({ hasNextPage, fetchNextPage })
+  const { data, networkStatus, fetchMore, hasNextPage, cursor } = usePersonArticles(path)
+
+  const handleMore = () => {
+    hasNextPage && fetchMore({
+      variables: {
+        _lt: cursor
+      }
+    })
+  }
+
+  const setRef = useObserver({ handleMore })
 
   return (
     <ContainerLayout
       type='profile'
       title={item.username}
       description={item.details || ''}
-      image={ item.avatar ?
-        process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/avatars/' + item.avatar : ''
-      }
+      image={ item.avatar ? item.avatar : ''  }
     >
       {/* アカウント情報 */}
       <Profile path={path} item={item} />
@@ -63,19 +85,16 @@ const Account = ({ item, path }: AccountProps) => {
       <Bar path={path} />
 
       {/* 自分の投稿一覧 */}
-      {data && data.pages[0].length > 0
-        ? data.pages.map((page, page_index) =>
-            page.map((item, index) => (
-              <Post
-                key={item.id}
-                data={item}
-                setRef={data.pages.length - 1 === page_index && page.length - 1 === index && setRef}
-              />
-            )),
-          )
-        : !isFetching && <Empty text='まだ投稿がありません' />}
+      { data && (data.articles.length > 0) ? data.articles.map((item, index) =>
+          <Post
+            key={item.id}
+            data={item as ArticleType}
+            setRef={index === (data.articles.length - 1) && setRef}
+          />
+        ) : (networkStatus === 7) && <Empty text='まだ投稿がありません' />
+      }
 
-      {isFetching && <Circular />}
+      {((networkStatus === 1) || (networkStatus === 3)) && <Circular />}
     </ContainerLayout>
   )
 }

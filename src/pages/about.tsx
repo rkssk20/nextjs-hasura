@@ -28,7 +28,7 @@ const About = () => {
       </Typography>
 
       <NextLink href='/article/' passHref>
-        <MuiLink className={styles.link}>Next.js × Supabaseの技術選定</MuiLink>
+        <MuiLink className={styles.link}>Next.js × Hasuraの技術選定</MuiLink>
       </NextLink>
 
       <Typography className={styles.title} classes={{ root: styles.title_root }} variant='h3'>
@@ -36,16 +36,16 @@ const About = () => {
       </Typography>
 
       <NextLink href='/article/' passHref>
-        <MuiLink className={styles.link}>Next.js × Supabaseで実装した機能</MuiLink>
+        <MuiLink className={styles.link}>Next.js × Hasuraで実装した機能</MuiLink>
       </NextLink>
 
       <Typography className={styles.title} classes={{ root: styles.title_root }} variant='h3'>
         githubリポジトリ
       </Typography>
 
-      <NextLink href='https://github.com/rkssk20/nextjs-supabase' passHref>
+      <NextLink href='https://github.com/rkssk20/nextjs-hasura' passHref>
         <MuiLink className={styles.link} target='_blank'>
-          rkssk20/nextjs-supabase
+          rkssk20/nextjs-hasura
         </MuiLink>
       </NextLink>
 

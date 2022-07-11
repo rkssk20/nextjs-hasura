@@ -1,5 +1,4 @@
 import type { MouseEvent } from 'react'
-import type { definitions } from '@/types/supabase'
 
 // カテゴリ
 export type CategoriesProps = {
@@ -7,28 +6,31 @@ export type CategoriesProps = {
   url: 'front' | 'serverless'
 }
 
-// 記事一つ
+// 記事１つ
 export type ArticleType = {
-  id: definitions['articles']['id']
-  user_id: definitions['articles']['user_id']
-  image: definitions['articles']['image']
-  title: definitions['articles']['title']
-  details: definitions['articles']['details']
-  like_count: definitions['articles']['like_count']
-  comment_count: definitions['articles']['comment_count']
-  created_at: definitions['articles']['created_at']
-  avatar: definitions['profiles']['avatar']
-  username: definitions['profiles']['username']
-  categories: string[] | number[]
+  id: string;
+  user_id: string;
+  title: string;
+  image: string | null;
+  details: string;
+  username: string;
+  avatar: string | null;
+  comment_count: number;
+  like_count: number;
+  created_at: string;
+  categories: number[];
 }
 
-// アカウントトップ10
-export type ProfilesSummaryType = {
-  id: definitions['profiles']['id']
-  username: definitions['profiles']['username']
-  avatar: definitions['profiles']['avatar']
-  details: definitions['profiles']['details']
-  follower_count: definitions['profiles']['follower_count']
+// プロフィール
+export type ProfileType = {
+  item: {
+    id: string
+    username: string
+    avatar: string | undefined
+    details: string
+    follow_count: number
+    follower_count: number
+  }
 }
 
 // ダイアログ
@@ -36,28 +38,6 @@ export type DialogProps = {
   dialog: boolean
   handleClose: (e?: MouseEvent) => void
 }
-
-// 記事一つ
-// export type ArticleType = {
-//   id: string;
-//   title: string;
-//   details: string;
-//   image?: string | undefined;
-//   like_count: number;
-//   comment_count: number;
-//   created_at: string;
-//   categories: {
-//     category: number
-//   }[]
-//   profiles: {
-//     id: string
-//     usernmae: string
-//     avatar: string | null
-//   }
-//   likes: {
-//     id: number | undefined
-//   }[]
-// }
 
 // プロフィールの詳細api
 export type ProfileDetailsType = {

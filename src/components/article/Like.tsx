@@ -1,7 +1,8 @@
 import { ReactElement, Dispatch, SetStateAction, useState } from 'react'
 import dynamic from 'next/dynamic'
 import useSelectLikes from '@/hooks/select/useSelectLikes'
-import useMutateLikes from '@/hooks/mutate/useMutateLikes'
+import useInsertLike from '@/hooks/mutate/insert/useInsertLike'
+import useDeleteLike from '@/hooks/mutate/delete/useDeleteLike'
 
 import IconButton from '@mui/material/IconButton'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
@@ -17,27 +18,74 @@ const Like = ({ handle, children }: { handle: () => void; children: ReactElement
   )
 }
 
-type LoginLikeProps = {
+type Props = {
   path: string
   setLikeCountState: Dispatch<SetStateAction<number>>
 }
 
-// ログイン時のいいねボタン
-export const LoginLike = ({ path, setLikeCountState }: LoginLikeProps) => {
-  const { data, isFetching } = useSelectLikes(path)
-  const { mutate, isLoading } = useMutateLikes(path, setLikeCountState)
+// いいねボタン
+const InsertLike = ({path, setLikeCountState}: Props) => {
+  const { mutateFunction, loading } = useInsertLike(path)
 
   // いいね処理
   const handleLikes = () => {
-    if (isFetching || isLoading) return
+    if (loading) return
 
-    mutate(data?.id)
+    mutateFunction({
+      variables: {
+        articles_id: path
+      }
+    }).then(() => {
+      setLikeCountState(prev => prev + 1)
+    })
   }
 
   return (
     <Like handle={handleLikes}>
-      {data?.id && data.id ? <FavoriteIcon /> : <FavoriteBorderIcon color='action' />}
+      <FavoriteBorderIcon color='action' />
     </Like>
+  )
+}
+
+// いいね取り消しボタン
+const DeleteLike = ({ id, path, setLikeCountState }: Props & { id: number }) => {
+  const { mutateFunction, loading } = useDeleteLike(path)
+
+  // いいね処理
+  const handleLikes = () => {
+    if (loading) return
+
+    mutateFunction({
+      variables: {
+        id
+      }
+    }).then(() => {
+      setLikeCountState(prev => prev - 1)
+    })
+  }
+
+  return (
+    <Like handle={handleLikes}>
+      <FavoriteIcon />
+    </Like>
+  )
+}
+
+// ログイン時のいいねボタン
+export const LoginLike = ({ path, setLikeCountState }: Props) => {
+  const { data, loading } = useSelectLikes(path)
+
+  if(loading) return null
+
+  return (
+    data?.likes[0]?.id ?
+    <DeleteLike
+      id={ data.likes[0].id as number }
+      path={ path }
+      setLikeCountState={ setLikeCountState }
+    />
+    :
+    <InsertLike path={ path } setLikeCountState={ setLikeCountState} />
   )
 }
 

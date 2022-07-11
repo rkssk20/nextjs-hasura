@@ -86,7 +86,7 @@ const Side = () => {
           </MuiLink>
         </NextLink>
 
-        <Typography variant='caption'>@2022 Next.js × Supabase</Typography>
+        <Typography variant='caption'>@2022 Next.js × Hasura</Typography>
       </div>
     </div>
   )

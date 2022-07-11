@@ -1,6 +1,7 @@
 import { ReactElement, useState } from 'react'
-import { useSetRecoilState } from 'recoil'
-import { notificateState } from '@/lib/recoil'
+import { useRecoilValue } from 'recoil'
+import { accountState } from '@/lib/recoil'
+import useDeleteProfiles from '@/hooks/mutate/delete/useDeleteProfiles'
 import { ContainedButton, DisabledButton } from '@/atoms/Button'
 import PageLayout from '@/components/provider/PageLayout'
 import ContainerLayout from '@/components/provider/ContainerLayout'
@@ -13,9 +14,20 @@ import Checkbox from '@mui/material/Checkbox'
 
 const Withdrawal = () => {
   const [confirm, setConfirm] = useState(false)
-  const setNotificate = useSetRecoilState(notificateState)
+  const account = useRecoilValue(accountState)
+  const { mutateFunction, loading } = useDeleteProfiles()
 
   const list = ['アカウントデータ', '記事、コメント', '記事、コメントへのいいね']
+
+  const handleDelete = () => {
+    if(loading) return
+    
+    mutateFunction({
+      variables: {
+        id: account.data?.id
+      }
+    })
+  }
 
   return (
     <ContainerLayout
@@ -46,7 +58,7 @@ const Withdrawal = () => {
         />
 
         {confirm ? (
-          <ContainedButton text='削除する' handle={() => setNotificate({ open: true, message: 'ポートフォリオのため機能を制限しています。' })} />
+          <ContainedButton text='削除する' handle={handleDelete} />
         ) : (
           <DisabledButton text='削除する' />
         )}
