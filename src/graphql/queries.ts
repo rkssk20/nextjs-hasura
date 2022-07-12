@@ -211,7 +211,7 @@ export const GET_SEARCH_ARTICLES = gql`
       created_at
       categories
       username
-      # avatar
+      avatar
     }
   }
 `

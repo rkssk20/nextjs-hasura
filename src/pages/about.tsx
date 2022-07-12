@@ -40,7 +40,7 @@ const About = () => {
       </NextLink>
 
       <Typography className={styles.title} classes={{ root: styles.title_root }} variant='h3'>
-        githubリポジトリ
+        GitHubリポジトリ
       </Typography>
 
       <NextLink href='https://github.com/rkssk20/nextjs-hasura' passHref>
