@@ -21,8 +21,6 @@ const About = () => {
       description=''
       image=''
     >
-      <Introduction />
-
       <Typography className={styles.title} classes={{ root: styles.title_root }} variant='h3'>
         技術選定
       </Typography>
@@ -61,6 +59,8 @@ export default About
 About.getLayout = function getLayout(page: ReactElement) {
   return (
     <PageLayout>
+      <Introduction details={ false } />
+
       {page}
 
       <Side />

@@ -281,3 +281,17 @@ export const GET_SEARCH_PROFILES = gql`
     }
   }
 `
+
+// トレンド
+export const GET_TREND = gql`
+  query GetTrend($_in: [String!]!) {
+    articles(where: {id: {_in: $_in}}) {
+      id
+      title
+      image
+      profile {
+        username
+      }
+    }
+  }
+`

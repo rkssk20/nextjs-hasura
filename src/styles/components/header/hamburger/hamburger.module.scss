@@ -24,3 +24,11 @@
     margin: var(--xs) var(--md);
   }
 }
+
+// 他サイトへのリンクボタン
+.other_button {
+  &.other_button_root {
+    display: flex;
+    align-items: center;
+  }
+}

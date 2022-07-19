@@ -1,9 +1,10 @@
 // タイトル
 .title {
+  padding-top: var(--xl);
   padding-bottom: var(--sm);
   border-bottom: var(--border);
   &.title_root {
-    margin-top: var(--xl);
+    // margin-top: var(--xl);
     margin-right: var(--md);
     margin-bottom: var(--md);
     margin-left: var(--md);
