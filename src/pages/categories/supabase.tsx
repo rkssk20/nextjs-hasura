@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react'
 import type { ArticleType } from '@/types/types'
-import useServerlessArticles from '@/hooks/select/useServerlessArticles'
+import useSupabaseArticles from '@/hooks/select/categories/useSupabaseArticles'
 import useObserver from '@/hooks/atoms/useObserver'
 import Circular from '@/atoms/Circular'
 import Header from '@/components/categories/Header'
@@ -9,8 +9,8 @@ import ContainerLayout from '@/components/provider/ContainerLayout'
 import Post from '@/components/post/Post'
 import Side from '@/components/side/Side'
 
-const Serverless = () => {
-  const { data, loading, fetchMore, networkStatus, hasNextPage, cursor } = useServerlessArticles()
+const Supabase = () => {
+  const { data, loading, fetchMore, networkStatus, hasNextPage, cursor } = useSupabaseArticles()
 
   const handleMore = () => {
     hasNextPage && fetchMore({
@@ -25,11 +25,11 @@ const Serverless = () => {
   return (
     <ContainerLayout
       type='article'
-      title='フロント'
+      title='Supabase'
       description=''
       image=''
     >
-      <Header text='サーバーレス' url='serverless' />
+      <Header text='Supabase' url='supabase' />
 
       {/* 投稿一覧 */}
       { data && data.articles.map((item, index) =>
@@ -47,9 +47,9 @@ const Serverless = () => {
   )
 }
 
-export default Serverless
+export default Supabase
 
-Serverless.getLayout = function getLayout (page: ReactElement) {
+Supabase.getLayout = function getLayout (page: ReactElement) {
   return (
     <PageLayout>
       { page }

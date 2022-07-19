@@ -1,16 +1,16 @@
 import { useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { useSetRecoilState } from 'recoil'
-import { GET_FRONT_ARTICLES } from '@/graphql/queries'
-import type { GetFrontArticlesQuery } from '@/types/generated/graphql'
+import { GET_HASURA_ARTICLES } from '@/graphql/queries'
+import type { GetHasuraArticlesQuery } from '@/types/generated/graphql'
 import { notificateState } from '@/lib/recoil'
 
-const useFrontArticles = () => {
+const useHasuraArticles = () => {
   const [hasNextPage, setHasNextPage] = useState(true)
   const [cursor, setCursor] = useState(new Date().toJSON())
   const setNotificate = useSetRecoilState(notificateState)
 
-  const {data, previousData, loading, networkStatus, fetchMore} = useQuery<GetFrontArticlesQuery>(GET_FRONT_ARTICLES, {
+  const {data, previousData, loading, networkStatus, fetchMore} = useQuery<GetHasuraArticlesQuery>(GET_HASURA_ARTICLES, {
     variables: {
       _eq: 1
     },
@@ -44,4 +44,4 @@ const useFrontArticles = () => {
   return { data, loading, fetchMore, networkStatus, hasNextPage, cursor }
 }
 
-export default useFrontArticles
+export default useHasuraArticles

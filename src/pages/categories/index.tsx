@@ -10,16 +10,19 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 
 const Categories = () => {
-  const categories = [
-    {
-      url: 'front',
-      text: 'フロント',
-    },
-    {
-      url: 'serverless',
-      text: 'サーバーレス',
-    },
-  ]
+  const categories = [{
+    url: 'nextjs',
+    text: 'Next.js',
+  }, {
+    url: 'supabase',
+    text: 'Supabase',
+  }, {
+    url: 'hasura',
+    text: 'Hasura'
+  }, {
+    url: 'firebase',
+    text: 'Firebase'
+  }]
 
   return (
     <ContainerLayout

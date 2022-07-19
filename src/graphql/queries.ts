@@ -87,10 +87,10 @@ export const GET_FOLLOWS = gql`
   }
 `
 
-// フロントの投稿10件
-export const GET_FRONT_ARTICLES = gql`
-  query GetFrontArticles($_lt: timestamp = "now()") {
-    articles: front_articles(where: {created_at: {_lt: $_lt}}, order_by: {created_at: desc}, limit: 10) {
+// Next.jsの投稿10件
+export const GET_NEXTJS_ARTICLES = gql`
+  query GetNextjsArticles($_lt: timestamp = "now()") {
+    articles: nextjs_articles(where: {created_at: {_lt: $_lt}}, order_by: {created_at: desc}, limit: 10) {
       id
       title
       image
@@ -106,10 +106,48 @@ export const GET_FRONT_ARTICLES = gql`
   }
 `
 
-// サーバーレスの投稿10件
-export const GET_SERVERLESS_ARTICLES = gql`
-  query GetServerlessArticles($_lt: timestamp = "now()") {
-    articles: serverless_articles(where: {created_at: {_lt: $_lt}}, order_by: {created_at: desc}, limit: 10) {
+// Supabaseの投稿10件
+export const GET_SUPABASE_ARTICLES = gql`
+  query GetSupabaseArticles($_lt: timestamp = "now()") {
+    articles: supabase_articles(where: {created_at: {_lt: $_lt}}, order_by: {created_at: desc}, limit: 10) {
+      avatar
+      categories
+      comment_count
+      created_at
+      details
+      id
+      image
+      like_count
+      title
+      user_id
+      username
+    }
+  }
+`
+
+// 	Hasuraの投稿10件
+export const GET_HASURA_ARTICLES = gql`
+  query GetHasuraArticles($_lt: timestamp = "now()") {
+    articles: hasura_articles(where: {created_at: {_lt: $_lt}}, order_by: {created_at: desc}, limit: 10) {
+      avatar
+      categories
+      comment_count
+      created_at
+      details
+      id
+      image
+      like_count
+      title
+      user_id
+      username
+    }
+  }
+`
+
+// 	Firebaseの投稿10件
+export const GET_FIREBASE_ARTICLES = gql`
+  query GetFirebaseArticles($_lt: timestamp = "now()") {
+    articles: firebase_articles(where: {created_at: {_lt: $_lt}}, order_by: {created_at: desc}, limit: 10) {
       avatar
       categories
       comment_count

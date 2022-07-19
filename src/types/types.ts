@@ -2,8 +2,8 @@ import type { MouseEvent } from 'react'
 
 // カテゴリ
 export type CategoriesProps = {
-  text: 'フロント' | 'サーバーレス'
-  url: 'front' | 'serverless'
+  text: 'Next.js' | 'Supabase' | 'Hasura' | 'Firebase'
+  url: 'nextjs' | 'supabase' | 'hasura' |'firebase'
 }
 
 // 記事１つ

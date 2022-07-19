@@ -91,6 +91,8 @@ const Edit = () => {
         details: '',
         categories: []
       })
+
+      router.push('/')
     })
   }
 

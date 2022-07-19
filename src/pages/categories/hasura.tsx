@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react'
 import type { ArticleType } from '@/types/types'
-import useFrontArticles from '@/hooks/select/useFrontArticles'
+import useHasuraArticles from '@/hooks/select/categories/useHasuraArticles'
 import useObserver from '@/hooks/atoms/useObserver'
 import Circular from '@/atoms/Circular'
 import Header from '@/components/categories/Header'
@@ -9,8 +9,8 @@ import ContainerLayout from '@/components/provider/ContainerLayout'
 import Post from '@/components/post/Post'
 import Side from '@/components/side/Side'
 
-const Front = () => {
-  const { data, loading, fetchMore, networkStatus, hasNextPage, cursor } = useFrontArticles()
+const Hasura = () => {
+  const { data, loading, fetchMore, networkStatus, hasNextPage, cursor } = useHasuraArticles()
 
   const handleMore = () => {
     hasNextPage && fetchMore({
@@ -25,11 +25,11 @@ const Front = () => {
   return (
     <ContainerLayout
       type='article'
-      title='フロント'
+      title='Hasura'
       description=''
       image=''
     >
-      <Header text='フロント' url='front' />
+      <Header text='Hasura' url='hasura' />
 
       {/* 投稿一覧 */}
       { data && data.articles.map((item, index) =>
@@ -47,9 +47,9 @@ const Front = () => {
   )
 }
 
-export default Front
+export default Hasura
 
-Front.getLayout = function getLayout(page: ReactElement) {
+Hasura.getLayout = function getLayout(page: ReactElement) {
   return (
     <PageLayout>
       {page}
