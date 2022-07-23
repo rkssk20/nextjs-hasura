@@ -114,6 +114,30 @@ const Hamburger = ({ hamburger, setHamburger }: HamburgerProps) => {
             </ListItemText>
           </ListItemButton>
         </Link>
+
+        <a href='https://github.com/rkssk20/nextjs-hasura' target='_blank'>
+          <ListItemButton
+            className={styles.list_item_button}
+            classes={{ root: styles.list_item_button_root }}
+            component='a'
+            onClick={handleClose}
+          >
+            <ListItemIcon>
+              <GitHubIcon />
+            </ListItemIcon>
+
+            <ListItemText
+              primaryTypographyProps={{
+                classes: { root: styles.other_button },
+                className: styles.other_button_root,
+                variant: 'h5'
+              }}
+            >
+              ソースコード
+              <OpenInNewIcon fontSize='small' />
+            </ListItemText>
+          </ListItemButton>
+        </a>
       </List>
 
       <Divider className={styles.divider} classes={{ root: styles.divider_root }} />

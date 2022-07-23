@@ -8,18 +8,18 @@ type Props = {
   type: 'website' | 'article' | 'profile'
   title: string
   description: string
-  image: string | number
+  image: string
   children: ReactNode
 }
 
 const ContainerLayout: NextPage<Props> = ({ type, title, description, image, children }) => {
   const ogpTitle = title ? title + ' | Next.js × Hasura' : 'Next.js × Hasura'
+
   const ogpDescription = description
     ? description
     : 'Next.jsとHasuraを使用したテンプレート。技術ブログ風。'
-  const ogpImageUrl = image
-    ? `${process.env.NEXT_PUBLIC_STORAGE_URL}/${image}.png`
-    : `${process.env.NEXT_PUBLIC_STORAGE_URL}/top.png`
+
+  const ogpImageUrl = image ?? '/favicon.png'
 
   return (
     <div className={styles.container}>

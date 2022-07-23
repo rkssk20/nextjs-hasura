@@ -13,7 +13,6 @@ const Introduction = ({ details }: { details: boolean }) => {
         className={styles.title}
         classes={{ root: styles.title_root }}
         variant='h1'
-        // color='white'
       >
         Next.js × Hasura
       </Typography>
@@ -22,7 +21,6 @@ const Introduction = ({ details }: { details: boolean }) => {
         className={styles.subtitle}
         classes={{ root: styles.subtitle_root }}
         variant='caption'
-        // color='white'
       >
         技術ブログ風のポートフォリオ
       </Typography>
@@ -31,7 +29,6 @@ const Introduction = ({ details }: { details: boolean }) => {
         className={styles.text}
         classes={{ root: styles.text_root }}
         variant='h5'
-        // color='white'
         >
         ログイン・投稿・いいね・コメントなどお試しください
       </Typography>

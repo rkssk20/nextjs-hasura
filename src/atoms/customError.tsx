@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 const CustomError = ({ status }: { status: '404' | '500' }) => {
   return (
     <div className={styles.field}>
-      <Image src='/top.png' width={100} height={100} quality={80} />
+      <Image src='/favicon.png' width={100} height={100} quality={80} />
 
       <div className={styles.text_field}>
         <Typography variant='h5'>{status}</Typography>

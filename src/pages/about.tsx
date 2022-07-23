@@ -30,14 +30,6 @@ const About = () => {
       </NextLink>
 
       <Typography className={styles.title} classes={{ root: styles.title_root }} variant='h3'>
-        機能一覧
-      </Typography>
-
-      <NextLink href='/article/' passHref>
-        <MuiLink className={styles.link}>Next.js × Hasuraで実装した機能</MuiLink>
-      </NextLink>
-
-      <Typography className={styles.title} classes={{ root: styles.title_root }} variant='h3'>
         GitHubリポジトリ
       </Typography>
 

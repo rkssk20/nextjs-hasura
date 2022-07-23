@@ -109,7 +109,7 @@ const Article = ({ item, path }: ArticleProps) => {
       type='article'
       title={item.title}
       description={item.details.replace(/\_|\*|\\|\`|\#|\+|\-|\!|\{|\}|\[|\]/g, '').slice(0, 100)}
-      image={item.image ? item.image : 'nextjssupabase'}
+      image={item.image ?? ''}
     >
       {/* 画像 */}
       {item.image ? <ArticleImage image={item.image} /> : <NoArtcileImage title={item.title} />}

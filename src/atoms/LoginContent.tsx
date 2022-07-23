@@ -21,6 +21,12 @@ const LoginContent = () => {
     },
   ]
 
+  const handleEazy = () => {
+    signIn('credentials', {
+      callbackUrl: '/'
+    })
+  }
+
   const handleAuth = async (provider: string) => {
     signIn((provider === 'Twitter') ? 'twitter' : (provider === 'Facebook') ? 'facebook' : 'google', {
       callbackUrl: '/'
@@ -40,6 +46,7 @@ const LoginContent = () => {
         classes={{ root: styles.eazy_root }}
         variant='contained'
         color='info'
+        onClick={ handleEazy }
       >
         簡単ログイン
       </Button>

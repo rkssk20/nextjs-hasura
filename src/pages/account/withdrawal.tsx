@@ -20,11 +20,13 @@ const Withdrawal = () => {
   const list = ['アカウントデータ', '記事、コメント', '記事、コメントへのいいね']
 
   const handleDelete = () => {
-    if(loading) return
+    if(!account.data?.id || loading) return
+
+    console.log(account.data.id)
     
     mutateFunction({
       variables: {
-        id: account.data?.id
+        id: account.data.id
       }
     })
   }
