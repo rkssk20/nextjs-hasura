@@ -1,14 +1,18 @@
 ## Next.js × Hasura
 
-Next.js と Hasura を使用した技術ブログ風のポートフォリオです。
+[https://nextjs-hasura.tk](https://nextjs-hasura.tk)
 
-※ 無料版 Hasura のため、一ヶ月 1GB の制限を超えると利用できない可能性があります
+※ 当サイトは Hasura 無料枠で運用しているため、リージョンが遠くて少し通信が遅いです
+※ 無料枠は 1GB までです。画像を DB に blob で保存しているため、制限を迎える可能性があります。
 
-[Next.js × Hasura](https://nextjs-hasura.tk)
+Next.js と Hasura を使用した技術ブログ風のポートフォリオです。ログイン・投稿・いいね・コメントなどをお試しください
+[Supabase 版](https://nextjs-supabase.tk)と[Firebase 版](https://nextjs-firebase)もあります
+
+<br>
 
 ## 技術選定
 
-詳細は、[今回の技術選定](https://nextjs-hasura.tk)をご覧ください。
+詳細は[Next.js × Hasura の技術選定](https://nextjs-hasura/article/2VUSR4cSHml0oVyiQlLsU)
 
 ### フロント
 
@@ -22,7 +26,7 @@ Next.js と Hasura を使用した技術ブログ風のポートフォリオで�
 ### サーバー
 
 - Hasura (GraphQL サーバー)
-- NextAuth.js (認証)
+- NextAuth.js(認証ライブラリ)
 
 ### ホスティング
 
@@ -43,20 +47,32 @@ Next.js と Hasura を使用した技術ブログ風のポートフォリオで�
 - 記事・コメント・返信へのいいね
 - アカウント作成、削除、プロフィール変更
 - ユーザーのフォロー
-- 記事の画像・アバター画像のアップロード
+- 記事やアバター画像のアップロード
 
 など
 
-### 検索
-
 ### 検索履歴、下書き
 
-- Recoil Persist
+- Recoil (Persist)
 
 ### レスポンシブデザイン
 
-- SCSS と Mui
+- Mui と SCSS
+
+### トレンド一覧
+
+- Google Analytics で PV 数を測定
+- Google Analytics Data API で人気のページを取得
 
 ### Markdown
 
+- エディターは react-simplemde-editor
+- unified で変換して表示
+
 ### 無限スクロール
+
+- Intersection Observer API で ref を監視
+
+### 検索
+
+- iLike で部分一致

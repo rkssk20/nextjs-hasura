@@ -7,7 +7,16 @@ const useMutateCommentsLikes = () => {
   const setNotificate = useSetRecoilState(notificateState)
 
   const [mutateFunction, { loading }] = useMutation(INSERT_COMMENTS_LIKES, {
-    onCompleted: () => {
+    update: (cache, { data }) => {
+      cache.modify({
+        fields: {
+          comments (existing = []) {
+            return [data.insert_comments_likes_one, ...existing]
+          }
+        }
+      })
+    },
+    onCompleted: () => { 
       setNotificate({
         open: true,
         message: 'コメントにいいねしました'

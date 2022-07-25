@@ -1,6 +1,6 @@
 import { ReactElement, useState } from 'react'
-import { useRecoilValue } from 'recoil'
-import { accountState } from '@/lib/recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { accountState, notificateState } from '@/lib/recoil'
 import useDeleteProfiles from '@/hooks/mutate/delete/useDeleteProfiles'
 import { ContainedButton, DisabledButton } from '@/atoms/Button'
 import PageLayout from '@/components/provider/PageLayout'
@@ -14,6 +14,7 @@ import Checkbox from '@mui/material/Checkbox'
 
 const Withdrawal = () => {
   const [confirm, setConfirm] = useState(false)
+  const setNotificate = useSetRecoilState(notificateState)
   const account = useRecoilValue(accountState)
   const { mutateFunction, loading } = useDeleteProfiles()
 
@@ -22,7 +23,14 @@ const Withdrawal = () => {
   const handleDelete = () => {
     if(!account.data?.id || loading) return
 
-    console.log(account.data.id)
+    if(account.data.id === 'DHpXgNxQeTr5HuEnSReGR') {
+      setNotificate({
+        open: true,
+        message: 'かんたんログインは削除できません'
+      })
+
+      return
+    }
     
     mutateFunction({
       variables: {

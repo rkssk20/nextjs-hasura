@@ -16,16 +16,16 @@ export const GET_PERSON_ARTICLES = gql`
   query GetPersonArticles($_eq: String!, $_lt: timestamp = "now()") {
     articles: person_articles(where: {user_id: {_eq: $_eq}, created_at: {_lt: $_lt}}, order_by: {created_at: desc}, limit: 10) {
       id
-      user_id
       title
-      image
       details
-      username
-      avatar
+      image
       comment_count
       like_count
-      created_at
       categories
+      created_at
+      user_id
+      username
+      avatar
     }
   }
 `
@@ -129,17 +129,17 @@ export const GET_SUPABASE_ARTICLES = gql`
 export const GET_HASURA_ARTICLES = gql`
   query GetHasuraArticles($_lt: timestamp = "now()") {
     articles: hasura_articles(where: {created_at: {_lt: $_lt}}, order_by: {created_at: desc}, limit: 10) {
-      avatar
-      categories
-      comment_count
-      created_at
-      details
       id
-      image
-      like_count
       title
+      details
+      image
+      comment_count
+      like_count
+      created_at
+      categories
       user_id
       username
+      avatar
     }
   }
 `

@@ -119,7 +119,6 @@ const Hamburger = ({ hamburger, setHamburger }: HamburgerProps) => {
           <ListItemButton
             className={styles.list_item_button}
             classes={{ root: styles.list_item_button_root }}
-            component='a'
             onClick={handleClose}
           >
             <ListItemIcon>
@@ -147,7 +146,6 @@ const Hamburger = ({ hamburger, setHamburger }: HamburgerProps) => {
           <ListItemButton
             className={styles.list_item_button}
             classes={{ root: styles.list_item_button_root }}
-            component='a'
             onClick={handleClose}
           >
             <ListItemIcon>
@@ -172,7 +170,6 @@ const Hamburger = ({ hamburger, setHamburger }: HamburgerProps) => {
           <ListItemButton
             className={styles.list_item_button}
             classes={{ root: styles.list_item_button_root }}
-            component='a'
             onClick={handleClose}
           >
             <ListItemIcon>

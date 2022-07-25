@@ -7,6 +7,15 @@ const useDeleteRepliesLikes = () => {
   const setNotificate = useSetRecoilState(notificateState)
 
   const [mutateFunction, { loading }] = useMutation(DELETE_REPLIES_LIKES, {
+    update: (cache, { data }) => {
+      cache.modify({
+        fields: {
+          replies: (existing = []) => {
+            return [data.delete_replies_likes_by_pk, ...existing]
+          }
+        }
+      })
+    },
     onCompleted: () => {
       setNotificate({
         open: true,

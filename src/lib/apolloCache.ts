@@ -1,7 +1,33 @@
 import { InMemoryCache } from '@apollo/client'
 
 const cache = new InMemoryCache({
+  // addTypename: false,
   typePolicies: {
+    person_articles: {
+      keyFields: (args) => {        
+        return `articles:${ args.id }`
+      },
+    },
+    nextjs_articles: {
+      keyFields: (args) => {        
+        return `articles:${ args.id }`
+      },
+    },
+    supabase_articles: {
+      keyFields: (args) => {        
+        return `articles:${ args.id }`
+      },
+    },
+    hasura_articles: {
+      keyFields: (args) => {        
+        return `articles:${ args.id }`
+      },
+    },
+    firebase_articles: {
+      keyFields: (args) => {        
+        return `articles:${ args.id }`
+      },
+    },
     Query: {
       fields: {
         // その人の投稿10件
@@ -84,7 +110,10 @@ const cache = new InMemoryCache({
           
         },
         comments: {
-          keyArgs: false,
+          keyArgs: (args) => {
+            args?.where?.created_at && delete args.where.created_at
+            return JSON.stringify(args)
+          },
           merge: (existing = [], incoming) => {
             if(!existing) {
               return incoming

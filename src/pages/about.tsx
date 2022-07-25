@@ -25,7 +25,7 @@ const About = () => {
         技術選定
       </Typography>
 
-      <NextLink href='/article/' passHref>
+      <NextLink href='/article/2VUSR4cSHml0oVyiQlLsU' passHref>
         <MuiLink className={styles.link}>Next.js × Hasuraの技術選定</MuiLink>
       </NextLink>
 

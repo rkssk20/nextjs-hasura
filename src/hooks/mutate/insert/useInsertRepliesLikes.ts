@@ -7,6 +7,15 @@ const useInsertRepliesLikes = () => {
   const setNotificate = useSetRecoilState(notificateState)
 
   const [mutateFunction, { loading }] = useMutation(INSERT_REPLIES_LIKES, {
+    update: (cache, { data }) => {
+      cache.modify({
+        fields: {
+          replies (existing = []) {
+            return [data.insert_replies_likes_one, ...existing]
+          }
+        }
+      })
+    },
     onCompleted: () => {
       setNotificate({
         open: true,

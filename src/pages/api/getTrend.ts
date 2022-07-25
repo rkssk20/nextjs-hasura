@@ -38,8 +38,42 @@ const getTrend = async (req: NextApiRequest, res: NextApiResponse) => {
       limit: 5
     })
 
+    let array: any[] = []
+        
+    response.rows?.map((item: any) => (
+      array.push(item.dimensionValues[0].value.replace('/article/', ''))
+    ))
+
+    const data = fetch(process.env.NEXT_PUBLIC_HASURA_ENDPOINT as string, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        query: `
+          query GetTrend($_in: [String!]!) {
+            articles(where: {id: {_in: $_in}}) {
+              id
+              title
+              image
+              profile {
+                username
+              }
+            }
+          }
+        `,
+        variables: {
+          _in: array
+        },
+      })
+    })
+
+    const result = await (await data).json()
+
+    // 一日キャッシュ
+    res.setHeader('Cache-Control', 's-maxage=86400');
     res.status(200).json({
-      response: response.rows
+      response: result
     })
   } catch {
     res.status(400).json({

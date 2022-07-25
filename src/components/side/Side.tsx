@@ -17,8 +17,6 @@ const Side = () => {
   const data = useTrend()
   const router = useRouter()
 
-  console.log(data)
-
   if(data && data.articles.length === 0) return null
 
   return (

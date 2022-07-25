@@ -7,6 +7,18 @@ const useInsertReplies = () => {
   const setNotificate = useSetRecoilState(notificateState)
 
   const [mutateFunction, { loading}] = useMutation(INSERT_REPLIES, {
+    update: (cache, { data }) => {
+      cache.modify({
+        fields: {
+          comments (existing = []) {
+            return [data.insert_replies_one, ...existing]
+          },
+          replies (existing = []) {
+            return [data.insert_replies_one, ...existing]
+          },
+        }
+      })
+    },
     onCompleted: () => {
       setNotificate({
         open: true,

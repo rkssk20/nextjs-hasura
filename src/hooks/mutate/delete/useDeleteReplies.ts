@@ -7,6 +7,15 @@ const useDeleteReplies = (handleClose: () => void) => {
   const setNotificate = useSetRecoilState(notificateState)
 
   const [mutateFunction, { loading}] = useMutation(DELETE_REPLIES, {
+    update: (cache, { data }) => {
+      cache.modify({
+        fields: {
+          replies (existing = []) {
+            return [...data, existing]
+          }
+        }
+      })
+    },
     onCompleted: () => {
       setNotificate({
         open: true,

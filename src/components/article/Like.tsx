@@ -20,12 +20,12 @@ const Like = ({ handle, children }: { handle: () => void; children: ReactElement
 
 type Props = {
   path: string
-  setLikeCountState: Dispatch<SetStateAction<number>>
+  setLikeCount: Dispatch<SetStateAction<number>>
 }
 
 // いいねボタン
-const InsertLike = ({path, setLikeCountState}: Props) => {
-  const { mutateFunction, loading } = useInsertLike(path)
+const InsertLike = ({path, setLikes, setLikeCount}: Props & { setLikes: Dispatch<SetStateAction<number | null>>  }) => {
+  const { mutateFunction, loading } = useInsertLike()
 
   // いいね処理
   const handleLikes = () => {
@@ -35,8 +35,10 @@ const InsertLike = ({path, setLikeCountState}: Props) => {
       variables: {
         articles_id: path
       }
-    }).then(() => {
-      setLikeCountState(prev => prev + 1)
+    }).then((data) => {
+      data.data.insert_likes_one.id && setLikes(data.data.insert_likes_one.id)
+
+      setLikeCount(prev => prev + 1)
     })
   }
 
@@ -48,7 +50,7 @@ const InsertLike = ({path, setLikeCountState}: Props) => {
 }
 
 // いいね取り消しボタン
-const DeleteLike = ({ id, path, setLikeCountState }: Props & { id: number }) => {
+const DeleteLike = ({ id, path, setLikes, setLikeCount }: Props & { id: number,  setLikes: Dispatch<SetStateAction<number | null>> }) => {
   const { mutateFunction, loading } = useDeleteLike(path)
 
   // いいね処理
@@ -60,7 +62,8 @@ const DeleteLike = ({ id, path, setLikeCountState }: Props & { id: number }) => 
         id
       }
     }).then(() => {
-      setLikeCountState(prev => prev - 1)
+      setLikeCount(prev => prev - 1)
+      setLikes(null)
     })
   }
 
@@ -72,20 +75,25 @@ const DeleteLike = ({ id, path, setLikeCountState }: Props & { id: number }) => 
 }
 
 // ログイン時のいいねボタン
-export const LoginLike = ({ path, setLikeCountState }: Props) => {
-  const { data, loading } = useSelectLikes(path)
+export const LoginLike = ({ path, setLikeCount }: Props) => {
+  const { data, loading, likes, setLikes } = useSelectLikes(path)
 
   if(loading) return null
 
   return (
-    data?.likes[0]?.id ?
+    likes ?
     <DeleteLike
-      id={ data.likes[0].id as number }
+      id={ likes }
       path={ path }
-      setLikeCountState={ setLikeCountState }
+      setLikes={ setLikes }
+      setLikeCount={ setLikeCount }
     />
     :
-    <InsertLike path={ path } setLikeCountState={ setLikeCountState} />
+    <InsertLike
+      path={ path }
+      setLikes={ setLikes }
+      setLikeCount={ setLikeCount}
+    />
   )
 }
 
