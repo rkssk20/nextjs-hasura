@@ -1,6 +1,8 @@
-import type { MouseEvent, TouchEvent } from 'react'
+import { useState, useEffect, MouseEvent, TouchEvent } from 'react'
 import NextLink from 'next/link'
+import { getDownloadURL, ref } from 'firebase/storage'
 import CreatedAt from '@/lib/createdAt'
+import { storage } from '@/lib/firebase'
 import AvatarIcon from '@/atoms/Icon/AvatarIcon'
 import InitialIcon from '@/atoms/Icon/InitialIcon'
 
@@ -16,7 +18,18 @@ interface HeaderProps {
 }
 
 const Header = ({ id, username, avatar, created_at }: HeaderProps) => {
+  const [image, setImage] = useState('')
   const created = CreatedAt(created_at)
+
+  useEffect(() => {
+    if(avatar) {
+      (async() => {
+        const result = await getDownloadURL(ref(storage, avatar))
+
+        setImage(result)
+      })()
+    }
+  }, [avatar])
 
   return (
     <div className={styles.field}>
@@ -28,9 +41,9 @@ const Header = ({ id, username, avatar, created_at }: HeaderProps) => {
           onMouseDown={(e: MouseEvent<HTMLSpanElement>) => e.stopPropagation()}
           onTouchStart={(e: TouchEvent<HTMLSpanElement>) => e.stopPropagation()}
         >
-          {avatar ? (
+          {image ? (
             <AvatarIcon
-              src={avatar}
+              src={image}
               variant='link'
             />
           ) : username && (

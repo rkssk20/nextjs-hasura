@@ -1,5 +1,6 @@
 import { useEffect, Dispatch, SetStateAction } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useRecoilValue } from 'recoil'
 import { accountState } from '@/lib/recoil'
@@ -16,6 +17,8 @@ import ListItemText from '@mui/material/ListItemText'
 import Divider from '@mui/material/Divider'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp'
 import TagIcon from '@mui/icons-material/Tag'
+import GitHubIcon from '@mui/icons-material/GitHub';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 type HamburgerProps = {
   hamburger: boolean
@@ -111,6 +114,81 @@ const Hamburger = ({ hamburger, setHamburger }: HamburgerProps) => {
             </ListItemText>
           </ListItemButton>
         </Link>
+
+        <a href='https://github.com/rkssk20/nextjs-hasura' target='_blank'>
+          <ListItemButton
+            className={styles.list_item_button}
+            classes={{ root: styles.list_item_button_root }}
+            onClick={handleClose}
+          >
+            <ListItemIcon>
+              <GitHubIcon />
+            </ListItemIcon>
+
+            <ListItemText
+              primaryTypographyProps={{
+                classes: { root: styles.other_button },
+                className: styles.other_button_root,
+                variant: 'h5'
+              }}
+            >
+              ソースコード
+              <OpenInNewIcon fontSize='small' />
+            </ListItemText>
+          </ListItemButton>
+        </a>
+      </List>
+
+      <Divider className={styles.divider} classes={{ root: styles.divider_root }} />
+
+      <List>
+        <a href='https://nextjs-supabase.tk' target='_blank'>
+          <ListItemButton
+            className={styles.list_item_button}
+            classes={{ root: styles.list_item_button_root }}
+            onClick={handleClose}
+          >
+            <ListItemIcon>
+              <Image src='/image/supabase.png' width='24' height='24' />
+            </ListItemIcon>
+
+            <ListItemText
+              primaryTypographyProps={{
+                classes: { root: styles.other_button },
+                className: styles.other_button_root,
+                variant: 'h5',
+                color: "#2b825b"
+              }}
+            >
+              Suapabse版 
+              <OpenInNewIcon fontSize='small' />
+            </ListItemText>
+          </ListItemButton>
+        </a>
+
+        <a href='https://nextjs-firebase.tk' target='_blank'>
+          <ListItemButton
+            className={styles.list_item_button}
+            classes={{ root: styles.list_item_button_root }}
+            onClick={handleClose}
+          >
+            <ListItemIcon>
+              <Image src='/image/firebase.png' width='24' height='24' />
+            </ListItemIcon>
+
+            <ListItemText
+              primaryTypographyProps={{
+                classes: { root: styles.other_button },
+                className: styles.other_button_root,
+                variant: 'h5',
+                color: "#FFA000"
+              }}
+            >
+              Firebase版 
+              <OpenInNewIcon fontSize='small' />
+            </ListItemText>
+          </ListItemButton>
+        </a>
       </List>
     </Drawer>
   )

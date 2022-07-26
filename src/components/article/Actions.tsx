@@ -18,11 +18,12 @@ type ActionsProps = {
   like_count: number
   user_id: string
   path: string
+  image: string | undefined
 }
 
-const Actions = ({ like_count, user_id, path }: ActionsProps) => {
+const Actions = ({ like_count, user_id, path, image }: ActionsProps) => {
+  const [likeCount, setLikeCount] = useState(like_count)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const [likeCountState, setLikeCountState] = useState(like_count)
   const [dialog, setDialog] = useState(false)
   const open = Boolean(anchorEl)
   const account = useRecoilValue(accountState)
@@ -42,7 +43,7 @@ const Actions = ({ like_count, user_id, path }: ActionsProps) => {
     <div className={styles.card_actions}>
       {!account.loading && (
         account.data ? (
-          <LoginLike path={path} setLikeCountState={setLikeCountState} />
+          <LoginLike path={path} setLikeCount={setLikeCount} />
         ) : (
           <LogoutLike />
         )
@@ -50,7 +51,7 @@ const Actions = ({ like_count, user_id, path }: ActionsProps) => {
 
       {/* いいね数 */}
       <Typography className={styles.favorite_count} variant='caption'>
-        {likeCountState.toLocaleString()}
+        {likeCount.toLocaleString()}
       </Typography>
 
       {/* 詳細ボタン */}
@@ -78,7 +79,12 @@ const Actions = ({ like_count, user_id, path }: ActionsProps) => {
 
       {dialog && (user_id === account.data?.id) ? (
         // 削除ダイアログ
-        <ArticleDelete dialog={dialog} handleClose={() => setDialog(false)} path={path} />
+        <ArticleDelete
+          dialog={dialog}
+          handleClose={() => setDialog(false)}
+          path={path}
+          image={ image }
+        />
       ) : (
         // 報告ダイアログ
         <Report dialog={dialog} handleClose={() => setDialog(false)} />

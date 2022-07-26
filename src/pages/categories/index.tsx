@@ -10,16 +10,19 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 
 const Categories = () => {
-  const categories = [
-    {
-      url: 'front',
-      text: 'フロント',
-    },
-    {
-      url: 'serverless',
-      text: 'サーバーレス',
-    },
-  ]
+  const categories = [{
+    url: 'nextjs',
+    text: 'Next.js',
+  }, {
+    url: 'supabase',
+    text: 'Supabase',
+  }, {
+    url: 'hasura',
+    text: 'Hasura'
+  }, {
+    url: 'firebase',
+    text: 'Firebase'
+  }]
 
   return (
     <ContainerLayout
@@ -48,8 +51,8 @@ const Categories = () => {
               component='a'
               startIcon={
                 <Image
-                  width={80}
-                  height={80}
+                  layout='fill'
+                  objectFit='contain'
                   quality={70}
                   alt={item.text}
                   src={`/image/${item.url}.png`}

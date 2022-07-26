@@ -1,5 +1,8 @@
 import type { GetStaticProps, GetStaticPaths } from 'next'
+import { useState, useEffect } from 'react'
+import { ref, getDownloadURL } from 'firebase/storage'
 import RemarkDown from '@/lib/remarkDown'
+import { storage } from '@/lib/firebase'
 import ArticleImage from '@/atoms/Image/ArticleImage'
 import NoArtcileImage from '@/atoms/Image/NoArticleImage'
 import PageLayout from '@/components/provider/PageLayout'
@@ -104,15 +107,27 @@ interface ArticleProps {
 }
 
 const Article = ({ item, path }: ArticleProps) => {
+  const [image, setImage] = useState('')
+  
+  useEffect(() => {
+    if(item.image) {
+      (async() => {
+        const result = await getDownloadURL(ref(storage, item.image))
+
+        setImage(result)
+      })()
+    }
+  }, [item.image])
+
   return (
     <ContainerLayout
       type='article'
       title={item.title}
       description={item.details.replace(/\_|\*|\\|\`|\#|\+|\-|\!|\{|\}|\[|\]/g, '').slice(0, 100)}
-      image={item.image ? item.image : 'nextjssupabase'}
+      image={item.image ?? ''}
     >
       {/* 画像 */}
-      {item.image ? <ArticleImage image={item.image} /> : <NoArtcileImage title={item.title} />}
+      {image ? <ArticleImage image={image} /> : <NoArtcileImage title={item.title} />}
 
       {/* タグ、タイトル、投稿日時 */}
       <Title categories={item.categories} title={item.title} />
@@ -141,7 +156,12 @@ const Article = ({ item, path }: ArticleProps) => {
       </div>
 
       {/* いいね、詳細ボタン */}
-      <Actions path={path} user_id={item.user_id} like_count={item.like_count} />
+      <Actions
+        path={path}
+        user_id={item.user_id}
+        like_count={item.like_count}
+        image={ item.image }
+      />
 
       {/* コメント欄 */}
       <Comments path={path} comments={item.comment_count} />

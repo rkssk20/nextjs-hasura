@@ -1,10 +1,11 @@
 // 背景
 .title_back {
   width: 100%;
-  height: calc((100vw / 16) * 9);
   max-height: 337.5px;
+  padding: var(--lg);
   margin-bottom: var(--lg);
-  background-color: #1EB4D4;
+  // background: linear-gradient(to bottom right,#8cffcb, #8cc0ff);
+  background: linear-gradient(108.54deg, #E8F8FB, #EBF8F2, #FFF5E5);
   border-radius: 16px;
   display: flex;
   flex-direction: column;
@@ -12,12 +13,49 @@
   align-items: center;
 }
 
-// テキスト
+// タイトル
 .title {
   user-select: none;
   &.title_root {
-    padding: var(--md);
-    font-weight: 600;
     text-align: center;
+  }
+}
+
+// サブタイトル
+.subtitle {
+  @extend .title;
+  &.subtitle_root {
+    @extend .title_root;
+    padding-top: 2px;
+    padding-bottom: var(--xl);
+  }
+}
+
+// テキスト
+.text {
+  @extend .title;
+  &.text_root {
+    @extend .title_root;
+    padding-bottom: var(--xl);
+  }
+}
+
+// Hasura版
+.supabase {
+  padding: 0;
+  text-decoration: underline;
+  text-decoration-color: #2b825b;
+  &:hover {
+    text-decoration-color: #1e5b3f;
+  }
+}
+
+// Firebase版
+.firebase {
+  padding: 0;
+  text-decoration: underline;
+  text-decoration-color: #FFA000;
+  &:hover {
+    text-decoration-color: #b27000;
   }
 }

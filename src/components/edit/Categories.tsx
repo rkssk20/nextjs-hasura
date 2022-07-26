@@ -35,7 +35,13 @@ const Categories = ({ categories, setCategories }: CategoriesProps) => {
           </span>
         ) : (
           selected.map((item) => (
-            <span key={item}>{item === 0 ? '# フロント' : '# サーバーレス'}</span>
+            <span key={item}>
+              {
+                (item === 0) ? '# Next.js' :
+                (item === 1) ? '# Supabase' :
+                (item === 2) ? '# Hasura' : '# Firebase'
+              }
+            </span>
           ))
         )
       }
@@ -52,7 +58,7 @@ const Categories = ({ categories, setCategories }: CategoriesProps) => {
       IconComponent={() => <></>}
       onChange={handleChange}
     >
-      {['# フロント', '# サーバーレス'].map((item, index) => (
+      {['# Next.js', '# Supabase', '# Hasura', '# Firebase'].map((item, index) => (
         <MenuItem
           className={styles.menu_item}
           classes={{ root: styles.menu_item_selected }}

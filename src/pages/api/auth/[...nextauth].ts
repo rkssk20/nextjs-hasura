@@ -2,6 +2,7 @@ import NextAuth from "next-auth/next";
 import GoogleProvider from 'next-auth/providers/google'
 import TwitterProvider from 'next-auth/providers/twitter'
 import FacebookProvider from 'next-auth/providers/facebook'
+import CredentialProvider from 'next-auth/providers/credentials'
 import type { JWT } from "next-auth/jwt";
 import * as jsonwebtoken from "jsonwebtoken";
 
@@ -18,6 +19,16 @@ export default NextAuth({
     FacebookProvider({
       clientId: process.env.NEXT_PUBLIC_FACEBOOK_CLIENT as string,
       clientSecret: process.env.NEXT_PUBLIC_FACEBOOK_SECRET as string
+    }),
+    CredentialProvider({
+      credentials: {},
+      authorize() {
+        return {
+          id: 'DHpXgNxQeTr5HuEnSReGR',
+          name: 'かんたんログイン',
+          avatar: null
+        };
+      }
     })
   ],
   secret: process.env.SECRET,

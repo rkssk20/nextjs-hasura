@@ -7,13 +7,23 @@ const useInsertComments = () => {
   const setNotificate = useSetRecoilState(notificateState)
 
   const [mutateFunction, { loading}] = useMutation(INSERT_COMMENTS, {
+    update: (cache, { data }) => {
+      cache.modify({
+        fields: {
+          comments(existing = []) {
+            return [data.comments, ...existing]
+          }
+        }
+      })
+    },
     onCompleted: () => {
       setNotificate({
         open: true,
         message: 'コメントを投稿しました'
       })
     },
-    onError: () => {
+    onError: (e) => {
+      console.log(e)
       setNotificate({
         open: true,
         message: 'エラーが発生しました'

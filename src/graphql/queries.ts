@@ -11,21 +11,30 @@ export const GET_PROFILES_DETAILS = gql`
   }
 `
 
+// アバターだけ
+export const GET_PROFILES_AVATAR = gql`
+  query GetProfilesAvatar($id: String!) {
+    profiles_by_pk(id: $id) {
+      avatar
+    }
+  }
+`
+
 // その人の投稿10件
 export const GET_PERSON_ARTICLES = gql`
   query GetPersonArticles($_eq: String!, $_lt: timestamp = "now()") {
     articles: person_articles(where: {user_id: {_eq: $_eq}, created_at: {_lt: $_lt}}, order_by: {created_at: desc}, limit: 10) {
       id
-      user_id
       title
-      image
       details
-      username
-      avatar
+      image
       comment_count
       like_count
-      created_at
       categories
+      created_at
+      user_id
+      username
+      avatar
     }
   }
 `
@@ -87,10 +96,10 @@ export const GET_FOLLOWS = gql`
   }
 `
 
-// フロントの投稿10件
-export const GET_FRONT_ARTICLES = gql`
-  query GetFrontArticles($_lt: timestamp = "now()") {
-    articles: front_articles(where: {created_at: {_lt: $_lt}}, order_by: {created_at: desc}, limit: 10) {
+// Next.jsの投稿10件
+export const GET_NEXTJS_ARTICLES = gql`
+  query GetNextjsArticles($_lt: timestamp = "now()") {
+    articles: nextjs_articles(where: {created_at: {_lt: $_lt}}, order_by: {created_at: desc}, limit: 10) {
       id
       title
       image
@@ -106,10 +115,48 @@ export const GET_FRONT_ARTICLES = gql`
   }
 `
 
-// サーバーレスの投稿10件
-export const GET_SERVERLESS_ARTICLES = gql`
-  query GetServerlessArticles($_lt: timestamp = "now()") {
-    articles: serverless_articles(where: {created_at: {_lt: $_lt}}, order_by: {created_at: desc}, limit: 10) {
+// Supabaseの投稿10件
+export const GET_SUPABASE_ARTICLES = gql`
+  query GetSupabaseArticles($_lt: timestamp = "now()") {
+    articles: supabase_articles(where: {created_at: {_lt: $_lt}}, order_by: {created_at: desc}, limit: 10) {
+      avatar
+      categories
+      comment_count
+      created_at
+      details
+      id
+      image
+      like_count
+      title
+      user_id
+      username
+    }
+  }
+`
+
+// 	Hasuraの投稿10件
+export const GET_HASURA_ARTICLES = gql`
+  query GetHasuraArticles($_lt: timestamp = "now()") {
+    articles: hasura_articles(where: {created_at: {_lt: $_lt}}, order_by: {created_at: desc}, limit: 10) {
+      id
+      title
+      details
+      image
+      comment_count
+      like_count
+      created_at
+      categories
+      user_id
+      username
+      avatar
+    }
+  }
+`
+
+// 	Firebaseの投稿10件
+export const GET_FIREBASE_ARTICLES = gql`
+  query GetFirebaseArticles($_lt: timestamp = "now()") {
+    articles: firebase_articles(where: {created_at: {_lt: $_lt}}, order_by: {created_at: desc}, limit: 10) {
       avatar
       categories
       comment_count
@@ -198,8 +245,8 @@ export const GET_NO_SEARCH_ARTICLES = gql`
 
 // 記事の検索10件
 export const GET_SEARCH_ARTICLES = gql`
-  query GetSearchArticles($_like: String!, $_lt: timestamp = "now()") {
-    articles: person_articles(where: {created_at: {_lt: $_lt}, _or: [{title: {_like: $_like}}, {details: {_like: $_like}}]}, order_by: {created_at: desc}, limit: 10) {
+  query GetSearchArticles($_ilike: String!, $_lt: timestamp = "now()") {
+    articles: person_articles(where: {created_at: {_lt: $_lt}, _or: [{title: {_ilike: $_ilike}}, {details: {_ilike: $_ilike}}]}, order_by: {created_at: desc}, limit: 10) {
       id
       user_id
       title
@@ -211,7 +258,7 @@ export const GET_SEARCH_ARTICLES = gql`
       created_at
       categories
       username
-      # avatar
+      avatar
     }
   }
 `
@@ -240,6 +287,20 @@ export const GET_SEARCH_PROFILES = gql`
       details
       follow_count
       follower_count
+    }
+  }
+`
+
+// トレンド
+export const GET_TREND = gql`
+  query GetTrend($_in: [String!]!) {
+    articles(where: {id: {_in: $_in}}) {
+      id
+      title
+      image
+      profile {
+        username
+      }
     }
   }
 `

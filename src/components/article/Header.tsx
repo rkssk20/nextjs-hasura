@@ -1,4 +1,7 @@
 import NextLink from 'next/link'
+import { useState, useEffect } from 'react'
+import { ref, getDownloadURL } from 'firebase/storage'
+import { storage } from '@/lib/firebase'
 import InitialIcon from '@/atoms/Icon/InitialIcon'
 import AvatarIcon from '@/atoms/Icon/AvatarIcon'
 
@@ -14,15 +17,26 @@ interface HeaderProps {
 }
 
 const Header = ({ user_id, avatar, name, created_at }: HeaderProps) => {
+  const [image, setImage] = useState('')
   const created = new Date(created_at + 'Z')
+
+  useEffect(() => {
+    if(avatar) {
+      (async() => {
+        const result = await getDownloadURL(ref(storage, avatar))
+
+        setImage(result)
+      })()
+    }
+  }, [avatar])
 
   return (
     <div className={styles.field}>
       {/* アバター */}
       <NextLink href={`/account/${user_id}`} as={`/account/${user_id}`} passHref>
         <MuiLink underline='none'>
-          { avatar ?
-            <AvatarIcon src={ avatar } variant='link' />
+          { image ?
+            <AvatarIcon src={ image } variant='link' />
             :
             <InitialIcon username={name} variant='link' />
           }

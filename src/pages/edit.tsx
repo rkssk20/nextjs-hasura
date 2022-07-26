@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo, ReactElement } from 'react'
 import { useRouter } from 'next/router'
 import { useRecoilState } from 'recoil'
-import { nanoid } from 'nanoid'
 import dynamic from 'next/dynamic'
 import { draftState } from '@/lib/recoil'
 import useInsertArticles from '@/hooks/mutate/insert/useInsertArticles'
@@ -27,9 +26,9 @@ const Edit = () => {
   const [title, setTitle] = useState('')
   const [details, setDetails] = useState('')
   const [categories, setCategories] = useState<number[]>([])
-  const [image, setImage] = useState<string | null>(null)
+  const [image, setImage] = useState<Blob | null>(null)
   const [draft, setDraft] = useRecoilState(draftState)
-  const { mutateFunction, loading } = useInsertArticles()
+  const { mutate, loading } = useInsertArticles()
   const router = useRouter()
   const tablet = useMediaQuery('(min-width: 768px)')
 
@@ -57,40 +56,12 @@ const Edit = () => {
     return () => router.beforePopState(() => true)
   }, [title, details, categories])
 
-  // 投稿する
   const handlePost = () => {
-    if (loading) return
-
-    const id = nanoid()
-
-    let variables: {
-      id: string;
-      title: string;
-      image: string | null;
-      details: string;
-      objects: { articles_id: string, category: number }[]
-    } = {
-      id,
+    mutate({
       title,
       image,
       details,
-      objects: []
-    }
-
-    if(categories.length > 0) {
-      categories.map(item => {
-        variables.objects.push({ articles_id: id, category: item })
-      })
-    }
-
-    mutateFunction({
-      variables
-    }).then(() => {
-      setDraft({
-        title: '',
-        details: '',
-        categories: []
-      })
+      categories
     })
   }
 

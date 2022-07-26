@@ -1,5 +1,7 @@
-import type { Dispatch, SetStateAction } from 'react'
+import { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import { useRouter } from 'next/router'
+import { ref, getDownloadURL } from 'firebase/storage'
+import { storage } from '@/lib/firebase'
 import AvatarIcon from '@/atoms/Icon/AvatarIcon'
 import InitialIcon from '@/atoms/Icon/InitialIcon'
 
@@ -17,8 +19,19 @@ type AccountProps = {
 }
 
 const Account = ({ id, username, avatar, details, setRef }: AccountProps) => {
+  const [image, setImage] = useState('')
   const router = useRouter()
   const url = `/account/${id}`
+
+  useEffect(() => {
+    if(avatar) {
+      (async() => {
+        const result = await getDownloadURL(ref(storage, avatar))
+
+        setImage(result)
+      })()
+    }
+  }, [avatar])
 
   return (
     <ListItemButton
@@ -28,9 +41,9 @@ const Account = ({ id, username, avatar, details, setRef }: AccountProps) => {
       onClick={() => router.push(url, url)}
     >
       <ListItemIcon>
-        {avatar ? (
+        {image ? (
           <AvatarIcon
-            src={ avatar }
+            src={ image }
             variant='medium'
           />
         ) : (

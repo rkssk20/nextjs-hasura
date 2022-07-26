@@ -1,16 +1,16 @@
 import { useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { useSetRecoilState } from 'recoil'
-import { GET_SERVERLESS_ARTICLES } from '@/graphql/queries'
-import type { GetServerlessArticlesQuery } from '@/types/generated/graphql'
+import { GET_FIREBASE_ARTICLES } from '@/graphql/queries'
+import type { GetFirebaseArticlesQuery } from '@/types/generated/graphql'
 import { notificateState } from '@/lib/recoil'
 
-const useServerlessArticles = () => {
+const useFirebaseArticles = () => {
   const [hasNextPage, setHasNextPage] = useState(true)
   const [cursor, setCursor] = useState(new Date().toJSON())
   const setNotificate = useSetRecoilState(notificateState)
 
-  const {data, previousData, loading, networkStatus, fetchMore} = useQuery<GetServerlessArticlesQuery>(GET_SERVERLESS_ARTICLES, {
+  const {data, previousData, loading, networkStatus, fetchMore} = useQuery<GetFirebaseArticlesQuery>(GET_FIREBASE_ARTICLES, {
     variables: {
       _eq: 1
     },
@@ -44,4 +44,4 @@ const useServerlessArticles = () => {
   return { data, loading, fetchMore, networkStatus, hasNextPage, cursor }
 }
 
-export default useServerlessArticles
+export default useFirebaseArticles

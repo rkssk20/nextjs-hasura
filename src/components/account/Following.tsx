@@ -7,7 +7,7 @@ import useInsertFollows from '@/hooks/mutate/insert/useInsertFollows'
 import useDeleteFollows from '@/hooks/mutate/delete/useDeleteFollows'
 import { ContainedButton, OutlinedButton } from '@/atoms/Button'
 
-const Login = dynamic(import('@/components/dialog/Login'))
+const Login = dynamic(import('@/components/dialog/Login'));
 
 import styles from '@/styles/components/account/following.module.scss'
 import CircularProgress from '@mui/material/CircularProgress'

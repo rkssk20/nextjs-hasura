@@ -11,7 +11,7 @@ const ArticlesSearch = ({ word }: { word: string | string[] }) => {
   const handleMore = () => {
     hasNextPage && fetchMore({
       variables: {
-        _like: "%" + word + "%",
+        _ilike: "%" + word + "%",
         _lt: cursor
       }
     })

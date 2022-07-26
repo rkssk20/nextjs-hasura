@@ -34,10 +34,6 @@
   @include utils.mq(md) {
     max-height: calc(100vh - 178px);
   }
-  &.list_root {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
 }
 
 // トレンドのタイトル

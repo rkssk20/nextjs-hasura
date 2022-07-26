@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { signIn, signOut } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 
 import styles from '@/styles/atoms/loginContent.module.scss'
 import Typography from '@mui/material/Typography'
@@ -21,6 +21,12 @@ const LoginContent = () => {
     },
   ]
 
+  const handleEazy = () => {
+    signIn('credentials', {
+      callbackUrl: '/'
+    })
+  }
+
   const handleAuth = async (provider: string) => {
     signIn((provider === 'Twitter') ? 'twitter' : (provider === 'Facebook') ? 'facebook' : 'google', {
       callbackUrl: '/'
@@ -40,6 +46,7 @@ const LoginContent = () => {
         classes={{ root: styles.eazy_root }}
         variant='contained'
         color='info'
+        onClick={ handleEazy }
       >
         簡単ログイン
       </Button>
@@ -67,8 +74,6 @@ const LoginContent = () => {
           </Typography>
         </Button>
       ))}
-
-      <button onClick={ () => signOut()}>a</button>
     </div>
   )
 }

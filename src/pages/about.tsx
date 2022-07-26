@@ -21,26 +21,16 @@ const About = () => {
       description=''
       image=''
     >
-      <Introduction />
-
       <Typography className={styles.title} classes={{ root: styles.title_root }} variant='h3'>
         技術選定
       </Typography>
 
-      <NextLink href='/article/' passHref>
+      <NextLink href='/article/2VUSR4cSHml0oVyiQlLsU' passHref>
         <MuiLink className={styles.link}>Next.js × Hasuraの技術選定</MuiLink>
       </NextLink>
 
       <Typography className={styles.title} classes={{ root: styles.title_root }} variant='h3'>
-        機能一覧
-      </Typography>
-
-      <NextLink href='/article/' passHref>
-        <MuiLink className={styles.link}>Next.js × Hasuraで実装した機能</MuiLink>
-      </NextLink>
-
-      <Typography className={styles.title} classes={{ root: styles.title_root }} variant='h3'>
-        githubリポジトリ
+        GitHubリポジトリ
       </Typography>
 
       <NextLink href='https://github.com/rkssk20/nextjs-hasura' passHref>
@@ -61,6 +51,8 @@ export default About
 About.getLayout = function getLayout(page: ReactElement) {
   return (
     <PageLayout>
+      <Introduction details={ false } />
+
       {page}
 
       <Side />
