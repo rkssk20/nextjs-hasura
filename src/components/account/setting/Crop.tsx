@@ -26,17 +26,23 @@ const Crop = ({ selectImage, setSelectImage }: Props) => {
     setSelectImage('')
   }
 
-  const { mutateFunction, loading } = useAvatarUpload(setSelectImage)
+  const { mutate, loading } = useAvatarUpload(handleClose)
 
   // 送信
   const handleConfirm = () => {
     if ((ref=== null) || loading) return
-    mutateFunction({
-      variables: {
-        id: account.data?.id,
-        avatar: ref.current?.getImageScaledToCanvas().toDataURL('image/png')
-      }
-    })
+
+    // chromeならwebpに変換し、画質を0.5にする
+    // chrome以外ではpngに変換される
+    ref.current?.getImage().toBlob(
+      (blob: Blob | null) => {
+        if(blob === null) return
+
+        mutate(blob, handleClose)
+      },
+      'image/webp',
+      0.5,
+    )
   }
 
   return (

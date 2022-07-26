@@ -18,9 +18,10 @@ type ActionsProps = {
   like_count: number
   user_id: string
   path: string
+  image: string | undefined
 }
 
-const Actions = ({ like_count, user_id, path }: ActionsProps) => {
+const Actions = ({ like_count, user_id, path, image }: ActionsProps) => {
   const [likeCount, setLikeCount] = useState(like_count)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [dialog, setDialog] = useState(false)
@@ -78,7 +79,12 @@ const Actions = ({ like_count, user_id, path }: ActionsProps) => {
 
       {dialog && (user_id === account.data?.id) ? (
         // 削除ダイアログ
-        <ArticleDelete dialog={dialog} handleClose={() => setDialog(false)} path={path} />
+        <ArticleDelete
+          dialog={dialog}
+          handleClose={() => setDialog(false)}
+          path={path}
+          image={ image }
+        />
       ) : (
         // 報告ダイアログ
         <Report dialog={dialog} handleClose={() => setDialog(false)} />

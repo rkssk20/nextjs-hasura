@@ -11,6 +11,15 @@ export const GET_PROFILES_DETAILS = gql`
   }
 `
 
+// アバターだけ
+export const GET_PROFILES_AVATAR = gql`
+  query GetProfilesAvatar($id: String!) {
+    profiles_by_pk(id: $id) {
+      avatar
+    }
+  }
+`
+
 // その人の投稿10件
 export const GET_PERSON_ARTICLES = gql`
   query GetPersonArticles($_eq: String!, $_lt: timestamp = "now()") {
@@ -236,8 +245,8 @@ export const GET_NO_SEARCH_ARTICLES = gql`
 
 // 記事の検索10件
 export const GET_SEARCH_ARTICLES = gql`
-  query GetSearchArticles($_like: String!, $_lt: timestamp = "now()") {
-    articles: person_articles(where: {created_at: {_lt: $_lt}, _or: [{title: {_like: $_like}}, {details: {_like: $_like}}]}, order_by: {created_at: desc}, limit: 10) {
+  query GetSearchArticles($_ilike: String!, $_lt: timestamp = "now()") {
+    articles: person_articles(where: {created_at: {_lt: $_lt}, _or: [{title: {_ilike: $_ilike}}, {details: {_ilike: $_ilike}}]}, order_by: {created_at: desc}, limit: 10) {
       id
       user_id
       title

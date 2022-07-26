@@ -15,6 +15,7 @@ const Category = ({ category }: { category: string | number }) => {
     >
       <MuiLink
         underline='hover'
+        onClick={(e: MouseEvent<HTMLSpanElement>) => e.stopPropagation()}
         onMouseDown={(e: MouseEvent<HTMLSpanElement>) => e.stopPropagation()}
         onTouchStart={(e: TouchEvent<HTMLSpanElement>) => e.stopPropagation()}
       >

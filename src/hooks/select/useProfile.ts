@@ -1,4 +1,6 @@
 import { useEffect } from 'react'
+import { getDownloadURL, ref } from 'firebase/storage'
+import { storage } from '@/lib/firebase'
 import { useSetRecoilState } from 'recoil'
 import { accountState } from '@/lib/recoil'
 
@@ -12,14 +14,30 @@ const useProfile = () => {
     if(status === 'loading') return
 
     if(data) {
-      setAccount({
-        loading: false,
-        data: {
-          id: data.id as string,
-          username: data.username as string,
-          avatar: data?.avatar as string | undefined
-        }
-      })
+      if(data?.avatar) {
+        (async() => {
+          const fullPath = await getDownloadURL(ref(storage, data.avatar as string));
+
+          setAccount({
+            loading: false,
+            data: {
+              id: data.id as string,
+              username: data.username as string,
+              avatar: fullPath
+            }
+          });
+        })();
+
+      } else {
+        setAccount({
+          loading: false,
+          data: {
+            id: data.id as string,
+            username: data.username as string,
+            avatar: undefined
+          }
+        })
+      }
     } else {
       setAccount({
         loading: false,

@@ -2559,13 +2559,20 @@ export type GetProfilesDetailsQueryVariables = Exact<{
 
 export type GetProfilesDetailsQuery = { __typename?: 'query_root', profiles_by_pk?: { __typename?: 'profiles', username: string, avatar?: string | null, details?: string | null } | null };
 
+export type GetProfilesAvatarQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetProfilesAvatarQuery = { __typename?: 'query_root', profiles_by_pk?: { __typename?: 'profiles', avatar?: string | null } | null };
+
 export type GetPersonArticlesQueryVariables = Exact<{
   _eq: Scalars['String'];
   _lt?: InputMaybe<Scalars['timestamp']>;
 }>;
 
 
-export type GetPersonArticlesQuery = { __typename?: 'query_root', articles: Array<{ __typename?: 'person_articles', id?: string | null, user_id?: string | null, title?: string | null, image?: string | null, details?: string | null, username?: string | null, avatar?: string | null, comment_count?: number | null, like_count?: number | null, created_at?: any | null, categories?: any | null }> };
+export type GetPersonArticlesQuery = { __typename?: 'query_root', articles: Array<{ __typename?: 'person_articles', id?: string | null, title?: string | null, details?: string | null, image?: string | null, comment_count?: number | null, like_count?: number | null, categories?: any | null, created_at?: any | null, user_id?: string | null, username?: string | null, avatar?: string | null }> };
 
 export type GetPersonLikesArticlesQueryVariables = Exact<{
   _eq: Scalars['String'];
@@ -2618,7 +2625,7 @@ export type GetHasuraArticlesQueryVariables = Exact<{
 }>;
 
 
-export type GetHasuraArticlesQuery = { __typename?: 'query_root', articles: Array<{ __typename?: 'hasura_articles', avatar?: string | null, categories?: any | null, comment_count?: number | null, created_at?: any | null, details?: string | null, id?: string | null, image?: string | null, like_count?: number | null, title?: string | null, user_id?: string | null, username?: string | null }> };
+export type GetHasuraArticlesQuery = { __typename?: 'query_root', articles: Array<{ __typename?: 'hasura_articles', id?: string | null, title?: string | null, details?: string | null, image?: string | null, comment_count?: number | null, like_count?: number | null, created_at?: any | null, categories?: any | null, user_id?: string | null, username?: string | null, avatar?: string | null }> };
 
 export type GetFirebaseArticlesQueryVariables = Exact<{
   _lt?: InputMaybe<Scalars['timestamp']>;
@@ -2658,7 +2665,7 @@ export type GetNoSearchArticlesQueryVariables = Exact<{
 export type GetNoSearchArticlesQuery = { __typename?: 'query_root', articles: Array<{ __typename?: 'person_articles', id?: string | null, user_id?: string | null, title?: string | null, image?: string | null, details?: string | null, username?: string | null, avatar?: string | null, comment_count?: number | null, like_count?: number | null, created_at?: any | null, categories?: any | null }> };
 
 export type GetSearchArticlesQueryVariables = Exact<{
-  _like: Scalars['String'];
+  _ilike: Scalars['String'];
   _lt?: InputMaybe<Scalars['timestamp']>;
 }>;
 
@@ -2725,6 +2732,41 @@ export function useGetProfilesDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type GetProfilesDetailsQueryHookResult = ReturnType<typeof useGetProfilesDetailsQuery>;
 export type GetProfilesDetailsLazyQueryHookResult = ReturnType<typeof useGetProfilesDetailsLazyQuery>;
 export type GetProfilesDetailsQueryResult = Apollo.QueryResult<GetProfilesDetailsQuery, GetProfilesDetailsQueryVariables>;
+export const GetProfilesAvatarDocument = gql`
+    query GetProfilesAvatar($id: String!) {
+  profiles_by_pk(id: $id) {
+    avatar
+  }
+}
+    `;
+
+/**
+ * __useGetProfilesAvatarQuery__
+ *
+ * To run a query within a React component, call `useGetProfilesAvatarQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProfilesAvatarQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProfilesAvatarQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetProfilesAvatarQuery(baseOptions: Apollo.QueryHookOptions<GetProfilesAvatarQuery, GetProfilesAvatarQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProfilesAvatarQuery, GetProfilesAvatarQueryVariables>(GetProfilesAvatarDocument, options);
+      }
+export function useGetProfilesAvatarLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProfilesAvatarQuery, GetProfilesAvatarQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProfilesAvatarQuery, GetProfilesAvatarQueryVariables>(GetProfilesAvatarDocument, options);
+        }
+export type GetProfilesAvatarQueryHookResult = ReturnType<typeof useGetProfilesAvatarQuery>;
+export type GetProfilesAvatarLazyQueryHookResult = ReturnType<typeof useGetProfilesAvatarLazyQuery>;
+export type GetProfilesAvatarQueryResult = Apollo.QueryResult<GetProfilesAvatarQuery, GetProfilesAvatarQueryVariables>;
 export const GetPersonArticlesDocument = gql`
     query GetPersonArticles($_eq: String!, $_lt: timestamp = "now()") {
   articles: person_articles(
@@ -2733,16 +2775,16 @@ export const GetPersonArticlesDocument = gql`
     limit: 10
   ) {
     id
-    user_id
     title
-    image
     details
-    username
-    avatar
+    image
     comment_count
     like_count
-    created_at
     categories
+    created_at
+    user_id
+    username
+    avatar
   }
 }
     `;
@@ -3057,17 +3099,17 @@ export const GetHasuraArticlesDocument = gql`
     order_by: {created_at: desc}
     limit: 10
   ) {
-    avatar
-    categories
-    comment_count
-    created_at
-    details
     id
-    image
-    like_count
     title
+    details
+    image
+    comment_count
+    like_count
+    created_at
+    categories
     user_id
     username
+    avatar
   }
 }
     `;
@@ -3338,9 +3380,9 @@ export type GetNoSearchArticlesQueryHookResult = ReturnType<typeof useGetNoSearc
 export type GetNoSearchArticlesLazyQueryHookResult = ReturnType<typeof useGetNoSearchArticlesLazyQuery>;
 export type GetNoSearchArticlesQueryResult = Apollo.QueryResult<GetNoSearchArticlesQuery, GetNoSearchArticlesQueryVariables>;
 export const GetSearchArticlesDocument = gql`
-    query GetSearchArticles($_like: String!, $_lt: timestamp = "now()") {
+    query GetSearchArticles($_ilike: String!, $_lt: timestamp = "now()") {
   articles: person_articles(
-    where: {created_at: {_lt: $_lt}, _or: [{title: {_like: $_like}}, {details: {_like: $_like}}]}
+    where: {created_at: {_lt: $_lt}, _or: [{title: {_ilike: $_ilike}}, {details: {_ilike: $_ilike}}]}
     order_by: {created_at: desc}
     limit: 10
   ) {
@@ -3372,7 +3414,7 @@ export const GetSearchArticlesDocument = gql`
  * @example
  * const { data, loading, error } = useGetSearchArticlesQuery({
  *   variables: {
- *      _like: // value for '_like'
+ *      _ilike: // value for '_ilike'
  *      _lt: // value for '_lt'
  *   },
  * });

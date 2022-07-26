@@ -9,7 +9,7 @@ import MuiDialog from '@mui/material/Dialog'
 type Props = {
   selectImage: string
   setSelectImage: Dispatch<SetStateAction<string>>
-  setImage: Dispatch<SetStateAction<string | null>>
+  setImage: Dispatch<SetStateAction<Blob | null>>
 }
 
 const Crop = ({ selectImage, setSelectImage, setImage }: Props) => {
@@ -27,16 +27,22 @@ const Crop = ({ selectImage, setSelectImage, setImage }: Props) => {
 
   const handleConfirm = () => {
     if (loading || (ref === null)) return
-
     setLoading(true)
-    
-    setImage(ref.current?.getImageScaledToCanvas().toDataURL('image/png') ?? null);
+    // chromeならwebpに変換し、画質を0.5にする
+    // chrome以外ではpngに変換される
+    ref.current?.getImage().toBlob(
+      (blob: Blob | null) => {
+        if(blob === null) return
+        
+        setImage(blob)
 
-    (document.getElementById('icon-button-file') as HTMLInputElement).value = '';
-
-    setSelectImage('')
-
-    setLoading(false)
+        ;(document.getElementById('icon-button-file') as HTMLInputElement).value = ''
+        setSelectImage('')
+        setLoading(false)
+      },
+      'image/webp',
+      1,
+    )
   }
 
   return (

@@ -12,7 +12,7 @@ const useArticlesSearch = (word: string | string[]) => {
 
   const { data, previousData, networkStatus, fetchMore } = useQuery<GetSearchArticlesQuery>(GET_SEARCH_ARTICLES, {
     variables: {
-      _like: '%' + word + '%'
+      _ilike: '%' + word + '%'
     },
     nextFetchPolicy: 'cache-first',
     notifyOnNetworkStatusChange: true,

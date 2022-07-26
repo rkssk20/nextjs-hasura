@@ -1,5 +1,7 @@
-import { useState, Dispatch, SetStateAction } from 'react'
+import { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import { useRouter } from 'next/router'
+import { ref, getDownloadURL } from 'firebase/storage'
+import { storage } from '@/lib/firebase'
 import type { ArticleType } from '@/types/types'
 import ArticleImage from '@/atoms/Image/ArticleImage'
 import NoArticleImage from '@/atoms/Image/NoArticleImage'
@@ -18,9 +20,20 @@ type PostProps = {
 }
 
 const Post = ({ data, setRef }: PostProps) => {
+  const [image, setImage] = useState('')
   const [dialog, setDialog] = useState(false)
   const router = useRouter()
   const url = `/article/${data.id}`
+
+  useEffect(() => {
+    if(data.image) {
+      (async() => {
+        const result = await getDownloadURL(ref(storage, data.image as string))
+
+        setImage(result)
+      })()
+    }
+  }, [data.image])
 
   return (
     <Card className={styles.card} classes={{ root: styles.card_root }} elevation={0}>
@@ -40,8 +53,8 @@ const Post = ({ data, setRef }: PostProps) => {
         />
 
         {/* 画像 */}
-        {data.image && data.image.length > 0 ? (
-          <ArticleImage image={data.image} />
+        {image && image.length > 0 ? (
+          <ArticleImage image={image} />
         ) : (
           <NoArticleImage title={data.title} />
         )}

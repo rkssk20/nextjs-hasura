@@ -3,31 +3,31 @@ import { InMemoryCache } from '@apollo/client'
 const cache = new InMemoryCache({
   // addTypename: false,
   typePolicies: {
-    person_articles: {
-      keyFields: (args) => {        
-        return `articles:${ args.id }`
-      },
-    },
-    nextjs_articles: {
-      keyFields: (args) => {        
-        return `articles:${ args.id }`
-      },
-    },
-    supabase_articles: {
-      keyFields: (args) => {        
-        return `articles:${ args.id }`
-      },
-    },
-    hasura_articles: {
-      keyFields: (args) => {        
-        return `articles:${ args.id }`
-      },
-    },
-    firebase_articles: {
-      keyFields: (args) => {        
-        return `articles:${ args.id }`
-      },
-    },
+    // person_articles: {
+    //   keyFields: (args) => {        
+    //     return `articles:${ args.id }`
+    //   },
+    // },
+    // nextjs_articles: {
+    //   keyFields: (args) => {        
+    //     return `articles:${ args.id }`
+    //   },
+    // },
+    // supabase_articles: {
+    //   keyFields: (args) => {        
+    //     return `articles:${ args.id }`
+    //   },
+    // },
+    // hasura_articles: {
+    //   keyFields: (args) => {        
+    //     return `articles:${ args.id }`
+    //   },
+    // },
+    // firebase_articles: {
+    //   keyFields: (args) => {        
+    //     return `articles:${ args.id }`
+    //   },
+    // },
     Query: {
       fields: {
         // その人の投稿10件
@@ -48,7 +48,10 @@ const cache = new InMemoryCache({
         },
         // その人のいいねした投稿10件
         likes_articles: {
-          keyArgs: false,
+          keyArgs: (args) => {
+            args?.where?.created_at && delete args.where.created_at
+            return JSON.stringify(args)
+          },
           merge: (existing = [], incoming) => {
             if(!existing) {
               return incoming
@@ -84,8 +87,11 @@ const cache = new InMemoryCache({
           }
         },
         // フロントの投稿10件
-        front_articles: {
-          keyArgs: false,
+        nextjs_articles: {
+          keyArgs: (args) => {
+            args?.where?.created_at && delete args.where.created_at
+            return JSON.stringify(args)
+          },
           merge: (existing = [], incoming) => {
             if(!existing) {
               return incoming
@@ -94,9 +100,12 @@ const cache = new InMemoryCache({
             return [...existing, ...incoming]
           }
         },
-        // サーバーレスの投稿10件
-        serverless_articles: {
-          keyArgs: false,
+        // Supabaseの投稿10件
+        supabase_articles: {
+          keyArgs: (args) => {
+            args?.where?.created_at && delete args.where.created_at
+            return JSON.stringify(args)
+          },
           merge: (existing = [], incoming) => {
             if(!existing) {
               return incoming
@@ -105,9 +114,33 @@ const cache = new InMemoryCache({
             return [...existing, ...incoming]
           }
         },
-        // 記事へのいいね
-        likes: {
-          
+        // Hasuraの投稿10件
+        hasura_articles: {
+          keyArgs: (args) => {
+            args?.where?.created_at && delete args.where.created_at
+            return JSON.stringify(args)
+          },
+          merge: (existing = [], incoming) => {
+            if(!existing) {
+              return incoming
+            }
+  
+            return [...existing, ...incoming]
+          }
+        },
+        // Firebaseの投稿10件
+        firebase_articles: {
+          keyArgs: (args) => {
+            args?.where?.created_at && delete args.where.created_at
+            return JSON.stringify(args)
+          },
+          merge: (existing = [], incoming) => {
+            if(!existing) {
+              return incoming
+            }
+  
+            return [...existing, ...incoming]
+          }
         },
         comments: {
           keyArgs: (args) => {

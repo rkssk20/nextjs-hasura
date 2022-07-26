@@ -1,9 +1,12 @@
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import NextLink from 'next/link'
 import { useRecoilValue } from 'recoil'
+import { getDownloadURL, ref } from 'firebase/storage'
 import { signOut } from 'next-auth/react'
 import type { ProfileType } from '@/types/types'
 import { accountState } from '@/lib/recoil'
+import { storage } from '@/lib/firebase'
 import AvatarIcon from '@/atoms/Icon/AvatarIcon'
 import { ContainedButton, OutlinedButton } from '@/atoms/Button'
 import InitialIcon from '@/atoms/Icon/InitialIcon'
@@ -21,8 +24,19 @@ type ProfileProps = ProfileType & {
 }
 
 const Profile = ({ path, item }: ProfileProps) => {
+  const [image, setImage] = useState('')
   const account = useRecoilValue(accountState)
   const router = useRouter()
+
+  useEffect(() => {
+    if(item.avatar) {
+      (async() => {
+        const result = await getDownloadURL(ref(storage, item.avatar))
+
+        setImage(result)
+      })()
+    }
+  }, [item.avatar])
 
   // ログアウト処理
   const handleLogout = async () => {
@@ -33,9 +47,9 @@ const Profile = ({ path, item }: ProfileProps) => {
     <DialogContent>
       <Stack direction='row' alignItems='center'>
         {/* ユーザーアイコン */}
-        {item.avatar ? (
+        {image ? (
           <AvatarIcon
-            src={ item.avatar }
+            src={ image }
             variant='large'
           />
         ) : (

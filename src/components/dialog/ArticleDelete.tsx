@@ -9,10 +9,11 @@ import Button from '@mui/material/Button'
 
 type Props = DialogProps & {
   path: string
+  image: string | undefined
 }
 
-const ArticleDelete = ({ dialog, handleClose, path }: Props) => {
-  const { mutateFunction, loading } = useArticleDelete()
+const ArticleDelete = ({ dialog, handleClose, path, image }: Props) => {
+  const { mutateFunction, loading } = useArticleDelete(image)
 
   const list = ['記事に関するデータ', '記事へのコメント', '記事、コメントへのいいね']
 

@@ -18,29 +18,13 @@ const Icon = ({ newUserName }: IconProps) => {
   const [selectImage, setSelectImage] = useState('')
   const account = useRecoilValue(accountState)
   const setNotificate = useSetRecoilState(notificateState)
-  const { mutateFunction, loading } = useAvatarDelete()
+  const mutate = useAvatarDelete()
   const color = Color(newUserName)
 
   // 画像選択
   const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || !e.target.files[0]) return
     setSelectImage(window.URL.createObjectURL(e.target.files[0]))
-  }
-
-  // 現在のアバターを削除
-  const handleCancel = () => {
-    if(loading) return
-    // アバター画像がない場合
-    if (!account.data?.avatar) {
-      setNotificate({
-        open: true,
-        message: '画像がありません。',
-      })
-
-      return
-    }
-
-    mutateFunction()
   }
 
   return (
@@ -100,7 +84,7 @@ const Icon = ({ newUserName }: IconProps) => {
       <Button
         className={styles.text_button}
         classes={{ root: styles.text_button_root }}
-        onClick={handleCancel}
+        onClick={() => mutate()}
         color='inherit'
       >
         削除する
