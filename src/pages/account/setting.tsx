@@ -22,7 +22,7 @@ const Setting = () => {
           <Divider className={styles.divider} classes={{ root: styles.divider_root }} />
 
           <NextLink href='/account/withdrawal' passHref>
-            <MuiLink variant='caption' color='gray' underline='hover'>
+            <MuiLink variant='caption' color='caption' underline='hover'>
               退会する
             </MuiLink>
           </NextLink>

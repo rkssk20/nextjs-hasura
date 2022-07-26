@@ -22,6 +22,9 @@
     flex-direction: column;
   }
   .button_start_icon {
+    width: 80px;
+    height: 80px;
     margin: 0 0 var(--sm);
+    position: relative;
   }
 }

@@ -86,6 +86,7 @@ const Share = ({ path }: { path: string }) => {
                 <Image
                   src={`/image/${item.social}.png`}
                   alt='共有アイコン'
+                  layout='fixed'
                   width={44}
                   height={44}
                   quality={70}

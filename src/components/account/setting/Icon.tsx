@@ -50,6 +50,7 @@ const Icon = ({ newUserName }: IconProps) => {
             className={styles.avatar}
             classes={{ root: styles.avatar_root }}
             src={account.data?.avatar}
+            alt='プロフィール画像'
           />
         ) : (
           // 画像なしのアバター

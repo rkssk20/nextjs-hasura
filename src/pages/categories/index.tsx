@@ -51,8 +51,8 @@ const Categories = () => {
               component='a'
               startIcon={
                 <Image
-                  width={80}
-                  height={80}
+                  layout='fill'
+                  objectFit='contain'
                   quality={70}
                   alt={item.text}
                   src={`/image/${item.url}.png`}

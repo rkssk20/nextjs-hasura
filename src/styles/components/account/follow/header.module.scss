@@ -9,3 +9,12 @@
     }
   }
 }
+
+// ヘッダー
+.header {
+  padding-right: var(--md);
+  padding-left: var(--md);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

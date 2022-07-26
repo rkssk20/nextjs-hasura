@@ -46,7 +46,7 @@ const Header = ({ setHamburger }: { setHamburger: Dispatch<SetStateAction<boolea
           <MuiLink className={styles.title_link} underline='none'>
             <Image
               className={styles.title}
-              quality={80}
+              layout='fixed'
               width={34}
               height={34}
               alt='Next.js × Suapabase'

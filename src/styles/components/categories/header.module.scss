@@ -17,6 +17,13 @@
   justify-content: center;
 }
 
+// 画像
+.image {
+  width: 80px;
+  height: 80px;
+  position: relative;
+}
+
 // カテゴリ名
 .title_text {
   padding-left: var(--xl);

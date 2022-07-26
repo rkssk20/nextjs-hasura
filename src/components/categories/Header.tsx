@@ -21,7 +21,15 @@ const Header = ({ text, url }: CategoriesProps) => {
       </div>
 
       <div className={styles.title}>
-        <Image src={`/image/${url}.png`} alt={text} width={60} height={60} quality={70} />
+        <div className={ styles.image }>
+          <Image
+            src={`/image/${url}.png`}
+            alt={text}
+            layout='fill'
+            objectFit='contain'
+            quality={70}
+          />
+        </div>
 
         <Typography className={styles.title_text} variant='h5'>
           {'#' + text}
