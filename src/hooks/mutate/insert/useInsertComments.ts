@@ -22,8 +22,7 @@ const useInsertComments = () => {
         message: 'コメントを投稿しました'
       })
     },
-    onError: (e) => {
-      console.log(e)
+    onError: () => {
       setNotificate({
         open: true,
         message: 'エラーが発生しました'

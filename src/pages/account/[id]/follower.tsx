@@ -88,16 +88,16 @@ const Follower = ({ item, path }: AccountProps) => {
 
       {/* 各アカウント */}
       {data && (data.person_followers.length > 0) ? data.person_followers.map((item, index) =>
-            <Account
-              key={item.follower_id}
-              id={item.user_id as string}
-              username={item.username as string}
-              avatar={item.avatar as string | null}
-              details={item.details as string | null}
-              setRef={index === (data.person_followers.length - 1) && setRef}
-            />
-          )
-        : (networkStatus === 7) && <Empty text='まだフォローされていません。' />}
+          <Account
+            key={item.user_id}
+            id={item.user_id as string}
+            username={item.username as string}
+            avatar={item.avatar as string | null}
+            details={item.details as string | null}
+            setRef={index === (data.person_followers.length - 1) && setRef}
+          />
+        )
+      : (networkStatus === 7) && <Empty text='まだフォローされていません。' />}
 
       {((networkStatus === 1) || (networkStatus === 3)) && <Circular />}
     </ContainerLayout>

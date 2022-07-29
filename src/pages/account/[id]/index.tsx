@@ -48,8 +48,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         path: id
       }
     }
-  } catch(error) {
-    console.log(error)
+  } catch {
     return { notFound: true }
   }
 }

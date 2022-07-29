@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { useSetRecoilState } from 'recoil'
 import { GET_FOLLOWS } from '@/graphql/queries'
@@ -5,12 +6,16 @@ import type { GetFollowsQuery } from '@/types/generated/graphql'
 import { notificateState } from '@/lib/recoil'
 
 const useSelectFollows = (path: string, id: string) => {
+  const [follows, setFollows] = useState<number | null>(null)
   const setNotificate = useSetRecoilState(notificateState)
 
-  const { data, loading } = useQuery<GetFollowsQuery>(GET_FOLLOWS, {
+  const { loading } = useQuery<GetFollowsQuery>(GET_FOLLOWS, {
     variables: {
       _eq: id,
       _eq1: path
+    },
+    onCompleted: data => {
+      (data.follows.length > 0) && setFollows(data.follows[0].id)
     },
     onError: () => {
       setNotificate({
@@ -20,7 +25,7 @@ const useSelectFollows = (path: string, id: string) => {
     }
   })
 
-  return { data, loading }
+  return { follows, loading, setFollows }
 }
 
 export default useSelectFollows

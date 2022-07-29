@@ -294,13 +294,45 @@ export const GET_SEARCH_PROFILES = gql`
 // トレンド
 export const GET_TREND = gql`
   query GetTrend($_in: [String!]!) {
-    articles(where: {id: {_in: $_in}}) {
+    articles: person_articles(where: {id: {_in: $_in}}, limit: 5) {
+      id
+      title
+      details
+      image
+      comment_count
+      like_count
+      categories
+      created_at
+      user_id
+      username
+      avatar
+    }
+  }
+`
+
+// サイドのトレンド
+export const GET_SIDE_TREND = gql`
+  query GetSideTrend($_in: [String!]!) {
+    articles(where: {id: {_in: $_in}}, limit: 5) {
       id
       title
       image
       profile {
         username
       }
+    }
+  }
+`
+
+// 人気ユーザー
+export const GET_TREND_USER = gql`
+  query GetTrendUser {
+    profiles(limit: 5, order_by: {follower_count: desc}) {
+      id
+      username
+      avatar
+      details
+      follower_count
     }
   }
 `

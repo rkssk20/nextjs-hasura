@@ -18,8 +18,6 @@ const Input = () => {
   const { mutateFunction, loading: settingLoading } = useSetting()
   const account = useRecoilValue(accountState)
 
-  console.log(loading)
-
   useEffect(() => {
     if (!data?.profiles_by_pk) return
 
