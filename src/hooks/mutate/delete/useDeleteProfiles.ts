@@ -17,8 +17,7 @@ const useDeleteProfiles = () => {
         router.reload()
       })
     },
-    onError: (e) => {
-      console.log(e)
+    onError: () => {
       setNotificate({
         open: true,
         message: 'エラーが発生しました'

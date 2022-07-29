@@ -1,6 +1,6 @@
 import NextLink from 'next/link'
-import useSideTrend from '@/hooks/select/useSideTrend'
-import SidePost from '@/components/side/SidePost'
+import useTrendUser from '@/hooks/select/useTrendUser'
+import Account from '@/components/account/follow/Account'
 
 import styles from '@/styles/components/side/side.module.scss'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp'
@@ -8,30 +8,30 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import MuiLink from '@mui/material/Link'
 
-const Side = () => {
-  const data = useSideTrend()
-
-  if(data && data.articles.length === 0) return null
+const SideUser = () => {
+  const data = useTrendUser()
 
   return (
     <div className={styles.field}>
       <div className={styles.list}>
         <div className={styles.header}>
           <TrendingUpIcon />
-          <Typography className={styles.title}>トレンド</Typography>
+          <Typography className={styles.title}>人気ユーザー</Typography>
         </div>
 
-        { data && data.articles.map((item) => (
-          <SidePost
-            key={ item.id }
-            id={ item.id }
-            title={ item.title }
-            image={ item.image }
-            username={ item.profile.username }
-          />
-        ))}
+        { data && data.profiles.map(item =>
+            <Account
+              key={item.id}
+              id={item.id}
+              username={item.username}
+              avatar={item.avatar as string | null}
+              details={item.details as string | null}
+              setRef={false}
+            />
+          )
+        }
 
-        <NextLink href='/' passHref>
+        <NextLink href='/search=?sorce=user' passHref>
           <Button
             LinkComponent='a'
             className={styles.more_button}
@@ -56,4 +56,4 @@ const Side = () => {
   )
 }
 
-export default Side
+export default SideUser

@@ -10,8 +10,6 @@ const useArticleDelete = (image: string | undefined) => {
   const setNotificate = useSetRecoilState(notificateState)
   const router = useRouter()
 
-  console.log(image)
-
   const [mutateFunction, { loading }] = useMutation(DELETE_ARTICLES, {
     update: (cache, {data}) => {
       cache.modify({

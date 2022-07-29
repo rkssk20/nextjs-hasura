@@ -8,7 +8,7 @@ const analyticsDataClient = new BetaAnalyticsDataClient({
   }
 });
 
-const getTrend = async (req: NextApiRequest, res: NextApiResponse) => {
+const getSideTrend = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const [response] = await analyticsDataClient.runReport({
       property: `properties/${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_PROPERTY_ID}`,
@@ -51,19 +51,14 @@ const getTrend = async (req: NextApiRequest, res: NextApiResponse) => {
       },
       body: JSON.stringify({
         query: `
-          query GetTrend($_in: [String!]!) {
-            articles: person_articles(where: {id: {_in: $_in}}, limit: 5) {
+          query GetSideTrend($_in: [String!]!) {
+            articles(where: {id: {_in: $_in}}) {
               id
               title
-              details
               image
-              comment_count
-              like_count
-              categories
-              created_at
-              user_id
-              username
-              avatar
+              profile {
+                username
+              }
             }
           }
         `,
@@ -89,4 +84,4 @@ const getTrend = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export default getTrend
+export default getSideTrend

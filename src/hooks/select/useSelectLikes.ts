@@ -9,13 +9,11 @@ const useSelectLikes = (path: string) => {
   const [likes, setLikes] = useState<number | null>(null)
   const setNotificate = useSetRecoilState(notificateState)
 
-  const { data, loading } = useQuery<GetLikesQuery>(GET_LIKES, {
+  const { loading } = useQuery<GetLikesQuery>(GET_LIKES, {
     variables: {
       _eq: path
     },
     onCompleted: data => {
-      console.log(data);
-
       (data.likes.length > 0) && setLikes(data.likes[0].id)
     },
     onError: () => {
@@ -26,7 +24,7 @@ const useSelectLikes = (path: string) => {
     }
   })
 
-  return { data, loading, likes, setLikes, }
+  return { loading, likes, setLikes }
 }
 
 export default useSelectLikes

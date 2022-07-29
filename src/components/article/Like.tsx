@@ -76,7 +76,7 @@ const DeleteLike = ({ id, path, setLikes, setLikeCount }: Props & { id: number, 
 
 // ログイン時のいいねボタン
 export const LoginLike = ({ path, setLikeCount }: Props) => {
-  const { data, loading, likes, setLikes } = useSelectLikes(path)
+  const { loading, likes, setLikes } = useSelectLikes(path)
 
   if(loading) return null
 

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useRecoilValue } from 'recoil'
 import { accountState } from '@/lib/recoil'
@@ -12,7 +12,7 @@ const Login = dynamic(import('@/components/dialog/Login'));
 import styles from '@/styles/components/account/following.module.scss'
 import CircularProgress from '@mui/material/CircularProgress'
 
-const InsertFollows = ({path}: {path: string}) => {
+const InsertFollows = ({path, setFollows}: {path: string, setFollows: Dispatch<SetStateAction<number | null>>}) => {
   const { mutateFunction, loading } = useInsertFollows()
 
   const handleMutate = () => {
@@ -22,6 +22,8 @@ const InsertFollows = ({path}: {path: string}) => {
       variables: {
         follower_id: path
       }
+    }).then(data => {
+      data.data.insert_follows_one.id && setFollows(data.data.insert_follows_one.id)
     })
   }
 
@@ -29,7 +31,7 @@ const InsertFollows = ({path}: {path: string}) => {
   return <OutlinedButton text='フォロー' handle={handleMutate} />
 }
 
-const DeleteFollows = ({id}: {id: number }) => {
+const DeleteFollows = ({ follows, setFollows }: { follows: number, setFollows: Dispatch<SetStateAction<number | null>> }) => {
   const { mutateFunction, loading } = useDeleteFollows()
 
   const handleMutate = () => {
@@ -37,8 +39,10 @@ const DeleteFollows = ({id}: {id: number }) => {
 
     mutateFunction({
       variables: {
-        id
+        id: follows
       }
+    }).then(() => {
+      setFollows(null)
     })
   }
 
@@ -47,11 +51,22 @@ const DeleteFollows = ({id}: {id: number }) => {
 
 // ログイン時、フォローまたはフォローを外すボタン
 const LoginFollowing = ({ path, id }: { path: string, id: string }) => {
-  const { data, loading } = useSelectFollows(path, id)
+  const { follows, loading, setFollows } = useSelectFollows(path, id)
 
   if(loading) return <CircularProgress size={38.25} />
 
-  return (data?.follows.length === 1) ? <DeleteFollows id={ data.follows[0].id } /> : <InsertFollows path={ path } />
+  return (
+    follows ?
+    <DeleteFollows
+      follows={ follows }
+      setFollows={ setFollows }
+    />
+    :
+    <InsertFollows
+      path={ path }
+      setFollows={ setFollows }
+    />
+  )
 }
 
 // ログアウト時、ログインボタン

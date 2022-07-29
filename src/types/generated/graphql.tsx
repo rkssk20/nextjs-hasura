@@ -2692,7 +2692,19 @@ export type GetTrendQueryVariables = Exact<{
 }>;
 
 
-export type GetTrendQuery = { __typename?: 'query_root', articles: Array<{ __typename?: 'articles', id: string, title: string, image?: string | null, profile: { __typename?: 'profiles', username: string } }> };
+export type GetTrendQuery = { __typename?: 'query_root', articles: Array<{ __typename?: 'person_articles', id?: string | null, title?: string | null, details?: string | null, image?: string | null, comment_count?: number | null, like_count?: number | null, categories?: any | null, created_at?: any | null, user_id?: string | null, username?: string | null, avatar?: string | null }> };
+
+export type GetSideTrendQueryVariables = Exact<{
+  _in: Array<Scalars['String']> | Scalars['String'];
+}>;
+
+
+export type GetSideTrendQuery = { __typename?: 'query_root', articles: Array<{ __typename?: 'articles', id: string, title: string, image?: string | null, profile: { __typename?: 'profiles', username: string } }> };
+
+export type GetTrendUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetTrendUserQuery = { __typename?: 'query_root', profiles: Array<{ __typename?: 'profiles', id: string, username: string, avatar?: string | null, details?: string | null, follower_count: number }> };
 
 
 export const GetProfilesDetailsDocument = gql`
@@ -3521,13 +3533,18 @@ export type GetSearchProfilesLazyQueryHookResult = ReturnType<typeof useGetSearc
 export type GetSearchProfilesQueryResult = Apollo.QueryResult<GetSearchProfilesQuery, GetSearchProfilesQueryVariables>;
 export const GetTrendDocument = gql`
     query GetTrend($_in: [String!]!) {
-  articles(where: {id: {_in: $_in}}) {
+  articles: person_articles(where: {id: {_in: $_in}}, limit: 5) {
     id
     title
+    details
     image
-    profile {
-      username
-    }
+    comment_count
+    like_count
+    categories
+    created_at
+    user_id
+    username
+    avatar
   }
 }
     `;
@@ -3559,3 +3576,81 @@ export function useGetTrendLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetTrendQueryHookResult = ReturnType<typeof useGetTrendQuery>;
 export type GetTrendLazyQueryHookResult = ReturnType<typeof useGetTrendLazyQuery>;
 export type GetTrendQueryResult = Apollo.QueryResult<GetTrendQuery, GetTrendQueryVariables>;
+export const GetSideTrendDocument = gql`
+    query GetSideTrend($_in: [String!]!) {
+  articles(where: {id: {_in: $_in}}, limit: 5) {
+    id
+    title
+    image
+    profile {
+      username
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetSideTrendQuery__
+ *
+ * To run a query within a React component, call `useGetSideTrendQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSideTrendQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSideTrendQuery({
+ *   variables: {
+ *      _in: // value for '_in'
+ *   },
+ * });
+ */
+export function useGetSideTrendQuery(baseOptions: Apollo.QueryHookOptions<GetSideTrendQuery, GetSideTrendQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSideTrendQuery, GetSideTrendQueryVariables>(GetSideTrendDocument, options);
+      }
+export function useGetSideTrendLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSideTrendQuery, GetSideTrendQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSideTrendQuery, GetSideTrendQueryVariables>(GetSideTrendDocument, options);
+        }
+export type GetSideTrendQueryHookResult = ReturnType<typeof useGetSideTrendQuery>;
+export type GetSideTrendLazyQueryHookResult = ReturnType<typeof useGetSideTrendLazyQuery>;
+export type GetSideTrendQueryResult = Apollo.QueryResult<GetSideTrendQuery, GetSideTrendQueryVariables>;
+export const GetTrendUserDocument = gql`
+    query GetTrendUser {
+  profiles(limit: 5, order_by: {follower_count: desc}) {
+    id
+    username
+    avatar
+    details
+    follower_count
+  }
+}
+    `;
+
+/**
+ * __useGetTrendUserQuery__
+ *
+ * To run a query within a React component, call `useGetTrendUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTrendUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTrendUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetTrendUserQuery(baseOptions?: Apollo.QueryHookOptions<GetTrendUserQuery, GetTrendUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTrendUserQuery, GetTrendUserQueryVariables>(GetTrendUserDocument, options);
+      }
+export function useGetTrendUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTrendUserQuery, GetTrendUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTrendUserQuery, GetTrendUserQueryVariables>(GetTrendUserDocument, options);
+        }
+export type GetTrendUserQueryHookResult = ReturnType<typeof useGetTrendUserQuery>;
+export type GetTrendUserLazyQueryHookResult = ReturnType<typeof useGetTrendUserLazyQuery>;
+export type GetTrendUserQueryResult = Apollo.QueryResult<GetTrendUserQuery, GetTrendUserQueryVariables>;
