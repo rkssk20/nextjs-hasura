@@ -1,9 +1,7 @@
 ## Next.js × Hasura
 
-[https://nextjs-hasura.tk](https://nextjs-hasura.tk)
-
-※ 当サイトの Hasura は無料版で運用しているため、リージョンが遠くて少し通信が遅いです
-※ 無料版は月 1GB までのため、制限を迎える可能性もあります
+~~[https://nextjs-hasura.tk](https://nextjs-hasura.tk)~~
+Herokuの無料枠が終了したため、DBに接続できません。Supabase版、Firebase版がほぼ同じものになっているので、そちらをご覧ください。
 
 Next.js と Hasura を使用した技術ブログ風のポートフォリオです。ログイン・投稿・いいね・コメントなどをお試しください
 [Supabase 版](https://nextjs-supabase.tk)と[Firebase 版](https://nextjs-firebase.tk)もあります
